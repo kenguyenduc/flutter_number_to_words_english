@@ -1,6 +1,8 @@
 # flutter_number_to_words_english
 A Flutter/Dart package that converts number to words (English language)
 
+### Please give me 1 star if you find them useful!
+
 ### Flutter (Null Safety)
  Flutter (Channel stable, 2.5.2, locale en-US)
  - Flutter version 2.5.2
