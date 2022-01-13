@@ -27,4 +27,4 @@ NumberToWordsEnglish.convert(123456789);
 // 'one hundred twenty-three million four hundred fifty-six thousand seven hundred eighty-nine'
 
 ```
-### :small_orange_diamond: Please give me 1 star if you find them useful :relaxed:
+
