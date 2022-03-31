@@ -1,3 +1,6 @@
+///
+///A class handle convert number to words
+///
 class NumberToWordsEnglish {
   NumberToWordsEnglish._();
 
@@ -8,6 +11,7 @@ class NumberToWordsEnglish {
   static const String _million = 'million'; //1000 000
   static const String _billion = 'billion'; //1000 000 000
 
+  ///numNames
   static const List<String> _numNames = [
     '',
     'one',
