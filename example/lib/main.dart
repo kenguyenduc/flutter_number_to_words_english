@@ -28,12 +28,44 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Text(
-            'Result: 123456789 -> ${NumberToWordsEnglish.convert(_value)}',
-            style: const TextStyle(
-              fontSize: 14,
-              color: Colors.black,
-            ),
+          child: Column(
+            children: [
+              /// 'one hundred twenty-three million four hundred fifty-six thousand seven hundred eighty-nine'
+              Text(
+                'Result: 123456789 -> ${NumberToWordsEnglish.convert(_value)}',
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Colors.black,
+                ),
+              ),
+
+              ///'fifty-five'
+              Text(
+                NumberToWordsEnglish.convert(55),
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Colors.black,
+                ),
+              ),
+
+              ///'one hundred thousand'
+              Text(
+                NumberToWordsEnglish.convert(100000),
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Colors.black,
+                ),
+              ),
+
+              /// 'thirteen million five hundred seventy-eight thousand nine hundred twenty-one'
+              Text(
+                NumberToWordsEnglish.convert(13578921),
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Colors.black,
+                ),
+              ),
+            ],
           ),
         ),
       ),

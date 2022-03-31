@@ -35,6 +35,7 @@ class NumberToWordsEnglish {
     'nineteen'
   ];
 
+  ///tensNames
   static const List<String> _tensNames = [
     '',
     'ten',
@@ -48,6 +49,7 @@ class NumberToWordsEnglish {
     'ninety'
   ];
 
+  /// convertLessThanOneThousand
   static String _convertLessThanOneThousand(int number,
       [bool isLastThreeDigits = false]) {
     String soFar = '';
@@ -73,6 +75,7 @@ class NumberToWordsEnglish {
     return _numNames[number] + ' $_hundred ' + soFar;
   }
 
+  ///handle converter
   static String convert(int number) {
     // 0 to 999 999 999 999
     if (number == 0) {
@@ -107,6 +110,7 @@ class NumberToWordsEnglish {
     return result.trim();
   }
 
+  ///get Billions
   static String _getBillions(int billions) {
     String tradBillions;
     switch (billions) {
@@ -122,6 +126,7 @@ class NumberToWordsEnglish {
     return tradBillions;
   }
 
+  ///get Millions
   static String _getMillions(int millions) {
     String tradMillions;
     switch (millions) {
@@ -137,6 +142,7 @@ class NumberToWordsEnglish {
     return tradMillions;
   }
 
+  ///get Thousands
   static String _getThousands(int hundredThousands) {
     String tradHundredThousands;
     switch (hundredThousands) {
