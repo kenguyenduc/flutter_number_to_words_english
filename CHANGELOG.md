@@ -1,5 +1,9 @@
 # ChangeLog
 
+## [2.0.1]
+
+- fix formatting issues
+
 ## [0.0.3]
 
 - update changelog
