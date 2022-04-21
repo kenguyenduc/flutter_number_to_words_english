@@ -1,7 +1,8 @@
-## flutter_number_to_words_english [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/kenguyenduc/flutter_number_to_words_english/blob/master/LICENSE)
+ ## flutter_number_to_words_english [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/kenguyenduc/flutter_number_to_words_english/blob/master/LICENSE)
 A Flutter/Dart package that converts number to words (English language)
 
-### :small_orange_diamond: Flutter (Null Safety) :wrench:
+ --- 
+
  For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
