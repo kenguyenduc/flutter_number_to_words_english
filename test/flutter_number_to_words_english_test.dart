@@ -3,7 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:number_to_words_english/flutter_number_to_words_english.dart';
 
 void main() {
-  const MethodChannel channel = MethodChannel('flutter_number_to_words_english');
+  const MethodChannel channel =
+      MethodChannel('flutter_number_to_words_english');
 
   TestWidgetsFlutterBinding.ensureInitialized();
 
