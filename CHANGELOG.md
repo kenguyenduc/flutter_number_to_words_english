@@ -1,11 +1,13 @@
-### 0.0.3
+# ChangeLog
 
-update changelog
+## [0.0.3]
 
-### 0.0.2
+- update changelog
 
-Readme fixes
+## [0.0.2]
 
-## 0.0.1
+- Readme fixes
 
-Initial release
+## [0.0.1]
+
+- Initial release
