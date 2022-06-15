@@ -1,9 +1,10 @@
 name: number_to_words_english_example
+version: 0.0.1
 description: Demonstrates how to use the number_to_words_english plugin.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+#publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
   sdk: ">=2.12.0 <3.0.0"

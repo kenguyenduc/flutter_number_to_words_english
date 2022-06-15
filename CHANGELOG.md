@@ -1,5 +1,9 @@
 # ChangeLog
 
+## [2.0.2]
+
+- fix ios build error
+
 ## [2.0.1]
 
 - fix formatting issues

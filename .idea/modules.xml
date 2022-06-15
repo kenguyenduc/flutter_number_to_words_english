@@ -3,8 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/number_to_words_english.iml" filepath="$PROJECT_DIR$/number_to_words_english.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android/number_to_words_english_android.iml" filepath="$PROJECT_DIR$/android/number_to_words_english_android.iml" />
-      <module fileurl="file://$PROJECT_DIR$/example/android/number_to_words_english_example_android.iml" filepath="$PROJECT_DIR$/example/android/number_to_words_english_example_android.iml" />
     </modules>
   </component>
 </project>
