@@ -1,17 +1,26 @@
-///
-///A class handle convert number to words
-///
 class NumberToWordsEnglish {
   NumberToWordsEnglish._();
 
   static const String _unionSeparator = '-';
-  static const String _zero = 'zero'; //0
-  static const String _hundred = 'hundred'; //100
-  static const String _thousand = 'thousand'; //1000
-  static const String _million = 'million'; //1000 000
-  static const String _billion = 'billion'; //1000 000 000
+  static const String _zero = 'zero';
+  static const String _hundred = 'hundred';
 
-  ///numNames
+  // Scale names
+  static const List<String> _scaleNames = [
+    '',
+    'thousand',
+    'million',
+    'billion',
+    'trillion',
+    'quadrillion',
+    'quintillion',
+    'sextillion',
+    'septillion',
+    'octillion',
+    'nonillion',
+    'decillion'
+  ];
+
   static const List<String> _numNames = [
     '',
     'one',
@@ -35,7 +44,6 @@ class NumberToWordsEnglish {
     'nineteen'
   ];
 
-  ///tensNames
   static const List<String> _tensNames = [
     '',
     'ten',
@@ -49,25 +57,24 @@ class NumberToWordsEnglish {
     'ninety'
   ];
 
-  /// convertLessThanOneThousand
-  static String _convertLessThanOneThousand(int number,
-      [bool isLastThreeDigits = false]) {
+  /// Convert a number less than one thousand to words
+  static String _convertLessThanOneThousand(int number) {
     String soFar = '';
 
     if (number % 100 < 20) {
       soFar = _numNames[number % 100];
-      number = (number ~/ 100).toInt();
+      number = number ~/ 100;
     } else {
       final int numFirst = number;
       soFar = _numNames[number % 10];
-      number = (number ~/ 10).toInt();
+      number = number ~/ 10;
       final String unionSeparator =
-          ((number ~/ 10).toInt() != 0 && numFirst % 10 != 0) ||
-                  (numFirst % 10 != 0 && numFirst < 100)
-              ? _unionSeparator
-              : '';
+      ((number ~/ 10) != 0 && numFirst % 10 != 0) ||
+          (numFirst % 10 != 0 && numFirst < 100)
+          ? _unionSeparator
+          : '';
       soFar = _tensNames[number % 10] + unionSeparator + soFar;
-      number = (number ~/ 10).toInt();
+      number = number ~/ 10;
     }
     if (number == 0) {
       return soFar;
@@ -75,89 +82,97 @@ class NumberToWordsEnglish {
     return _numNames[number] + ' $_hundred ' + soFar;
   }
 
-  ///handle converter
-  static String convert(int number) {
-    // 0 to 999 999 999 999
+  /// Convert the integer part of the number
+  static String _convertIntegerPart(int number) {
     if (number == 0) {
       return _zero;
     }
-    final String strNumber = number.toString().padLeft(12, '0');
-    // XXXnnnnnnnnn
-    final int billions = int.parse(strNumber.substring(0, 3));
-    // nnnXXXnnnnnn
-    final int millions = int.parse(strNumber.substring(3, 6));
-    // nnnnnnXXXnnn
-    final int hundredThousands = int.parse(strNumber.substring(6, 9));
-    // nnnnnnnnnXXX
-    final int thousands = int.parse(strNumber.substring(9, 12));
 
-    final String tradBillions = _getBillions(billions);
-    String result = tradBillions;
+    // Pad to 36 digits for decillion
+    final String strNumber = number.toString().padLeft(36, '0');
 
-    final String tradMillions = _getMillions(millions);
-    result = result + tradMillions;
-
-    final String tradHundredThousands = _getThousands(hundredThousands);
-    result = result + tradHundredThousands;
-
-    String tradThousand;
-    tradThousand = _convertLessThanOneThousand(thousands, true);
-    result = result + tradThousand;
-
-    // remove extra spaces!
-    result =
-        result.replaceAll(RegExp('\\s+'), ' ').replaceAll('\\b\\s{2,}\\b', ' ');
-    return result.trim();
-  }
-
-  ///get Billions
-  static String _getBillions(int billions) {
-    String tradBillions;
-    switch (billions) {
-      case 0:
-        tradBillions = '';
-        break;
-      case 1:
-        tradBillions = _convertLessThanOneThousand(billions) + ' $_billion ';
-        break;
-      default:
-        tradBillions = _convertLessThanOneThousand(billions) + ' $_billion ';
-    }
-    return tradBillions;
-  }
-
-  ///get Millions
-  static String _getMillions(int millions) {
-    String tradMillions;
-    switch (millions) {
-      case 0:
-        tradMillions = '';
-        break;
-      case 1:
-        tradMillions = _convertLessThanOneThousand(millions) + ' $_million ';
-        break;
-      default:
-        tradMillions = _convertLessThanOneThousand(millions) + ' $_million ';
-    }
-    return tradMillions;
-  }
-
-  ///get Thousands
-  static String _getThousands(int hundredThousands) {
-    String tradHundredThousands;
-    switch (hundredThousands) {
-      case 0:
-        tradHundredThousands = '';
-        break;
-      case 1:
-        tradHundredThousands =
-            _convertLessThanOneThousand(hundredThousands) + ' $_thousand ';
-        break;
-      default:
-        tradHundredThousands =
-            _convertLessThanOneThousand(hundredThousands) + ' $_thousand ';
+    // Break into groups of 3
+    final int totalGroups = (strNumber.length / 3).round();
+    final List<String> groups = [];
+    for (int i = 0; i < totalGroups; i++) {
+      final start = i * 3;
+      final end = start + 3;
+      groups.add(strNumber.substring(start, end));
     }
 
-    return tradHundredThousands;
+    final List<int> intGroups = groups.map((g) => int.parse(g)).toList();
+    String result = '';
+
+    for (int i = 0; i < totalGroups; i++) {
+      int groupValue = intGroups[i];
+      if (groupValue > 0) {
+        int scaleIndex = totalGroups - 1 - i;
+        String partial = _convertLessThanOneThousand(groupValue);
+        String scaleName = _scaleNames[scaleIndex];
+        if (scaleName.isNotEmpty) {
+          partial = '$partial $scaleName ';
+        } else {
+          partial = '$partial ';
+        }
+        result += partial;
+      }
+    }
+
+    // Clean up spaces
+    result = result.replaceAll(RegExp('\\s+'), ' ').trim();
+    return result.isEmpty ? _zero : result;
+  }
+
+  /// Convert a decimal number string
+  static String convertDecimal(String numberStr) {
+    if (!RegExp(r'^-?\d+(\.\d+)?$').hasMatch(numberStr)) {
+      throw ArgumentError('Input is not a valid number');
+    }
+
+    bool isNegative = numberStr.startsWith('-');
+    if (isNegative) {
+      numberStr = numberStr.substring(1);
+    }
+
+    // Split into integer and decimal parts
+    List<String> parts = numberStr.split('.');
+    String integerPartStr = parts[0];
+    String decimalPartStr = parts.length > 1 ? parts[1] : '';
+
+    // Convert integer part
+    int integerPart = int.parse(integerPartStr);
+    String integerWords = _convertIntegerPart(integerPart);
+
+    // If no decimal part
+    if (decimalPartStr.isEmpty) {
+      return (isNegative ? 'minus ' : '') + integerWords;
+    }
+
+    // If there's a decimal part, read each digit
+    String decimalWords = 'point';
+    for (int i = 0; i < decimalPartStr.length; i++) {
+      int digit = int.parse(decimalPartStr[i]);
+      decimalWords += ' ' + _numNames[digit];
+    }
+
+    String result = integerWords + ' ' + decimalWords;
+    result = result.replaceAll(RegExp('\\s+'), ' ').trim();
+    if (isNegative) {
+      result = 'minus ' + result;
+    }
+    return result;
+  }
+
+  /// Public method to convert a number (int or double) to words.
+  static String convert(num number) {
+    bool isNegative = number < 0;
+    if (number is int) {
+      int absNumber = number.abs();
+      String words = _convertIntegerPart(absNumber);
+      return isNegative ? 'minus $words' : words;
+    } else {
+      // Convert double to string and then to words
+      return convertDecimal(number.toString());
+    }
   }
 }

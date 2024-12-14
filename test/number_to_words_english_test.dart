@@ -3,7 +3,7 @@ import 'package:number_to_words_english/number_to_words_english.dart';
 
 void main() {
   group('NumberToWordsEnglish', () {
-    final List<MapEntry<int, String>> testNumbers = <MapEntry<int, String>>[
+    final List<MapEntry<num, String>> testNumbers = <MapEntry<num, String>>[
       const MapEntry(1, 'one'),
       const MapEntry(2, 'two'),
       const MapEntry(3, 'three'),
@@ -37,9 +37,19 @@ void main() {
       const MapEntry(1000000000, 'one billion'),
       const MapEntry(13578921,
           'thirteen million five hundred seventy-eight thousand nine hundred twenty-one'),
+      const MapEntry(-13578921,
+          'minus thirteen million five hundred seventy-eight thousand nine hundred twenty-one'),
       const MapEntry(123, 'one hundred twenty-three'),
+      const MapEntry(-123.45, 'minus one hundred twenty-three point four five'),
+      const MapEntry(123.45, 'one hundred twenty-three point four five'),
+      const MapEntry(5553456987345,
+          'five trillion five hundred fifty-three billion four hundred fifty-six million nine hundred eighty-seven thousand three hundred forty-five'),
+      const MapEntry(5553456987345.123,
+          'five trillion five hundred fifty-three billion four hundred fifty-six million nine hundred eighty-seven thousand three hundred forty-five point one two three'),
       const MapEntry(123456789,
           'one hundred twenty-three million four hundred fifty-six thousand seven hundred eighty-nine'),
+      const MapEntry(9223372036854775807,
+          'nine quintillion two hundred twenty-three quadrillion three hundred seventy-two trillion thirty-six billion eight hundred fifty-four million seven hundred seventy-five thousand eight hundred seven'),
     ];
 
     for (int i = 0; i < testNumbers.length; i++) {
