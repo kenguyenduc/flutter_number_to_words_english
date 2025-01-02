@@ -69,10 +69,10 @@ class NumberToWordsEnglish {
       soFar = _numNames[number % 10];
       number = number ~/ 10;
       final String unionSeparator =
-      ((number ~/ 10) != 0 && numFirst % 10 != 0) ||
-          (numFirst % 10 != 0 && numFirst < 100)
-          ? _unionSeparator
-          : '';
+          ((number ~/ 10) != 0 && numFirst % 10 != 0) ||
+                  (numFirst % 10 != 0 && numFirst < 100)
+              ? _unionSeparator
+              : '';
       soFar = _tensNames[number % 10] + unionSeparator + soFar;
       number = number ~/ 10;
     }
