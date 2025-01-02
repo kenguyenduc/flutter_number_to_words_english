@@ -79,7 +79,7 @@ class NumberToWordsEnglish {
     if (number == 0) {
       return soFar;
     }
-    return _numNames[number] + ' $_hundred ' + soFar;
+    return '${_numNames[number]} $_hundred $soFar';
   }
 
   /// Convert the integer part of the number
@@ -152,13 +152,13 @@ class NumberToWordsEnglish {
     String decimalWords = 'point';
     for (int i = 0; i < decimalPartStr.length; i++) {
       int digit = int.parse(decimalPartStr[i]);
-      decimalWords += ' ' + _numNames[digit];
+      decimalWords += ' ${_numNames[digit]}';
     }
 
-    String result = integerWords + ' ' + decimalWords;
+    String result = '$integerWords $decimalWords';
     result = result.replaceAll(RegExp('\\s+'), ' ').trim();
     if (isNegative) {
-      result = 'minus ' + result;
+      result = 'minus $result';
     }
     return result;
   }
