@@ -1,5 +1,10 @@
 # ChangeLog
 
+
+## [2.1.0]
+
+- [new] Update support for large integers up to quintillion.
+
 ## [2.0.2]
 
 - fix ios build error
