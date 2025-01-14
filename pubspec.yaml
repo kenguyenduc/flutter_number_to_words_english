@@ -1,6 +1,6 @@
 name: number_to_words_english
 description: A Flutter/Dart package that converts number to words (English language).
-version: 2.1.0
+version: 2.1.1
 homepage: https://github.com/kenguyenduc/flutter_number_to_words_english
 git: https://github.com/kenguyenduc/flutter_number_to_words_english
 issue_tracker: https://github.com/kenguyenduc/flutter_number_to_words_english/issues

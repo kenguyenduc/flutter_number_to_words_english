@@ -27,10 +27,12 @@ NumberToWordsEnglish.convert(13578921);
 // 'thirteen million five hundred seventy-eight thousand nine hundred twenty-one'
 
 NumberToWordsEnglish.convert(123456789);
-// 'one hundred twenty-three million four hundred fifty-six thousand seven hundred eighty-nine'
+// 'one hundred twenty-three million four hundred fifty-six thousand seven hundred 
+  eighty-nine'
 
 NumberToWordsEnglish.convert(5553456987345);
-// 'five trillion five hundred fifty-three billion four hundred fifty-six million nine hundred eighty-seven thousand three hundred forty-five'
+// 'five trillion five hundred fifty-three billion four hundred fifty-six million 
+  nine hundred eighty-seven thousand three hundred forty-five'
 
 ```
 
