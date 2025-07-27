@@ -106,7 +106,7 @@ print(123.toJPY());
 // Output: 'one hundred twenty-three yen'
 
 print(123.45.toVND());
-// Output: 'một trăm hai mười ba đồng bốn mười lăm xu'
+// Output: 'một trăm hai mười ba đồng bốn mười năm xu'
 
 print(123.45.toCNY());
 // Output: '一百二十三人民币四十五角'
@@ -219,7 +219,7 @@ print(NumberToWords.convertCurrency('en', 123.45, 'USD'));  // English
 // "one hundred twenty-three dollars and forty-five cents"
 
 print(NumberToWords.convertCurrency('vi', 123.45, 'VND'));  // Vietnamese
-// "một trăm hai mười ba đồng bốn mười lăm xu"
+// "một trăm hai mười ba đồng bốn mười năm xu"
 
 print(NumberToWords.convertCurrency('fr', 123.45, 'EUR'));  // French
 // "cent vingt-trois euros et quarante-cinq centimes"
@@ -340,7 +340,7 @@ Converts a number to its word representation in the specified language.
 
 **Parameters:**
 
-- `languageCode` (String): Language code ('en', 'vi', 'es')
+- `languageCode` (String): Language code ('en', 'vi', 'es', 'fr', 'de', 'it', 'pt', 'ru', 'zh', 'ja', 'nl', 'ar')
 - `number` (num): The number to convert (int or double)
 
 **Returns:**
@@ -360,7 +360,7 @@ Converts a decimal number string to words in the specified language.
 
 **Parameters:**
 
-- `languageCode` (String): Language code ('en', 'vi', 'es')
+- `languageCode` (String): Language code ('en', 'vi', 'es', 'fr', 'de', 'it', 'pt', 'ru', 'zh', 'ja', 'nl', 'ar')
 - `numberStr` (String): The number as a string (e.g., "123.45")
 
 **Returns:**
@@ -373,7 +373,7 @@ Returns a list of supported language codes.
 
 **Returns:**
 
-- `List<String>`: List of language codes ['en', 'vi', 'es']
+- `List<String>`: List of all 12 supported language codes ['en', 'vi', 'es', 'fr', 'de', 'it', 'pt', 'ru', 'zh', 'ja', 'nl', 'ar']
 
 ##### `static Map<String, String> get supportedLanguagesWithNames`
 
@@ -394,6 +394,47 @@ Checks if a language is supported.
 **Returns:**
 
 - `bool`: True if the language is supported
+
+##### `static String convertOrdinal(String languageCode, int number)`
+
+Converts a number to its ordinal word representation (1st, 2nd, 3rd, etc.).
+
+**Parameters:**
+
+- `languageCode` (String): Language code ('en', 'vi', 'es', 'fr', 'de', 'it', 'pt', 'ru', 'zh', 'ja', 'nl', 'ar')
+- `number` (int): Positive integer to convert to ordinal
+
+**Returns:**
+
+- `String`: The ordinal word representation (e.g., "first", "second", "twenty-first")
+
+**Example:**
+
+```dart
+String result = NumberToWords.convertOrdinal('en', 21);
+// Returns: "twenty-first"
+```
+
+##### `static String convertCurrency(String languageCode, double amount, String currencyCode)`
+
+Converts a monetary amount to words with proper currency names.
+
+**Parameters:**
+
+- `languageCode` (String): Language code ('en', 'vi', 'es', 'fr', 'de', 'it', 'pt', 'ru', 'zh', 'ja', 'nl', 'ar')
+- `amount` (double): Monetary amount to convert
+- `currencyCode` (String): ISO 4217 currency code ('USD', 'EUR', 'GBP', 'JPY', 'VND', 'CNY', 'KRW', 'THB', 'SGD', 'AUD', 'CAD', 'CHF')
+
+**Returns:**
+
+- `String`: The currency amount in words
+
+**Example:**
+
+```dart
+String result = NumberToWords.convertCurrency('en', 123.45, 'USD');
+// Returns: "one hundred twenty-three dollars and forty-five cents"
+```
 
 ### NumberToWordsEnglish (Legacy)
 

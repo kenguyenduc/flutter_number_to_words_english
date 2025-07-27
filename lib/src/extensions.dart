@@ -370,7 +370,7 @@ extension NumberToWordsExtension on num {
   /// - [ArgumentError] if currency code is not supported
   /// - [ArgumentError] if amount is negative
   String toCurrency(String currencyCode) {
-    return NumberToWords.convertCurrency('en', this.toDouble(), currencyCode);
+    return NumberToWords.convertCurrency('en', toDouble(), currencyCode);
   }
 
   /// Convert this number to currency format in a specific language
@@ -391,7 +391,7 @@ extension NumberToWordsExtension on num {
   /// - [ArgumentError] if amount is negative
   String toCurrencyInLanguage(String languageCode, String currencyCode) {
     return NumberToWords.convertCurrency(
-        languageCode, this.toDouble(), currencyCode);
+        languageCode, toDouble(), currencyCode);
   }
 
   /// Convert this number to US Dollars in English
