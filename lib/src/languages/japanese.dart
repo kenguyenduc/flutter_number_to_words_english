@@ -112,7 +112,7 @@ class JapaneseNumberToWords extends NumberToWordsLanguage {
       if (tenThousands == 1) {
         result += 'いちまん';
       } else {
-        result += convertLessThanOneThousand(tenThousands) + 'まん';
+        result += '${convertLessThanOneThousand(tenThousands)}まん';
       }
       number %= 10000;
     }
@@ -193,18 +193,90 @@ class JapaneseNumberToWords extends NumberToWordsLanguage {
 
   // Currency data for Japanese
   static const Map<String, Map<String, String>> _currencyData = {
-    'USD': {'major': 'アメリカドル', 'majorPlural': 'アメリカドル', 'minor': 'セント', 'minorPlural': 'セント', 'decimals': '2'},
-    'EUR': {'major': 'ユーロ', 'majorPlural': 'ユーロ', 'minor': 'セント', 'minorPlural': 'セント', 'decimals': '2'},
-    'GBP': {'major': 'イギリスポンド', 'majorPlural': 'イギリスポンド', 'minor': 'ペンス', 'minorPlural': 'ペンス', 'decimals': '2'},
-    'JPY': {'major': '円', 'majorPlural': '円', 'minor': '', 'minorPlural': '', 'decimals': '0'},
-    'VND': {'major': 'ベトナムドン', 'majorPlural': 'ベトナムドン', 'minor': 'ス', 'minorPlural': 'ス', 'decimals': '2'},
-    'CNY': {'major': '人民元', 'majorPlural': '人民元', 'minor': '角', 'minorPlural': '角', 'decimals': '2'},
-    'KRW': {'major': 'ウォン', 'majorPlural': 'ウォン', 'minor': '', 'minorPlural': '', 'decimals': '0'},
-    'THB': {'major': 'タイバーツ', 'majorPlural': 'タイバーツ', 'minor': 'サタン', 'minorPlural': 'サタン', 'decimals': '2'},
-    'SGD': {'major': 'シンガポールドル', 'majorPlural': 'シンガポールドル', 'minor': 'セント', 'minorPlural': 'セント', 'decimals': '2'},
-    'AUD': {'major': 'オーストラリアドル', 'majorPlural': 'オーストラリアドル', 'minor': 'セント', 'minorPlural': 'セント', 'decimals': '2'},
-    'CAD': {'major': 'カナダドル', 'majorPlural': 'カナダドル', 'minor': 'セント', 'minorPlural': 'セント', 'decimals': '2'},
-    'CHF': {'major': 'スイスフラン', 'majorPlural': 'スイスフラン', 'minor': 'ラッペン', 'minorPlural': 'ラッペン', 'decimals': '2'},
+    'USD': {
+      'major': 'アメリカドル',
+      'majorPlural': 'アメリカドル',
+      'minor': 'セント',
+      'minorPlural': 'セント',
+      'decimals': '2'
+    },
+    'EUR': {
+      'major': 'ユーロ',
+      'majorPlural': 'ユーロ',
+      'minor': 'セント',
+      'minorPlural': 'セント',
+      'decimals': '2'
+    },
+    'GBP': {
+      'major': 'イギリスポンド',
+      'majorPlural': 'イギリスポンド',
+      'minor': 'ペンス',
+      'minorPlural': 'ペンス',
+      'decimals': '2'
+    },
+    'JPY': {
+      'major': '円',
+      'majorPlural': '円',
+      'minor': '',
+      'minorPlural': '',
+      'decimals': '0'
+    },
+    'VND': {
+      'major': 'ベトナムドン',
+      'majorPlural': 'ベトナムドン',
+      'minor': 'ス',
+      'minorPlural': 'ス',
+      'decimals': '2'
+    },
+    'CNY': {
+      'major': '人民元',
+      'majorPlural': '人民元',
+      'minor': '角',
+      'minorPlural': '角',
+      'decimals': '2'
+    },
+    'KRW': {
+      'major': 'ウォン',
+      'majorPlural': 'ウォン',
+      'minor': '',
+      'minorPlural': '',
+      'decimals': '0'
+    },
+    'THB': {
+      'major': 'タイバーツ',
+      'majorPlural': 'タイバーツ',
+      'minor': 'サタン',
+      'minorPlural': 'サタン',
+      'decimals': '2'
+    },
+    'SGD': {
+      'major': 'シンガポールドル',
+      'majorPlural': 'シンガポールドル',
+      'minor': 'セント',
+      'minorPlural': 'セント',
+      'decimals': '2'
+    },
+    'AUD': {
+      'major': 'オーストラリアドル',
+      'majorPlural': 'オーストラリアドル',
+      'minor': 'セント',
+      'minorPlural': 'セント',
+      'decimals': '2'
+    },
+    'CAD': {
+      'major': 'カナダドル',
+      'majorPlural': 'カナダドル',
+      'minor': 'セント',
+      'minorPlural': 'セント',
+      'decimals': '2'
+    },
+    'CHF': {
+      'major': 'スイスフラン',
+      'majorPlural': 'スイスフラン',
+      'minor': 'ラッペン',
+      'minorPlural': 'ラッペン',
+      'decimals': '2'
+    },
   };
 
   @override
@@ -220,10 +292,10 @@ class JapaneseNumberToWords extends NumberToWordsLanguage {
     }
 
     final decimals = int.parse(currency['decimals']!);
-    
+
     // Split into major and minor units
     final majorAmount = amount.floor();
-    final minorAmount = decimals > 0 
+    final minorAmount = decimals > 0
         ? ((amount - majorAmount) * (decimals == 2 ? 100 : 10)).round()
         : 0;
 
@@ -250,6 +322,6 @@ class JapaneseNumberToWords extends NumberToWordsLanguage {
 
     // In Japanese, ordinals are formed by adding "第" before and "番目" or just "番" after
     String cardinalWords = convertIntegerPart(number);
-    return '第${cardinalWords}番目';
+    return '第$cardinalWords番目';
   }
 }

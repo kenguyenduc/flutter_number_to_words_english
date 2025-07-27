@@ -391,33 +391,33 @@ class EnglishNumberToWords extends NumberToWordsLanguage {
     switch (lastDigit) {
       case 1:
         if (baseWords.endsWith(' one')) {
-          return baseWords.substring(0, baseWords.length - 4) + ' first';
+          return '${baseWords.substring(0, baseWords.length - 4)} first';
         } else if (baseWords.endsWith('-one')) {
-          return baseWords.substring(0, baseWords.length - 4) + '-first';
+          return '${baseWords.substring(0, baseWords.length - 4)}-first';
         } else {
           return '${baseWords}st';
         }
       case 2:
         if (baseWords.endsWith(' two')) {
-          return baseWords.substring(0, baseWords.length - 4) + ' second';
+          return '${baseWords.substring(0, baseWords.length - 4)} second';
         } else if (baseWords.endsWith('-two')) {
-          return baseWords.substring(0, baseWords.length - 4) + '-second';
+          return '${baseWords.substring(0, baseWords.length - 4)}-second';
         } else {
           return '${baseWords}nd';
         }
       case 3:
         if (baseWords.endsWith(' three')) {
-          return baseWords.substring(0, baseWords.length - 6) + ' third';
+          return '${baseWords.substring(0, baseWords.length - 6)} third';
         } else if (baseWords.endsWith('-three')) {
-          return baseWords.substring(0, baseWords.length - 6) + '-third';
+          return '${baseWords.substring(0, baseWords.length - 6)}-third';
         } else {
           return '${baseWords}rd';
         }
       case 5:
         if (baseWords.endsWith(' five')) {
-          return baseWords.substring(0, baseWords.length - 5) + ' fifth';
+          return '${baseWords.substring(0, baseWords.length - 5)} fifth';
         } else if (baseWords.endsWith('-five')) {
-          return baseWords.substring(0, baseWords.length - 5) + '-fifth';
+          return '${baseWords.substring(0, baseWords.length - 5)}-fifth';
         } else {
           return '${baseWords}th';
         }

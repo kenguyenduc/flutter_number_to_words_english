@@ -348,6 +348,6 @@ class SpanishNumberToWords extends NumberToWordsLanguage {
     // For larger numbers, construct from base + ordinal endings
     // This is a simplified version - Spanish ordinals can be complex
     String baseWords = convertIntegerPart(number);
-    return '${baseWords}º'; // Using ordinal symbol for simplicity
+    return '$baseWordsº'; // Using ordinal symbol for simplicity
   }
 }

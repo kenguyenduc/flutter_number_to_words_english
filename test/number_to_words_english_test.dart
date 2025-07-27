@@ -974,7 +974,7 @@ void main() {
       // Test getting language instances
       var englishLang = NumberToWords.getLanguage('en');
       expect(englishLang, isNotNull);
-      expect(englishLang!.languageCode, 'en');
+      expect(englishLang.languageCode, 'en');
       expect(englishLang.languageName, 'English');
 
       // Test all languages have valid instances
@@ -995,7 +995,7 @@ void main() {
       for (String lang in allLanguages) {
         var instance = NumberToWords.getLanguage(lang);
         expect(instance, isNotNull, reason: 'Language instance null for $lang');
-        expect(instance!.languageCode, lang);
+        expect(instance.languageCode, lang);
         expect(instance.languageName, isNotEmpty);
       }
     });

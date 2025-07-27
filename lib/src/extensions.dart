@@ -188,7 +188,7 @@ extension NumberToWordsExtension on num {
     if (this != this.toInt() || this <= 0) {
       throw ArgumentError('Ordinal conversion requires positive integers');
     }
-    return NumberToWords.convertOrdinal('en', this.toInt());
+    return NumberToWords.convertOrdinal('en', toInt());
   }
 
   /// Convert this number to ordinal words in a specific language
@@ -211,10 +211,10 @@ extension NumberToWordsExtension on num {
   /// - [ArgumentError] if the language is not supported
   /// - [ArgumentError] if the number is not a positive integer
   String toOrdinalInLanguage(String languageCode) {
-    if (this != this.toInt() || this <= 0) {
+    if (this != toInt() || this <= 0) {
       throw ArgumentError('Ordinal conversion requires positive integers');
     }
-    return NumberToWords.convertOrdinal(languageCode, this.toInt());
+    return NumberToWords.convertOrdinal(languageCode, toInt());
   }
 
   /// Convert this number to ordinal words in English (explicit)

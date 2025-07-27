@@ -171,18 +171,90 @@ class VietnameseNumberToWords extends NumberToWordsLanguage {
 
   // Currency data for Vietnamese
   static const Map<String, Map<String, String>> _currencyData = {
-    'USD': {'major': 'đô la Mỹ', 'majorPlural': 'đô la Mỹ', 'minor': 'xu', 'minorPlural': 'xu', 'decimals': '2'},
-    'EUR': {'major': 'euro', 'majorPlural': 'euro', 'minor': 'xu', 'minorPlural': 'xu', 'decimals': '2'},
-    'GBP': {'major': 'bảng Anh', 'majorPlural': 'bảng Anh', 'minor': 'xu', 'minorPlural': 'xu', 'decimals': '2'},
-    'JPY': {'major': 'yên Nhật', 'majorPlural': 'yên Nhật', 'minor': '', 'minorPlural': '', 'decimals': '0'},
-    'VND': {'major': 'đồng', 'majorPlural': 'đồng', 'minor': 'xu', 'minorPlural': 'xu', 'decimals': '2'},
-    'CNY': {'major': 'nhân dân tệ', 'majorPlural': 'nhân dân tệ', 'minor': 'xu', 'minorPlural': 'xu', 'decimals': '2'},
-    'KRW': {'major': 'won Hàn Quốc', 'majorPlural': 'won Hàn Quốc', 'minor': '', 'minorPlural': '', 'decimals': '0'},
-    'THB': {'major': 'baht Thái', 'majorPlural': 'baht Thái', 'minor': 'xu', 'minorPlural': 'xu', 'decimals': '2'},
-    'SGD': {'major': 'đô la Singapore', 'majorPlural': 'đô la Singapore', 'minor': 'xu', 'minorPlural': 'xu', 'decimals': '2'},
-    'AUD': {'major': 'đô la Úc', 'majorPlural': 'đô la Úc', 'minor': 'xu', 'minorPlural': 'xu', 'decimals': '2'},
-    'CAD': {'major': 'đô la Canada', 'majorPlural': 'đô la Canada', 'minor': 'xu', 'minorPlural': 'xu', 'decimals': '2'},
-    'CHF': {'major': 'franc Thụy Sĩ', 'majorPlural': 'franc Thụy Sĩ', 'minor': 'xu', 'minorPlural': 'xu', 'decimals': '2'},
+    'USD': {
+      'major': 'đô la Mỹ',
+      'majorPlural': 'đô la Mỹ',
+      'minor': 'xu',
+      'minorPlural': 'xu',
+      'decimals': '2'
+    },
+    'EUR': {
+      'major': 'euro',
+      'majorPlural': 'euro',
+      'minor': 'xu',
+      'minorPlural': 'xu',
+      'decimals': '2'
+    },
+    'GBP': {
+      'major': 'bảng Anh',
+      'majorPlural': 'bảng Anh',
+      'minor': 'xu',
+      'minorPlural': 'xu',
+      'decimals': '2'
+    },
+    'JPY': {
+      'major': 'yên Nhật',
+      'majorPlural': 'yên Nhật',
+      'minor': '',
+      'minorPlural': '',
+      'decimals': '0'
+    },
+    'VND': {
+      'major': 'đồng',
+      'majorPlural': 'đồng',
+      'minor': 'xu',
+      'minorPlural': 'xu',
+      'decimals': '2'
+    },
+    'CNY': {
+      'major': 'nhân dân tệ',
+      'majorPlural': 'nhân dân tệ',
+      'minor': 'xu',
+      'minorPlural': 'xu',
+      'decimals': '2'
+    },
+    'KRW': {
+      'major': 'won Hàn Quốc',
+      'majorPlural': 'won Hàn Quốc',
+      'minor': '',
+      'minorPlural': '',
+      'decimals': '0'
+    },
+    'THB': {
+      'major': 'baht Thái',
+      'majorPlural': 'baht Thái',
+      'minor': 'xu',
+      'minorPlural': 'xu',
+      'decimals': '2'
+    },
+    'SGD': {
+      'major': 'đô la Singapore',
+      'majorPlural': 'đô la Singapore',
+      'minor': 'xu',
+      'minorPlural': 'xu',
+      'decimals': '2'
+    },
+    'AUD': {
+      'major': 'đô la Úc',
+      'majorPlural': 'đô la Úc',
+      'minor': 'xu',
+      'minorPlural': 'xu',
+      'decimals': '2'
+    },
+    'CAD': {
+      'major': 'đô la Canada',
+      'majorPlural': 'đô la Canada',
+      'minor': 'xu',
+      'minorPlural': 'xu',
+      'decimals': '2'
+    },
+    'CHF': {
+      'major': 'franc Thụy Sĩ',
+      'majorPlural': 'franc Thụy Sĩ',
+      'minor': 'xu',
+      'minorPlural': 'xu',
+      'decimals': '2'
+    },
   };
 
   @override
@@ -198,16 +270,17 @@ class VietnameseNumberToWords extends NumberToWordsLanguage {
     }
 
     final decimals = int.parse(currency['decimals']!);
-    
+
     // Split into major and minor units
     final majorAmount = amount.floor();
-    final minorAmount = decimals > 0 
+    final minorAmount = decimals > 0
         ? ((amount - majorAmount) * (decimals == 2 ? 100 : 10)).round()
         : 0;
 
     // Convert major amount
     String majorWords = convertIntegerPart(majorAmount);
-    String majorUnit = currency['major']!; // Vietnamese doesn't change for plural
+    String majorUnit =
+        currency['major']!; // Vietnamese doesn't change for plural
     String result = '$majorWords $majorUnit';
 
     // Add minor amount if applicable

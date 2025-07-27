@@ -111,7 +111,7 @@ class ChineseNumberToWords extends NumberToWordsLanguage {
     // Handle 万 (ten thousands)
     if (number >= 10000) {
       int tenThousands = number ~/ 10000;
-      result += convertLessThanOneThousand(tenThousands) + '万';
+      result += '${convertLessThanOneThousand(tenThousands)}万';
       number %= 10000;
       if (number > 0 && number < 1000) {
         result += _zero; // Add zero for numbers like 10005

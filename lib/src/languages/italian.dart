@@ -362,7 +362,7 @@ class ItalianNumberToWords extends NumberToWordsLanguage {
       default:
         // For larger numbers, use cardinal + º
         String baseWords = convertIntegerPart(number);
-        return '${baseWords}º';
+        return '$baseWordsº';
     }
   }
 }

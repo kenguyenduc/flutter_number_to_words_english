@@ -120,7 +120,7 @@ class PortugueseNumberToWords extends NumberToWordsLanguage {
             } else {
               String scale = _scaleNames[scaleIndex];
               if (scale.endsWith('ão')) {
-                scale = scale.substring(0, scale.length - 2) + 'ões';
+                scale = '${scale.substring(0, scale.length - 2)}ões';
               }
               part += ' $scale';
             }
@@ -338,7 +338,7 @@ class PortugueseNumberToWords extends NumberToWordsLanguage {
       default:
         // For larger numbers, use cardinal + º
         String baseWords = convertIntegerPart(number);
-        return '${baseWords}º';
+        return '$baseWordsº';
     }
   }
 }

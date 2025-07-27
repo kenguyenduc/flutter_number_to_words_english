@@ -21,10 +21,10 @@ class NumberToWords {
   // Private constructor to prevent instantiation
   NumberToWords._();
 
-    /// Map of supported language implementations
+  /// Map of supported language implementations
   static final Map<String, NumberToWordsLanguage> _languages = {
     'en': EnglishNumberToWords(),
-    'vi': VietnameseNumberToWords(), 
+    'vi': VietnameseNumberToWords(),
     'es': SpanishNumberToWords(),
     'fr': FrenchNumberToWords(),
     'de': GermanNumberToWords(),
@@ -117,13 +117,13 @@ class NumberToWords {
   }
 
   /// Convert an integer to ordinal words in specified language
-  /// 
+  ///
   /// Converts numbers to their ordinal form (1st, 2nd, 3rd, etc.) in words.
-  /// 
+  ///
   /// **Parameters:**
   /// - [languageCode] - Language code ('en', 'vi', 'es', 'fr', 'de', 'it', 'pt', 'ru', 'zh', 'ja', 'nl', 'ar')
   /// - [number] - Positive integer to convert to ordinal
-  /// 
+  ///
   /// **Examples:**
   /// ```dart
   /// NumberToWords.convertOrdinal('en', 1);   // "first"
@@ -134,7 +134,7 @@ class NumberToWords {
   /// NumberToWords.convertOrdinal('zh', 1);   // "第一"
   /// NumberToWords.convertOrdinal('ja', 1);   // "第いち番目"
   /// ```
-  /// 
+  ///
   /// **Throws:**
   /// - [ArgumentError] if the language is not supported
   /// - [ArgumentError] if the number is not a positive integer
@@ -148,21 +148,21 @@ class NumberToWords {
   }
 
   /// Convert a monetary amount to currency words in specified language
-  /// 
+  ///
   /// Converts monetary amounts to their word representation including
   /// currency names and subunit handling (cents, pence, xu, etc.).
-  /// 
+  ///
   /// **Parameters:**
   /// - [languageCode] - Language code ('en', 'vi', 'es', 'fr', 'de', 'it', 'pt', 'ru', 'zh', 'ja', 'nl', 'ar')
   /// - [amount] - Monetary amount (can include decimals)
   /// - [currencyCode] - ISO 4217 currency code (e.g., 'USD', 'EUR', 'VND')
-  /// 
+  ///
   /// **Supported Currencies:**
   /// - USD (US Dollar), EUR (Euro), GBP (British Pound)
-  /// - JPY (Japanese Yen), VND (Vietnamese Dong), CNY (Chinese Yuan)  
+  /// - JPY (Japanese Yen), VND (Vietnamese Dong), CNY (Chinese Yuan)
   /// - KRW (Korean Won), THB (Thai Baht), SGD (Singapore Dollar)
   /// - AUD (Australian Dollar), CAD (Canadian Dollar), CHF (Swiss Franc)
-  /// 
+  ///
   /// **Examples:**
   /// ```dart
   /// NumberToWords.convertCurrency('en', 123.45, 'USD');  // "one hundred twenty-three dollars and forty-five cents"
@@ -171,12 +171,13 @@ class NumberToWords {
   /// NumberToWords.convertCurrency('fr', 123.45, 'EUR');  // "cent vingt-trois euros et quarante-cinq centimes"
   /// NumberToWords.convertCurrency('zh', 123.45, 'CNY');  // "一百二十三人民币四十五角"
   /// ```
-  /// 
+  ///
   /// **Throws:**
   /// - [ArgumentError] if the language is not supported
   /// - [ArgumentError] if the currency code is not supported
   /// - [ArgumentError] if the amount is negative
-  static String convertCurrency(String languageCode, double amount, String currencyCode) {
+  static String convertCurrency(
+      String languageCode, double amount, String currencyCode) {
     final language = _languages[languageCode.toLowerCase()];
     if (language == null) {
       throw ArgumentError('Language "$languageCode" is not supported. '
