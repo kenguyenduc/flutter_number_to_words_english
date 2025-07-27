@@ -1,0 +1,192 @@
+import 'language_base.dart';
+import 'languages/english.dart';
+import 'languages/vietnamese.dart';
+import 'languages/spanish.dart';
+import 'languages/french.dart';
+import 'languages/german.dart';
+import 'languages/italian.dart';
+import 'languages/portuguese.dart';
+import 'languages/russian.dart';
+import 'languages/chinese.dart';
+import 'languages/japanese.dart';
+import 'languages/dutch.dart';
+import 'languages/arabic.dart';
+
+/// Main NumberToWords class with multi-language support
+///
+/// This class provides a unified interface for converting numbers to words
+/// in multiple languages. It manages language instances and provides
+/// utility methods for language discovery.
+class NumberToWords {
+  // Private constructor to prevent instantiation
+  NumberToWords._();
+
+    /// Map of supported language implementations
+  static final Map<String, NumberToWordsLanguage> _languages = {
+    'en': EnglishNumberToWords(),
+    'vi': VietnameseNumberToWords(), 
+    'es': SpanishNumberToWords(),
+    'fr': FrenchNumberToWords(),
+    'de': GermanNumberToWords(),
+    'it': ItalianNumberToWords(),
+    'pt': PortugueseNumberToWords(),
+    'ru': RussianNumberToWords(),
+    'zh': ChineseNumberToWords(),
+    'ja': JapaneseNumberToWords(),
+    'nl': DutchNumberToWords(),
+    'ar': ArabicNumberToWords(),
+  };
+
+  /// Convert number to words in specified language
+  ///
+  /// [languageCode] - Language code ('en', 'vi', 'es')
+  /// [number] - Number to convert (int or double)
+  ///
+  /// Example:
+  /// ```dart
+  /// NumberToWords.convert('en', 123); // "one hundred twenty-three"
+  /// NumberToWords.convert('vi', 123); // "một trăm hai mười ba"
+  /// NumberToWords.convert('es', 123); // "ciento veintitrés"
+  /// ```
+  ///
+  /// Throws [ArgumentError] if the language is not supported.
+  static String convert(String languageCode, num number) {
+    final language = _getLanguage(languageCode);
+    return language.convert(number);
+  }
+
+  /// Convert decimal number string to words in specified language
+  ///
+  /// [languageCode] - Language code ('en', 'vi', 'es')
+  /// [numberStr] - Number as string (e.g., "123.45", "-67.89")
+  ///
+  /// Example:
+  /// ```dart
+  /// NumberToWords.convertDecimal('en', '123.45');
+  /// // "one hundred twenty-three point four five"
+  /// ```
+  ///
+  /// Throws [ArgumentError] if the language is not supported or
+  /// if the number string is invalid.
+  static String convertDecimal(String languageCode, String numberStr) {
+    final language = _getLanguage(languageCode);
+    return language.convertDecimal(numberStr);
+  }
+
+  /// Get list of supported language codes
+  ///
+  /// Returns a list of language codes that this package supports.
+  ///
+  /// Example:
+  /// ```dart
+  /// List<String> codes = NumberToWords.supportedLanguages;
+  /// // ['en', 'vi', 'es']
+  /// ```
+  static List<String> get supportedLanguages => _languages.keys.toList();
+
+  /// Get map of supported language codes to their human-readable names
+  ///
+  /// Returns a map where keys are language codes and values are
+  /// the human-readable language names.
+  ///
+  /// Example:
+  /// ```dart
+  /// Map<String, String> languages = NumberToWords.supportedLanguagesWithNames;
+  /// // {'en': 'English', 'vi': 'Vietnamese', 'es': 'Spanish'}
+  /// ```
+  static Map<String, String> get supportedLanguagesWithNames {
+    return Map.fromEntries(
+        _languages.entries.map((e) => MapEntry(e.key, e.value.languageName)));
+  }
+
+  /// Check if a language is supported
+  ///
+  /// [languageCode] - Language code to check
+  ///
+  /// Returns `true` if the language is supported, `false` otherwise.
+  /// The check is case-insensitive.
+  ///
+  /// Example:
+  /// ```dart
+  /// bool isSupported = NumberToWords.isLanguageSupported('en'); // true
+  /// bool isSupported = NumberToWords.isLanguageSupported('fr'); // false
+  /// bool isSupported = NumberToWords.isLanguageSupported('EN'); // true (case-insensitive)
+  /// ```
+  static bool isLanguageSupported(String languageCode) {
+    return _languages.containsKey(languageCode.toLowerCase());
+  }
+
+  /// Get the language implementation for a given language code
+  ///
+  /// [languageCode] - Language code to get implementation for
+  ///
+  /// Returns the [NumberToWordsLanguage] implementation for the language.
+  ///
+  /// Throws [ArgumentError] if the language is not supported.
+  static NumberToWordsLanguage getLanguage(String languageCode) {
+    return _getLanguage(languageCode);
+  }
+
+  /// Register a new language implementation
+  ///
+  /// [language] - Language implementation to register
+  ///
+  /// This allows adding custom language implementations at runtime.
+  ///
+  /// Example:
+  /// ```dart
+  /// NumberToWords.registerLanguage(MyCustomLanguage());
+  /// ```
+  static void registerLanguage(NumberToWordsLanguage language) {
+    _languages[language.languageCode] = language;
+  }
+
+  /// Remove a language implementation
+  ///
+  /// [languageCode] - Language code to remove
+  ///
+  /// Returns `true` if the language was removed, `false` if it wasn't found.
+  ///
+  /// Note: Built-in languages can be removed, but this is not recommended
+  /// as it may break existing code.
+  static bool unregisterLanguage(String languageCode) {
+    return _languages.remove(languageCode.toLowerCase()) != null;
+  }
+
+  /// Get detailed information about all supported languages
+  ///
+  /// Returns a list of maps containing detailed information about each
+  /// supported language.
+  ///
+  /// Example:
+  /// ```dart
+  /// List<Map<String, String>> info = NumberToWords.getLanguageInfo();
+  /// // [
+  /// //   {'code': 'en', 'name': 'English', 'minusWord': 'minus', 'pointWord': 'point'},
+  /// //   {'code': 'vi', 'name': 'Vietnamese', 'minusWord': 'âm', 'pointWord': 'phẩy'},
+  /// //   ...
+  /// // ]
+  /// ```
+  static List<Map<String, String>> getLanguageInfo() {
+    return _languages.values
+        .map((lang) => {
+              'code': lang.languageCode,
+              'name': lang.languageName,
+              'minusWord': lang.minusWord,
+              'pointWord': lang.pointWord,
+            })
+        .toList();
+  }
+
+  /// Private helper method to get language implementation
+  ///
+  /// Handles case-insensitive lookup and error throwing.
+  static NumberToWordsLanguage _getLanguage(String languageCode) {
+    final language = _languages[languageCode.toLowerCase()];
+    if (language == null) {
+      throw ArgumentError('Language "$languageCode" is not supported. '
+          'Supported languages: ${_languages.keys.join(', ')}');
+    }
+    return language;
+  }
+}
