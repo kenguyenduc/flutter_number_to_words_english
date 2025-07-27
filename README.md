@@ -449,14 +449,11 @@ If you find this package helpful, consider supporting the development:
 
 [![Buy Me A Coffee](https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png)](https://coff.ee/kenguyen)
 
-<details>
-<summary>📱 QR Code</summary>
+**📱 QR Code:**
 
 <img src="buymecoffee_qr.png" alt="Buy Me A Coffee QR Code" width="200">
 
 Or visit: [coff.ee/kenguyen](https://coff.ee/kenguyen)
-
-</details>
 
 ## License
 
