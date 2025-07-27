@@ -179,6 +179,57 @@ class RussianNumberToWords extends NumberToWordsLanguage {
     }
   }
 
+  // Currency data for Russian
+  static const Map<String, Map<String, String>> _currencyData = {
+    'USD': {'major': 'доллар', 'majorPlural': 'долларов', 'minor': 'цент', 'minorPlural': 'центов', 'decimals': '2'},
+    'EUR': {'major': 'евро', 'majorPlural': 'евро', 'minor': 'цент', 'minorPlural': 'центов', 'decimals': '2'},
+    'GBP': {'major': 'фунт', 'majorPlural': 'фунтов', 'minor': 'пенс', 'minorPlural': 'пенсов', 'decimals': '2'},
+    'JPY': {'major': 'иена', 'majorPlural': 'иен', 'minor': '', 'minorPlural': '', 'decimals': '0'},
+    'VND': {'major': 'донг', 'majorPlural': 'донгов', 'minor': 'ксу', 'minorPlural': 'ксу', 'decimals': '2'},
+    'CNY': {'major': 'юань', 'majorPlural': 'юаней', 'minor': 'цзяо', 'minorPlural': 'цзяо', 'decimals': '2'},
+    'KRW': {'major': 'вона', 'majorPlural': 'вон', 'minor': '', 'minorPlural': '', 'decimals': '0'},
+    'THB': {'major': 'бат', 'majorPlural': 'батов', 'minor': 'сатанг', 'minorPlural': 'сатангов', 'decimals': '2'},
+    'SGD': {'major': 'сингапурский доллар', 'majorPlural': 'сингапурских долларов', 'minor': 'цент', 'minorPlural': 'центов', 'decimals': '2'},
+    'AUD': {'major': 'австралийский доллар', 'majorPlural': 'австралийских долларов', 'minor': 'цент', 'minorPlural': 'центов', 'decimals': '2'},
+    'CAD': {'major': 'канадский доллар', 'majorPlural': 'канадских долларов', 'minor': 'цент', 'minorPlural': 'центов', 'decimals': '2'},
+    'CHF': {'major': 'швейцарский франк', 'majorPlural': 'швейцарских франков', 'minor': 'сантим', 'minorPlural': 'сантимов', 'decimals': '2'},
+  };
+
+  @override
+  String convertCurrency(double amount, String currencyCode) {
+    if (amount < 0) {
+      throw ArgumentError('Currency amounts cannot be negative');
+    }
+
+    final currency = _currencyData[currencyCode.toUpperCase()];
+    if (currency == null) {
+      throw ArgumentError('Currency code "$currencyCode" is not supported. '
+          'Supported currencies: ${_currencyData.keys.join(', ')}');
+    }
+
+    final decimals = int.parse(currency['decimals']!);
+    
+    // Split into major and minor units
+    final majorAmount = amount.floor();
+    final minorAmount = decimals > 0 
+        ? ((amount - majorAmount) * (decimals == 2 ? 100 : 10)).round()
+        : 0;
+
+    // Convert major amount
+    String majorWords = convertIntegerPart(majorAmount);
+    String majorUnit = majorAmount == 1 ? currency['major']! : currency['majorPlural']!;
+    String result = '$majorWords $majorUnit';
+
+    // Add minor amount if applicable
+    if (decimals > 0 && minorAmount > 0) {
+      String minorWords = convertIntegerPart(minorAmount);
+      String minorUnit = minorAmount == 1 ? currency['minor']! : currency['minorPlural']!;
+      result += ' и $minorWords $minorUnit'; // "и" = "and" in Russian
+    }
+
+    return result;
+  }
+
   @override
   String convertOrdinal(int number) {
     if (number <= 0) {

@@ -1061,6 +1061,215 @@ void main() {
     });
   });
 
+  group('Currency Conversion Tests', () {
+    test('NumberToWords.convertCurrency basic functionality', () {
+      // English currency conversion
+      expect(NumberToWords.convertCurrency('en', 123.45, 'USD'),
+          'one hundred twenty-three dollars and forty-five cents');
+      expect(NumberToWords.convertCurrency('en', 1, 'USD'), 'one dollar');
+      expect(NumberToWords.convertCurrency('en', 2, 'USD'), 'two dollars');
+      expect(NumberToWords.convertCurrency('en', 123, 'JPY'),
+          'one hundred twenty-three yen');
+      expect(NumberToWords.convertCurrency('en', 123.45, 'EUR'),
+          'one hundred twenty-three euros and forty-five cents');
+      expect(NumberToWords.convertCurrency('en', 123.45, 'GBP'),
+          'one hundred twenty-three pounds and forty-five pence');
+    });
+
+    test('Vietnamese currency conversion', () {
+      expect(
+          NumberToWords.convertCurrency('vi', 123.45, 'VND'), contains('đồng'));
+      expect(NumberToWords.convertCurrency('vi', 123.45, 'USD'),
+          contains('đô la Mỹ'));
+      expect(NumberToWords.convertCurrency('vi', 100, 'VND'), 'một trăm đồng');
+    });
+
+    test('Currency conversion without decimals (JPY, KRW)', () {
+      expect(NumberToWords.convertCurrency('en', 123, 'JPY'),
+          'one hundred twenty-three yen');
+      expect(NumberToWords.convertCurrency('en', 123.45, 'JPY'),
+          'one hundred twenty-three yen'); // Should ignore decimals
+      expect(NumberToWords.convertCurrency('en', 123, 'KRW'),
+          'one hundred twenty-three won');
+    });
+
+    test('All languages currency basic conversion', () {
+      List<String> allLanguages = [
+        'en',
+        'vi',
+        'es',
+        'fr',
+        'de',
+        'it',
+        'pt',
+        'ru',
+        'zh',
+        'ja',
+        'nl',
+        'ar'
+      ];
+
+      for (String lang in allLanguages) {
+        String result = NumberToWords.convertCurrency(lang, 100, 'USD');
+        expect(result, isNotEmpty, reason: 'Currency failed for $lang');
+        expect(result, isNot(contains('null')),
+            reason: 'Currency contains null for $lang');
+      }
+    });
+
+    test('Currency error handling', () {
+      expect(() => NumberToWords.convertCurrency('en', -1, 'USD'),
+          throwsA(isA<ArgumentError>()));
+      expect(() => NumberToWords.convertCurrency('en', 100, 'INVALID'),
+          throwsA(isA<ArgumentError>()));
+      expect(() => NumberToWords.convertCurrency('invalid', 100, 'USD'),
+          throwsA(isA<ArgumentError>()));
+    });
+
+    test('Currency decimal precision', () {
+      expect(NumberToWords.convertCurrency('en', 0.01, 'USD'),
+          'zero dollars and one cent');
+      expect(NumberToWords.convertCurrency('en', 0.99, 'USD'),
+          'zero dollars and ninety-nine cents');
+      expect(NumberToWords.convertCurrency('en', 1.01, 'USD'),
+          'one dollar and one cent');
+    });
+
+    test('Supported currencies', () {
+      List<String> supportedCurrencies = [
+        'USD',
+        'EUR',
+        'GBP',
+        'JPY',
+        'VND',
+        'CNY',
+        'KRW',
+        'THB',
+        'SGD',
+        'AUD',
+        'CAD',
+        'CHF'
+      ];
+
+      for (String currency in supportedCurrencies) {
+        expect(() => NumberToWords.convertCurrency('en', 100, currency),
+            returnsNormally,
+            reason: 'Currency $currency should be supported');
+      }
+    });
+  });
+
+  group('Currency Extension Methods Tests', () {
+    test('Basic currency extension methods', () {
+      expect(123.45.toUSD(), contains('dollars'));
+      expect(123.45.toEUR(), contains('euros'));
+      expect(123.45.toGBP(), contains('pounds'));
+      expect(123.toJPY(), contains('yen'));
+      expect(123.45.toVND(), contains('đồng'));
+      expect(123.45.toCNY(), contains('人民币'));
+    });
+
+    test('Currency extension with specific amounts', () {
+      expect(1.toUSD(), 'one dollar');
+      expect(2.toUSD(), 'two dollars');
+      expect(0.01.toUSD(), 'zero dollars and one cent');
+      expect(1.01.toUSD(), 'one dollar and one cent');
+      expect(100.toJPY(), 'one hundred yen');
+    });
+
+    test('toCurrency and toCurrencyInLanguage methods', () {
+      expect(123.45.toCurrency('USD'), contains('dollars'));
+      expect(123.45.toCurrencyInLanguage('vi', 'VND'), contains('đồng'));
+      expect(123.45.toCurrencyInLanguage('fr', 'EUR'), contains('euros'));
+      expect(123.45.toCurrencyInLanguage('zh', 'CNY'), contains('人民币'));
+    });
+
+    test('Currency extension error handling', () {
+      expect(() => (-1).toCurrency('USD'), throwsA(isA<ArgumentError>()));
+      expect(() => 100.toCurrency('INVALID'), throwsA(isA<ArgumentError>()));
+      expect(() => 100.toCurrencyInLanguage('invalid', 'USD'),
+          throwsA(isA<ArgumentError>()));
+    });
+  });
+
+  group('Currency Multi-Language Comprehensive', () {
+    test('USD in all languages', () {
+      Map<String, RegExp> expectedContains = {
+        'en': RegExp(r'dollar'),
+        'vi': RegExp(r'đô la Mỹ'),
+        'es': RegExp(r'dólar'),
+        'fr': RegExp(r'dollar'),
+        'de': RegExp(r'Dollar'),
+        'it': RegExp(r'dollar'), // Can be "dollaro" or "dollari"
+        'pt': RegExp(r'dólar'),
+        'ru': RegExp(r'доллар'),
+        'zh': RegExp(r'美元'),
+        'ja': RegExp(r'アメリカドル'),
+        'nl': RegExp(r'dollar'),
+        'ar': RegExp(r'دولار'),
+      };
+
+      expectedContains.forEach((lang, expectedPattern) {
+        String result = NumberToWords.convertCurrency(lang, 100, 'USD');
+        expect(result, contains(expectedPattern),
+            reason: 'USD conversion failed for $lang: $result');
+      });
+    });
+
+    test('EUR in major European languages', () {
+      List<String> europeanLangs = ['en', 'fr', 'de', 'it', 'es', 'pt', 'nl'];
+
+      for (String lang in europeanLangs) {
+        String result = NumberToWords.convertCurrency(lang, 100, 'EUR');
+        expect(result, contains(RegExp(r'euro|Euro')),
+            reason: 'EUR conversion failed for $lang');
+      }
+    });
+
+    test('Asian currencies in Asian languages', () {
+      expect(NumberToWords.convertCurrency('zh', 100, 'CNY'), contains('人民币'));
+      expect(NumberToWords.convertCurrency('ja', 100, 'JPY'), contains('円'));
+      expect(NumberToWords.convertCurrency('vi', 100, 'VND'), contains('đồng'));
+    });
+
+    test('Currency with decimal handling across languages', () {
+      List<String> allLanguages = [
+        'en',
+        'vi',
+        'es',
+        'fr',
+        'de',
+        'it',
+        'pt',
+        'ru',
+        'zh',
+        'ja',
+        'nl',
+        'ar'
+      ];
+
+      for (String lang in allLanguages) {
+        String resultWithDecimal =
+            NumberToWords.convertCurrency(lang, 123.45, 'USD');
+        String resultWithoutDecimal =
+            NumberToWords.convertCurrency(lang, 123, 'USD');
+
+        expect(resultWithDecimal, isNotEmpty,
+            reason: 'Decimal currency failed for $lang');
+        expect(resultWithoutDecimal, isNotEmpty,
+            reason: 'Non-decimal currency failed for $lang');
+
+        // For currencies with decimals, result with decimal should be longer
+        if (lang != 'zh' && lang != 'ja') {
+          // Chinese and Japanese don't use spaces
+          expect(resultWithDecimal.length,
+              greaterThan(resultWithoutDecimal.length),
+              reason: 'Decimal handling failed for $lang');
+        }
+      }
+    });
+  });
+
   group('Case Insensitivity', () {
     test('Language codes are case insensitive', () {
       expect(NumberToWords.convert('EN', 123), 'one hundred twenty-three');

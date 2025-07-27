@@ -348,6 +348,117 @@ extension NumberToWordsExtension on num {
   String toOrdinalArabic() {
     return toOrdinalInLanguage('ar');
   }
+
+  /// Convert this number to currency format with specified currency code
+  ///
+  /// Converts the number to a currency representation in English by default.
+  ///
+  /// Example:
+  /// ```dart
+  /// print(123.45.toCurrency('USD')); // "one hundred twenty-three dollars and forty-five cents"
+  /// print(123.toCurrency('JPY'));    // "one hundred twenty-three yen"
+  /// print(50.25.toCurrency('EUR'));  // "fifty euros and twenty-five cents"
+  /// ```
+  ///
+  /// **Supported Currencies:**
+  /// - USD, EUR, GBP, JPY, VND, CNY, KRW, THB, SGD, AUD, CAD, CHF
+  ///
+  /// **Parameters:**
+  /// - [currencyCode] - ISO 4217 currency code (e.g., 'USD', 'EUR', 'VND')
+  ///
+  /// **Throws:**
+  /// - [ArgumentError] if currency code is not supported
+  /// - [ArgumentError] if amount is negative
+  String toCurrency(String currencyCode) {
+    return NumberToWords.convertCurrency('en', this.toDouble(), currencyCode);
+  }
+
+  /// Convert this number to currency format in a specific language
+  ///
+  /// Example:
+  /// ```dart
+  /// print(123.45.toCurrencyInLanguage('vi', 'VND')); // "một trăm hai mười ba đồng bốn mười lăm xu"
+  /// print(123.45.toCurrencyInLanguage('fr', 'EUR')); // "cent vingt-trois euros et quarante-cinq centimes"
+  /// print(123.45.toCurrencyInLanguage('zh', 'CNY')); // "一百二十三人民币四十五角"
+  /// ```
+  ///
+  /// **Parameters:**
+  /// - [languageCode] - Language code for conversion
+  /// - [currencyCode] - ISO 4217 currency code
+  ///
+  /// **Throws:**
+  /// - [ArgumentError] if language or currency code is not supported
+  /// - [ArgumentError] if amount is negative
+  String toCurrencyInLanguage(String languageCode, String currencyCode) {
+    return NumberToWords.convertCurrency(
+        languageCode, this.toDouble(), currencyCode);
+  }
+
+  /// Convert this number to US Dollars in English
+  ///
+  /// Example:
+  /// ```dart
+  /// print(123.45.toUSD()); // "one hundred twenty-three dollars and forty-five cents"
+  /// print(100.toUSD());    // "one hundred dollars"
+  /// ```
+  String toUSD() {
+    return toCurrency('USD');
+  }
+
+  /// Convert this number to Euros in English
+  ///
+  /// Example:
+  /// ```dart
+  /// print(123.45.toEUR()); // "one hundred twenty-three euros and forty-five cents"
+  /// print(50.toEUR());     // "fifty euros"
+  /// ```
+  String toEUR() {
+    return toCurrency('EUR');
+  }
+
+  /// Convert this number to British Pounds in English
+  ///
+  /// Example:
+  /// ```dart
+  /// print(123.45.toGBP()); // "one hundred twenty-three pounds and forty-five pence"
+  /// print(100.toGBP());    // "one hundred pounds"
+  /// ```
+  String toGBP() {
+    return toCurrency('GBP');
+  }
+
+  /// Convert this number to Japanese Yen in English
+  ///
+  /// Example:
+  /// ```dart
+  /// print(123.toJPY()); // "one hundred twenty-three yen"
+  /// print(1000.toJPY()); // "one thousand yen"
+  /// ```
+  String toJPY() {
+    return toCurrency('JPY');
+  }
+
+  /// Convert this number to Vietnamese Dong in Vietnamese
+  ///
+  /// Example:
+  /// ```dart
+  /// print(123.45.toVND()); // "một trăm hai mười ba đồng bốn mười lăm xu"
+  /// print(1000.toVND());   // "một nghìn đồng"
+  /// ```
+  String toVND() {
+    return toCurrencyInLanguage('vi', 'VND');
+  }
+
+  /// Convert this number to Chinese Yuan in Chinese
+  ///
+  /// Example:
+  /// ```dart
+  /// print(123.45.toCNY()); // "一百二十三人民币四十五角"
+  /// print(100.toCNY());    // "一百人民币"
+  /// ```
+  String toCNY() {
+    return toCurrencyInLanguage('zh', 'CNY');
+  }
 }
 
 /// Extension on [int] to provide integer-specific conversion methods
@@ -413,9 +524,9 @@ extension IntegerToWordsExtension on int {
   }
 
   /// Convert this integer to ordinal words in the specified language
-  /// 
+  ///
   /// Specialized method for integers to convert to ordinal form.
-  /// 
+  ///
   /// Example:
   /// ```dart
   /// print(1.toOrdinalWords()); // "first"
@@ -423,7 +534,7 @@ extension IntegerToWordsExtension on int {
   /// print(101.toOrdinalWords()); // "one hundred first"
   /// print(1.toOrdinalWords('vi')); // "thứ nhất"
   /// ```
-  /// 
+  ///
   /// **Throws:**
   /// - [ArgumentError] if the number is not positive
   String toOrdinalWords([String languageCode = 'en']) {
@@ -434,9 +545,9 @@ extension IntegerToWordsExtension on int {
   }
 
   /// Check if this integer can be converted to ordinal words
-  /// 
+  ///
   /// Returns true if the number is a positive integer.
-  /// 
+  ///
   /// Example:
   /// ```dart
   /// print(1.canConvertToOrdinal()); // true
@@ -448,13 +559,13 @@ extension IntegerToWordsExtension on int {
   }
 
   /// Get ordinal suffix for this number (English only)
-  /// 
+  ///
   /// Returns just the ordinal suffix (st, nd, rd, th).
-  /// 
+  ///
   /// Example:
   /// ```dart
   /// print(1.getOrdinalSuffix()); // "st"
-  /// print(2.getOrdinalSuffix()); // "nd" 
+  /// print(2.getOrdinalSuffix()); // "nd"
   /// print(3.getOrdinalSuffix()); // "rd"
   /// print(11.getOrdinalSuffix()); // "th"
   /// print(21.getOrdinalSuffix()); // "st"

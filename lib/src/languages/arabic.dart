@@ -172,6 +172,129 @@ class ArabicNumberToWords extends NumberToWordsLanguage {
     }
   }
 
+  // Currency data for Arabic
+  static const Map<String, Map<String, String>> _currencyData = {
+    'USD': {
+      'major': 'دولار',
+      'majorPlural': 'دولار',
+      'minor': 'سنت',
+      'minorPlural': 'سنت',
+      'decimals': '2'
+    },
+    'EUR': {
+      'major': 'يورو',
+      'majorPlural': 'يورو',
+      'minor': 'سنت',
+      'minorPlural': 'سنت',
+      'decimals': '2'
+    },
+    'GBP': {
+      'major': 'جنيه',
+      'majorPlural': 'جنيه',
+      'minor': 'بنس',
+      'minorPlural': 'بنس',
+      'decimals': '2'
+    },
+    'JPY': {
+      'major': 'ين',
+      'majorPlural': 'ين',
+      'minor': '',
+      'minorPlural': '',
+      'decimals': '0'
+    },
+    'VND': {
+      'major': 'دونغ',
+      'majorPlural': 'دونغ',
+      'minor': 'شو',
+      'minorPlural': 'شو',
+      'decimals': '2'
+    },
+    'CNY': {
+      'major': 'يوان',
+      'majorPlural': 'يوان',
+      'minor': 'جياو',
+      'minorPlural': 'جياو',
+      'decimals': '2'
+    },
+    'KRW': {
+      'major': 'وون',
+      'majorPlural': 'وون',
+      'minor': '',
+      'minorPlural': '',
+      'decimals': '0'
+    },
+    'THB': {
+      'major': 'بات',
+      'majorPlural': 'بات',
+      'minor': 'ساتانغ',
+      'minorPlural': 'ساتانغ',
+      'decimals': '2'
+    },
+    'SGD': {
+      'major': 'دولار سنغافوري',
+      'majorPlural': 'دولار سنغافوري',
+      'minor': 'سنت',
+      'minorPlural': 'سنت',
+      'decimals': '2'
+    },
+    'AUD': {
+      'major': 'دولار أسترالي',
+      'majorPlural': 'دولار أسترالي',
+      'minor': 'سنت',
+      'minorPlural': 'سنت',
+      'decimals': '2'
+    },
+    'CAD': {
+      'major': 'دولار كندي',
+      'majorPlural': 'دولار كندي',
+      'minor': 'سنت',
+      'minorPlural': 'سنت',
+      'decimals': '2'
+    },
+    'CHF': {
+      'major': 'فرنك سويسري',
+      'majorPlural': 'فرنك سويسري',
+      'minor': 'سنتيم',
+      'minorPlural': 'سنتيم',
+      'decimals': '2'
+    },
+  };
+
+  @override
+  String convertCurrency(double amount, String currencyCode) {
+    if (amount < 0) {
+      throw ArgumentError('Currency amounts cannot be negative');
+    }
+
+    final currency = _currencyData[currencyCode.toUpperCase()];
+    if (currency == null) {
+      throw ArgumentError('Currency code "$currencyCode" is not supported. '
+          'Supported currencies: ${_currencyData.keys.join(', ')}');
+    }
+
+    final decimals = int.parse(currency['decimals']!);
+
+    // Split into major and minor units
+    final majorAmount = amount.floor();
+    final minorAmount = decimals > 0
+        ? ((amount - majorAmount) * (decimals == 2 ? 100 : 10)).round()
+        : 0;
+
+    // Convert major amount
+    String majorWords = convertIntegerPart(majorAmount);
+    String majorUnit = currency['major']!; // Arabic doesn't change for plural
+    String result = '$majorWords $majorUnit';
+
+    // Add minor amount if applicable
+    if (decimals > 0 && minorAmount > 0) {
+      String minorWords = convertIntegerPart(minorAmount);
+      String minorUnit = currency['minor']!;
+      result += ' و $minorWords $minorUnit'; // "و" = "and" in Arabic
+    }
+
+    return result;
+  }
+
   @override
   String convertOrdinal(int number) {
     if (number <= 0) {

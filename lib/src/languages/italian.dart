@@ -207,6 +207,131 @@ class ItalianNumberToWords extends NumberToWordsLanguage {
     }
   }
 
+  // Currency data for Italian
+  static const Map<String, Map<String, String>> _currencyData = {
+    'USD': {
+      'major': 'dollaro',
+      'majorPlural': 'dollari',
+      'minor': 'centesimo',
+      'minorPlural': 'centesimi',
+      'decimals': '2'
+    },
+    'EUR': {
+      'major': 'euro',
+      'majorPlural': 'euro',
+      'minor': 'centesimo',
+      'minorPlural': 'centesimi',
+      'decimals': '2'
+    },
+    'GBP': {
+      'major': 'sterlina',
+      'majorPlural': 'sterline',
+      'minor': 'penny',
+      'minorPlural': 'pence',
+      'decimals': '2'
+    },
+    'JPY': {
+      'major': 'yen',
+      'majorPlural': 'yen',
+      'minor': '',
+      'minorPlural': '',
+      'decimals': '0'
+    },
+    'VND': {
+      'major': 'dong',
+      'majorPlural': 'dong',
+      'minor': 'xu',
+      'minorPlural': 'xu',
+      'decimals': '2'
+    },
+    'CNY': {
+      'major': 'yuan',
+      'majorPlural': 'yuan',
+      'minor': 'jiao',
+      'minorPlural': 'jiao',
+      'decimals': '2'
+    },
+    'KRW': {
+      'major': 'won',
+      'majorPlural': 'won',
+      'minor': '',
+      'minorPlural': '',
+      'decimals': '0'
+    },
+    'THB': {
+      'major': 'baht',
+      'majorPlural': 'baht',
+      'minor': 'satang',
+      'minorPlural': 'satang',
+      'decimals': '2'
+    },
+    'SGD': {
+      'major': 'dollaro di Singapore',
+      'majorPlural': 'dollari di Singapore',
+      'minor': 'centesimo',
+      'minorPlural': 'centesimi',
+      'decimals': '2'
+    },
+    'AUD': {
+      'major': 'dollaro australiano',
+      'majorPlural': 'dollari australiani',
+      'minor': 'centesimo',
+      'minorPlural': 'centesimi',
+      'decimals': '2'
+    },
+    'CAD': {
+      'major': 'dollaro canadese',
+      'majorPlural': 'dollari canadesi',
+      'minor': 'centesimo',
+      'minorPlural': 'centesimi',
+      'decimals': '2'
+    },
+    'CHF': {
+      'major': 'franco svizzero',
+      'majorPlural': 'franchi svizzeri',
+      'minor': 'centesimo',
+      'minorPlural': 'centesimi',
+      'decimals': '2'
+    },
+  };
+
+  @override
+  String convertCurrency(double amount, String currencyCode) {
+    if (amount < 0) {
+      throw ArgumentError('Currency amounts cannot be negative');
+    }
+
+    final currency = _currencyData[currencyCode.toUpperCase()];
+    if (currency == null) {
+      throw ArgumentError('Currency code "$currencyCode" is not supported. '
+          'Supported currencies: ${_currencyData.keys.join(', ')}');
+    }
+
+    final decimals = int.parse(currency['decimals']!);
+
+    // Split into major and minor units
+    final majorAmount = amount.floor();
+    final minorAmount = decimals > 0
+        ? ((amount - majorAmount) * (decimals == 2 ? 100 : 10)).round()
+        : 0;
+
+    // Convert major amount
+    String majorWords = convertIntegerPart(majorAmount);
+    String majorUnit =
+        majorAmount == 1 ? currency['major']! : currency['majorPlural']!;
+    String result = '$majorWords $majorUnit';
+
+    // Add minor amount if applicable
+    if (decimals > 0 && minorAmount > 0) {
+      String minorWords = convertIntegerPart(minorAmount);
+      String minorUnit =
+          minorAmount == 1 ? currency['minor']! : currency['minorPlural']!;
+      result += ' e $minorWords $minorUnit'; // "e" = "and" in Italian
+    }
+
+    return result;
+  }
+
   @override
   String convertOrdinal(int number) {
     if (number <= 0) {

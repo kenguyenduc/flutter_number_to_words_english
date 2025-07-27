@@ -147,6 +147,44 @@ class NumberToWords {
     return language.convertOrdinal(number);
   }
 
+  /// Convert a monetary amount to currency words in specified language
+  /// 
+  /// Converts monetary amounts to their word representation including
+  /// currency names and subunit handling (cents, pence, xu, etc.).
+  /// 
+  /// **Parameters:**
+  /// - [languageCode] - Language code ('en', 'vi', 'es', 'fr', 'de', 'it', 'pt', 'ru', 'zh', 'ja', 'nl', 'ar')
+  /// - [amount] - Monetary amount (can include decimals)
+  /// - [currencyCode] - ISO 4217 currency code (e.g., 'USD', 'EUR', 'VND')
+  /// 
+  /// **Supported Currencies:**
+  /// - USD (US Dollar), EUR (Euro), GBP (British Pound)
+  /// - JPY (Japanese Yen), VND (Vietnamese Dong), CNY (Chinese Yuan)  
+  /// - KRW (Korean Won), THB (Thai Baht), SGD (Singapore Dollar)
+  /// - AUD (Australian Dollar), CAD (Canadian Dollar), CHF (Swiss Franc)
+  /// 
+  /// **Examples:**
+  /// ```dart
+  /// NumberToWords.convertCurrency('en', 123.45, 'USD');  // "one hundred twenty-three dollars and forty-five cents"
+  /// NumberToWords.convertCurrency('vi', 123.45, 'VND');  // "một trăm hai mười ba đồng bốn mười lăm xu"
+  /// NumberToWords.convertCurrency('en', 123, 'JPY');     // "one hundred twenty-three yen"
+  /// NumberToWords.convertCurrency('fr', 123.45, 'EUR');  // "cent vingt-trois euros et quarante-cinq centimes"
+  /// NumberToWords.convertCurrency('zh', 123.45, 'CNY');  // "一百二十三人民币四十五角"
+  /// ```
+  /// 
+  /// **Throws:**
+  /// - [ArgumentError] if the language is not supported
+  /// - [ArgumentError] if the currency code is not supported
+  /// - [ArgumentError] if the amount is negative
+  static String convertCurrency(String languageCode, double amount, String currencyCode) {
+    final language = _languages[languageCode.toLowerCase()];
+    if (language == null) {
+      throw ArgumentError('Language "$languageCode" is not supported. '
+          'Supported languages: ${_languages.keys.join(', ')}');
+    }
+    return language.convertCurrency(amount, currencyCode);
+  }
+
   /// Get the language implementation for a given language code
   ///
   /// [languageCode] - Language code to get implementation for

@@ -183,6 +183,129 @@ class ChineseNumberToWords extends NumberToWordsLanguage {
     }
   }
 
+  // Currency data for Chinese
+  static const Map<String, Map<String, String>> _currencyData = {
+    'USD': {
+      'major': '美元',
+      'majorPlural': '美元',
+      'minor': '美分',
+      'minorPlural': '美分',
+      'decimals': '2'
+    },
+    'EUR': {
+      'major': '欧元',
+      'majorPlural': '欧元',
+      'minor': '欧分',
+      'minorPlural': '欧分',
+      'decimals': '2'
+    },
+    'GBP': {
+      'major': '英镑',
+      'majorPlural': '英镑',
+      'minor': '便士',
+      'minorPlural': '便士',
+      'decimals': '2'
+    },
+    'JPY': {
+      'major': '日元',
+      'majorPlural': '日元',
+      'minor': '',
+      'minorPlural': '',
+      'decimals': '0'
+    },
+    'VND': {
+      'major': '越南盾',
+      'majorPlural': '越南盾',
+      'minor': '徐',
+      'minorPlural': '徐',
+      'decimals': '2'
+    },
+    'CNY': {
+      'major': '人民币',
+      'majorPlural': '人民币',
+      'minor': '角',
+      'minorPlural': '角',
+      'decimals': '2'
+    },
+    'KRW': {
+      'major': '韩元',
+      'majorPlural': '韩元',
+      'minor': '',
+      'minorPlural': '',
+      'decimals': '0'
+    },
+    'THB': {
+      'major': '泰铢',
+      'majorPlural': '泰铢',
+      'minor': '萨当',
+      'minorPlural': '萨当',
+      'decimals': '2'
+    },
+    'SGD': {
+      'major': '新加坡元',
+      'majorPlural': '新加坡元',
+      'minor': '分',
+      'minorPlural': '分',
+      'decimals': '2'
+    },
+    'AUD': {
+      'major': '澳元',
+      'majorPlural': '澳元',
+      'minor': '分',
+      'minorPlural': '分',
+      'decimals': '2'
+    },
+    'CAD': {
+      'major': '加元',
+      'majorPlural': '加元',
+      'minor': '分',
+      'minorPlural': '分',
+      'decimals': '2'
+    },
+    'CHF': {
+      'major': '瑞士法郎',
+      'majorPlural': '瑞士法郎',
+      'minor': '生丁',
+      'minorPlural': '生丁',
+      'decimals': '2'
+    },
+  };
+
+  @override
+  String convertCurrency(double amount, String currencyCode) {
+    if (amount < 0) {
+      throw ArgumentError('Currency amounts cannot be negative');
+    }
+
+    final currency = _currencyData[currencyCode.toUpperCase()];
+    if (currency == null) {
+      throw ArgumentError('Currency code "$currencyCode" is not supported. '
+          'Supported currencies: ${_currencyData.keys.join(', ')}');
+    }
+
+    final decimals = int.parse(currency['decimals']!);
+
+    // Split into major and minor units
+    final majorAmount = amount.floor();
+    final minorAmount = decimals > 0
+        ? ((amount - majorAmount) * (decimals == 2 ? 100 : 10)).round()
+        : 0;
+
+    // Convert major amount
+    String majorWords = convertIntegerPart(majorAmount);
+    String majorUnit = currency['major']!; // Chinese doesn't change for plural
+    String result = '$majorWords$majorUnit';
+
+    // Add minor amount if applicable
+    if (decimals > 0 && minorAmount > 0) {
+      String minorWords = convertIntegerPart(minorAmount);
+      String minorUnit = currency['minor']!;
+      result += '$minorWords$minorUnit';
+    }
+
+    return result;
+  }
+
   @override
   String convertOrdinal(int number) {
     if (number <= 0) {

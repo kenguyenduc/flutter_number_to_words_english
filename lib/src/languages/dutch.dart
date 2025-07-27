@@ -189,6 +189,57 @@ class DutchNumberToWords extends NumberToWordsLanguage {
     }
   }
 
+  // Currency data for Dutch
+  static const Map<String, Map<String, String>> _currencyData = {
+    'USD': {'major': 'dollar', 'majorPlural': 'dollars', 'minor': 'cent', 'minorPlural': 'cents', 'decimals': '2'},
+    'EUR': {'major': 'euro', 'majorPlural': 'euros', 'minor': 'cent', 'minorPlural': 'cents', 'decimals': '2'},
+    'GBP': {'major': 'pond', 'majorPlural': 'pond', 'minor': 'penny', 'minorPlural': 'pence', 'decimals': '2'},
+    'JPY': {'major': 'yen', 'majorPlural': 'yen', 'minor': '', 'minorPlural': '', 'decimals': '0'},
+    'VND': {'major': 'dong', 'majorPlural': 'dong', 'minor': 'xu', 'minorPlural': 'xu', 'decimals': '2'},
+    'CNY': {'major': 'yuan', 'majorPlural': 'yuan', 'minor': 'jiao', 'minorPlural': 'jiao', 'decimals': '2'},
+    'KRW': {'major': 'won', 'majorPlural': 'won', 'minor': '', 'minorPlural': '', 'decimals': '0'},
+    'THB': {'major': 'baht', 'majorPlural': 'baht', 'minor': 'satang', 'minorPlural': 'satang', 'decimals': '2'},
+    'SGD': {'major': 'Singapore dollar', 'majorPlural': 'Singapore dollars', 'minor': 'cent', 'minorPlural': 'cents', 'decimals': '2'},
+    'AUD': {'major': 'Australische dollar', 'majorPlural': 'Australische dollars', 'minor': 'cent', 'minorPlural': 'cents', 'decimals': '2'},
+    'CAD': {'major': 'Canadese dollar', 'majorPlural': 'Canadese dollars', 'minor': 'cent', 'minorPlural': 'cents', 'decimals': '2'},
+    'CHF': {'major': 'Zwitserse frank', 'majorPlural': 'Zwitserse franken', 'minor': 'centime', 'minorPlural': 'centimes', 'decimals': '2'},
+  };
+
+  @override
+  String convertCurrency(double amount, String currencyCode) {
+    if (amount < 0) {
+      throw ArgumentError('Currency amounts cannot be negative');
+    }
+
+    final currency = _currencyData[currencyCode.toUpperCase()];
+    if (currency == null) {
+      throw ArgumentError('Currency code "$currencyCode" is not supported. '
+          'Supported currencies: ${_currencyData.keys.join(', ')}');
+    }
+
+    final decimals = int.parse(currency['decimals']!);
+    
+    // Split into major and minor units
+    final majorAmount = amount.floor();
+    final minorAmount = decimals > 0 
+        ? ((amount - majorAmount) * (decimals == 2 ? 100 : 10)).round()
+        : 0;
+
+    // Convert major amount
+    String majorWords = convertIntegerPart(majorAmount);
+    String majorUnit = majorAmount == 1 ? currency['major']! : currency['majorPlural']!;
+    String result = '$majorWords $majorUnit';
+
+    // Add minor amount if applicable
+    if (decimals > 0 && minorAmount > 0) {
+      String minorWords = convertIntegerPart(minorAmount);
+      String minorUnit = minorAmount == 1 ? currency['minor']! : currency['minorPlural']!;
+      result += ' en $minorWords $minorUnit'; // "en" = "and" in Dutch
+    }
+
+    return result;
+  }
+
   @override
   String convertOrdinal(int number) {
     if (number <= 0) {

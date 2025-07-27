@@ -12,15 +12,16 @@ A Flutter/Dart package that converts numbers to their written words representati
 ## Features
 
 ✅ **Comprehensive multi-language support**: 12 languages worldwide  
+✅ **🆕 Currency conversion**: Support for 12 major currencies in all languages  
 ✅ **🆕 Ordinal numbers**: 1st, 2nd, 3rd conversion in all languages  
-✅ **Extension methods**: Direct conversion with `.toWords()`, `.toOrdinal()`, etc.  
+✅ **Extension methods**: Direct conversion with `.toWords()`, `.toUSD()`, `.toOrdinal()`, etc.  
 ✅ **Global coverage**: Europe, Asia, Middle East, Latin America  
 ✅ Convert integers to written words in 12 languages  
 ✅ Supports numbers from 0 to trillion scale  
 ✅ Null safety support  
 ✅ Lightweight and fast  
 ✅ No external dependencies  
-✅ Well tested and documented (103+ tests)  
+✅ Well tested and documented (145+ tests)  
 ✅ **Backward compatible** - existing code continues to work  
 ✅ **Modular architecture** - easy to extend with new languages
 
@@ -93,6 +94,32 @@ print(1.toOrdinalChinese());
 
 print(1.toOrdinalJapanese());
 // Output: '第いち番目'
+
+// 🏦 Currency Conversion (NEW!)
+print(123.45.toUSD());
+// Output: 'one hundred twenty-three dollars and forty-five cents'
+
+print(123.45.toEUR());
+// Output: 'one hundred twenty-three euros and forty-five cents'
+
+print(123.toJPY());
+// Output: 'one hundred twenty-three yen'
+
+print(123.45.toVND());
+// Output: 'một trăm hai mười ba đồng bốn mười lăm xu'
+
+print(123.45.toCNY());
+// Output: '一百二十三人民币四十五角'
+
+// Currency in different languages
+print(123.45.toCurrency('USD'));
+// Output: 'one hundred twenty-three dollars and forty-five cents'
+
+print(123.45.toCurrencyInLanguage('fr', 'EUR'));
+// Output: 'cent vingt-trois euros et quarante-cinq centimes'
+
+print(123.45.toCurrencyInLanguage('es', 'USD'));
+// Output: 'ciento veintitrés dólares y cuarenta y cinco centavos'
 
 // Language-specific conversion
 print(123.toWordsInLanguage('vi'));
@@ -175,6 +202,43 @@ print(1.toOrdinalWords('vi'));           // "thứ nhất"
 print(21.getOrdinalSuffix());            // "st" (English only)
 print(5.canConvertToOrdinal());          // true
 ```
+
+### 💰 Currency Conversion (NEW!)
+
+Convert monetary amounts to their word representation with proper currency names and subunit handling:
+
+```dart
+// Basic currency conversion using extension methods
+print(123.45.toUSD());  // "one hundred twenty-three dollars and forty-five cents"
+print(123.45.toEUR());  // "one hundred twenty-three euros and forty-five cents"
+print(123.45.toGBP());  // "one hundred twenty-three pounds and forty-five pence"
+print(123.toJPY());     // "one hundred twenty-three yen" (no decimals)
+
+// Multi-language currency conversion
+print(NumberToWords.convertCurrency('en', 123.45, 'USD'));  // English
+// "one hundred twenty-three dollars and forty-five cents"
+
+print(NumberToWords.convertCurrency('vi', 123.45, 'VND'));  // Vietnamese
+// "một trăm hai mười ba đồng bốn mười lăm xu"
+
+print(NumberToWords.convertCurrency('fr', 123.45, 'EUR'));  // French
+// "cent vingt-trois euros et quarante-cinq centimes"
+
+print(NumberToWords.convertCurrency('zh', 123.45, 'CNY'));  // Chinese
+// "一百二十三人民币四十五角"
+
+// Convenient currency-specific methods
+print(123.45.toVND());  // Vietnamese Dong
+print(123.45.toCNY());  // Chinese Yuan
+print(123.45.toCurrencyInLanguage('es', 'EUR'));  // Spanish Euros
+```
+
+**Supported Currencies (12 Total):**
+
+- **USD** (US Dollar), **EUR** (Euro), **GBP** (British Pound)
+- **JPY** (Japanese Yen), **VND** (Vietnamese Dong), **CNY** (Chinese Yuan)
+- **KRW** (Korean Won), **THB** (Thai Baht), **SGD** (Singapore Dollar)
+- **AUD** (Australian Dollar), **CAD** (Canadian Dollar), **CHF** (Swiss Franc)
 
 ### Advanced Multi-Language Examples
 

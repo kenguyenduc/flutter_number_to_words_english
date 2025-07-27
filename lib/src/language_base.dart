@@ -38,4 +38,32 @@ abstract class NumberToWordsLanguage {
   /// convertOrdinal(21); // "twenty-first" (English), "thứ hai mười một" (Vietnamese)
   /// ```
   String convertOrdinal(int number);
+
+  /// Convert a number to currency format with specified currency code
+  ///
+  /// Converts monetary amounts to their word representation including
+  /// currency names and subunit handling (cents, pence, xu, etc.).
+  ///
+  /// Example:
+  /// ```dart
+  /// convertCurrency(123.45, 'USD'); // "one hundred twenty-three dollars and forty-five cents" (English)
+  /// convertCurrency(123.45, 'EUR'); // "one hundred twenty-three euros and forty-five cents" (English)
+  /// convertCurrency(123.45, 'VND'); // "một trăm hai mười ba đồng bốn mười lăm xu" (Vietnamese)
+  /// convertCurrency(123, 'JPY'); // "one hundred twenty-three yen" (English) - no subunits
+  /// ```
+  ///
+  /// **Supported Currencies:**
+  /// - USD (US Dollar), EUR (Euro), GBP (British Pound)
+  /// - JPY (Japanese Yen), VND (Vietnamese Dong), CNY (Chinese Yuan)
+  /// - KRW (Korean Won), THB (Thai Baht), SGD (Singapore Dollar)
+  /// - AUD (Australian Dollar), CAD (Canadian Dollar), CHF (Swiss Franc)
+  ///
+  /// **Parameters:**
+  /// - [amount] - The monetary amount (can include decimals)
+  /// - [currencyCode] - ISO 4217 currency code (e.g., 'USD', 'EUR', 'VND')
+  ///
+  /// **Throws:**
+  /// - [ArgumentError] if currency code is not supported
+  /// - [ArgumentError] if amount is negative
+  String convertCurrency(double amount, String currencyCode);
 }

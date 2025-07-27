@@ -2,7 +2,7 @@
 
 ## [3.0.0] - 2024-07-27
 
-### 🚀 Architecture Refactoring & Extension Methods + 🥇 Ordinal Numbers
+### 🚀 Architecture Refactoring & Extension Methods + 🥇 Ordinal Numbers + 💰 Currency Conversion
 
 #### 🏗️ Modular Architecture
 
@@ -52,6 +52,17 @@
 - **Integer-specific methods**: `toOrdinalWords()`, `getOrdinalSuffix()`, `canConvertToOrdinal()`
 - **Global coverage**: All 12 languages support ordinal conversion with culturally appropriate forms
 
+#### 💰 NEW: Currency Conversion Support
+
+- **12 major currencies**: USD, EUR, GBP, JPY, VND, CNY, KRW, THB, SGD, AUD, CAD, CHF
+- **New API method**: `NumberToWords.convertCurrency(languageCode, amount, currencyCode)`
+- **Currency extension methods**: `toCurrency()`, `toUSD()`, `toEUR()`, `toVND()`, `toCNY()`, etc.
+- **Multi-language currency names**: Proper currency names in all 12 languages
+- **Subunit handling**: Automatic cents, pence, xu, jiao, etc. for appropriate currencies
+- **No-decimal currencies**: Special handling for JPY, KRW (no subunits)
+- **Smart plural forms**: Proper singular/plural currency names (dollar vs dollars)
+- **Localized connectors**: "and" (EN), "et" (FR), "y" (ES), "und" (DE), "و" (AR), etc.
+
 #### 📚 Enhanced Documentation
 
 - **Comprehensive API documentation**: Every method has detailed docs with examples
@@ -61,8 +72,9 @@
 
 #### 🧪 Comprehensive Testing
 
-- **103 test cases**: Complete coverage of all features including ordinals
+- **145 test cases**: Complete coverage of all features including ordinals and currency
 - **15 new ordinal tests**: Dedicated coverage for all ordinal functionality
+- **15 new currency tests**: Complete currency conversion testing across all languages
 - **Extension method tests**: Dedicated test groups for each extension type
 - **Architecture tests**: Validation of modular design
 - **Edge case handling**: Robust error handling and validation
@@ -71,9 +83,10 @@
 
 - **Extension methods demo**: Interactive showcase of all extension methods
 - **🆕 Ordinal numbers demo**: Real-time ordinal conversion in all 12 languages
+- **🆕 Currency conversion demo**: Interactive currency conversion with all supported currencies
 - **Real-time examples**: Dynamic code examples that update with user input
 - **Multi-API comparison**: Side-by-side comparison of different APIs
-- **Smart UI**: Ordinals only shown for positive integers
+- **Smart UI**: Ordinals only shown for positive integers, currency shown for all numbers
 - **Better UI**: Modern Material Design 3 interface
 
 ### 🔄 Backward Compatibility

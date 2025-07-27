@@ -191,6 +191,57 @@ class JapaneseNumberToWords extends NumberToWordsLanguage {
     }
   }
 
+  // Currency data for Japanese
+  static const Map<String, Map<String, String>> _currencyData = {
+    'USD': {'major': 'アメリカドル', 'majorPlural': 'アメリカドル', 'minor': 'セント', 'minorPlural': 'セント', 'decimals': '2'},
+    'EUR': {'major': 'ユーロ', 'majorPlural': 'ユーロ', 'minor': 'セント', 'minorPlural': 'セント', 'decimals': '2'},
+    'GBP': {'major': 'イギリスポンド', 'majorPlural': 'イギリスポンド', 'minor': 'ペンス', 'minorPlural': 'ペンス', 'decimals': '2'},
+    'JPY': {'major': '円', 'majorPlural': '円', 'minor': '', 'minorPlural': '', 'decimals': '0'},
+    'VND': {'major': 'ベトナムドン', 'majorPlural': 'ベトナムドン', 'minor': 'ス', 'minorPlural': 'ス', 'decimals': '2'},
+    'CNY': {'major': '人民元', 'majorPlural': '人民元', 'minor': '角', 'minorPlural': '角', 'decimals': '2'},
+    'KRW': {'major': 'ウォン', 'majorPlural': 'ウォン', 'minor': '', 'minorPlural': '', 'decimals': '0'},
+    'THB': {'major': 'タイバーツ', 'majorPlural': 'タイバーツ', 'minor': 'サタン', 'minorPlural': 'サタン', 'decimals': '2'},
+    'SGD': {'major': 'シンガポールドル', 'majorPlural': 'シンガポールドル', 'minor': 'セント', 'minorPlural': 'セント', 'decimals': '2'},
+    'AUD': {'major': 'オーストラリアドル', 'majorPlural': 'オーストラリアドル', 'minor': 'セント', 'minorPlural': 'セント', 'decimals': '2'},
+    'CAD': {'major': 'カナダドル', 'majorPlural': 'カナダドル', 'minor': 'セント', 'minorPlural': 'セント', 'decimals': '2'},
+    'CHF': {'major': 'スイスフラン', 'majorPlural': 'スイスフラン', 'minor': 'ラッペン', 'minorPlural': 'ラッペン', 'decimals': '2'},
+  };
+
+  @override
+  String convertCurrency(double amount, String currencyCode) {
+    if (amount < 0) {
+      throw ArgumentError('Currency amounts cannot be negative');
+    }
+
+    final currency = _currencyData[currencyCode.toUpperCase()];
+    if (currency == null) {
+      throw ArgumentError('Currency code "$currencyCode" is not supported. '
+          'Supported currencies: ${_currencyData.keys.join(', ')}');
+    }
+
+    final decimals = int.parse(currency['decimals']!);
+    
+    // Split into major and minor units
+    final majorAmount = amount.floor();
+    final minorAmount = decimals > 0 
+        ? ((amount - majorAmount) * (decimals == 2 ? 100 : 10)).round()
+        : 0;
+
+    // Convert major amount
+    String majorWords = convertIntegerPart(majorAmount);
+    String majorUnit = currency['major']!; // Japanese doesn't change for plural
+    String result = '$majorWords$majorUnit';
+
+    // Add minor amount if applicable
+    if (decimals > 0 && minorAmount > 0) {
+      String minorWords = convertIntegerPart(minorAmount);
+      String minorUnit = currency['minor']!;
+      result += '$minorWords$minorUnit';
+    }
+
+    return result;
+  }
+
   @override
   String convertOrdinal(int number) {
     if (number <= 0) {
