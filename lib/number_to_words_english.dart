@@ -1,178 +1,145 @@
+// Export all public APIs
+export 'src/number_to_words.dart';
+export 'src/extensions.dart';
+export 'src/language_base.dart';
+
+// Export language implementations for advanced usage
+export 'src/languages/english.dart';
+export 'src/languages/vietnamese.dart';
+export 'src/languages/spanish.dart';
+export 'src/languages/french.dart';
+export 'src/languages/german.dart';
+export 'src/languages/italian.dart';
+export 'src/languages/portuguese.dart';
+export 'src/languages/russian.dart';
+export 'src/languages/chinese.dart';
+export 'src/languages/japanese.dart';
+export 'src/languages/dutch.dart';
+export 'src/languages/arabic.dart';
+
+// Legacy API for backward compatibility
+import 'src/languages/english.dart';
+
+/// A comprehensive Flutter/Dart package that converts numbers to words with support for 12 languages worldwide.
+///
+/// This library provides comprehensive number-to-words conversion functionality
+/// with support for 12 languages including English, Vietnamese, Spanish, French, German,
+/// Italian, Portuguese, Russian, Chinese, Japanese, Dutch, and Arabic.
+///
+/// ## Features
+///
+/// - **Comprehensive multi-language support**: 12 languages worldwide
+/// - **Extension methods**: Convert numbers directly using `.toWords()`, `.toFrench()`, etc.
+/// - **Global coverage**: Europe, Asia, Middle East, Latin America
+/// - **Flexible API**: Both static methods and extension methods
+/// - **Modular architecture**: Separate implementation for each language
+/// - **Backward compatible**: Existing `NumberToWordsEnglish` API still works
+/// - **Extensible**: Easy to add new language implementations
+///
+/// ## Basic Usage
+///
+/// ```dart
+/// import 'package:number_to_words_english/number_to_words_english.dart';
+///
+/// // Using the new multi-language API
+/// print(NumberToWords.convert('en', 123)); // "one hundred twenty-three"
+/// print(NumberToWords.convert('vi', 123)); // "một trăm hai mười ba"
+/// print(NumberToWords.convert('es', 123)); // "ciento veintitrés"
+///
+/// // Using extension methods
+/// print(123.toWords()); // "one hundred twenty-three"
+/// print(123.toVietnamese()); // "một trăm hai mười ba"
+/// print(123.toSpanish()); // "ciento veintitrés"
+/// print(123.toFrench()); // "cent vingt-trois"
+/// print(123.toGerman()); // "einhundertdreiundzwanzig"
+/// print(123.toChinese()); // "一百二十三"
+/// print(123.toJapanese()); // "ひゃくにじゅうさん"
+/// print(123.toArabic()); // "مائة ثلاثة وعشرون"
+///
+/// // Legacy API (still supported)
+/// print(NumberToWordsEnglish.convert(123)); // "one hundred twenty-three"
+/// ```
+///
+/// ## Supported Languages (12 Total)
+///
+/// | Code | Language | Example (123) | Region |
+/// |------|----------|---------------|--------|
+/// | `en` | English | one hundred twenty-three | Global |
+/// | `vi` | Vietnamese | một trăm hai mười ba | Southeast Asia |
+/// | `es` | Spanish | ciento veintitrés | Latin America |
+/// | `fr` | French | cent vingt-trois | Europe |
+/// | `de` | German | einhundertdreiundzwanzig | Europe |
+/// | `it` | Italian | centoventitre | Europe |
+/// | `pt` | Portuguese | cento e vinte e três | Latin America |
+/// | `ru` | Russian | сто двадцать три | Eastern Europe |
+/// | `zh` | Chinese | 一百二十三 | East Asia |
+/// | `ja` | Japanese | ひゃくにじゅうさん | East Asia |
+/// | `nl` | Dutch | honderddrieëntwintig | Europe |
+/// | `ar` | Arabic | مائة ثلاثة وعشرون | Middle East |
+
+/// Legacy class for backward compatibility
+///
+/// This class maintains the original API for existing users.
+/// For new projects, consider using [NumberToWords] class instead.
+///
+/// ## Migration Guide
+///
+/// **Old API:**
+/// ```dart
+/// NumberToWordsEnglish.convert(123); // "one hundred twenty-three"
+/// ```
+///
+/// **New API (recommended):**
+/// ```dart
+/// NumberToWords.convert('en', 123); // "one hundred twenty-three"
+/// // or using extensions:
+/// 123.toWords(); // "one hundred twenty-three"
+/// ```
 class NumberToWordsEnglish {
   NumberToWordsEnglish._();
 
-  static const String _unionSeparator = '-';
-  static const String _zero = 'zero';
-  static const String _hundred = 'hundred';
+  static final EnglishNumberToWords _english = EnglishNumberToWords();
 
-  // Scale names
-  static const List<String> _scaleNames = [
-    '',
-    'thousand',
-    'million',
-    'billion',
-    'trillion',
-    'quadrillion',
-    'quintillion',
-    'sextillion',
-    'septillion',
-    'octillion',
-    'nonillion',
-    'decillion'
-  ];
-
-  static const List<String> _numNames = [
-    '',
-    'one',
-    'two',
-    'three',
-    'four',
-    'five',
-    'six',
-    'seven',
-    'eight',
-    'nine',
-    'ten',
-    'eleven',
-    'twelve',
-    'thirteen',
-    'fourteen',
-    'fifteen',
-    'sixteen',
-    'seventeen',
-    'eighteen',
-    'nineteen'
-  ];
-
-  static const List<String> _tensNames = [
-    '',
-    'ten',
-    'twenty',
-    'thirty',
-    'forty',
-    'fifty',
-    'sixty',
-    'seventy',
-    'eighty',
-    'ninety'
-  ];
-
-  /// Convert a number less than one thousand to words
-  static String _convertLessThanOneThousand(int number) {
-    String soFar = '';
-
-    if (number % 100 < 20) {
-      soFar = _numNames[number % 100];
-      number = number ~/ 100;
-    } else {
-      final int numFirst = number;
-      soFar = _numNames[number % 10];
-      number = number ~/ 10;
-      final String unionSeparator =
-          ((number ~/ 10) != 0 && numFirst % 10 != 0) ||
-                  (numFirst % 10 != 0 && numFirst < 100)
-              ? _unionSeparator
-              : '';
-      soFar = _tensNames[number % 10] + unionSeparator + soFar;
-      number = number ~/ 10;
-    }
-    if (number == 0) {
-      return soFar;
-    }
-    return '${_numNames[number]} $_hundred $soFar';
-  }
-
-  /// Convert the integer part of the number
-  static String _convertIntegerPart(int number) {
-    if (number == 0) {
-      return _zero;
-    }
-
-    // Pad to 36 digits for decillion
-    final String strNumber = number.toString().padLeft(36, '0');
-
-    // Break into groups of 3
-    final int totalGroups = (strNumber.length / 3).round();
-    final List<String> groups = [];
-    for (int i = 0; i < totalGroups; i++) {
-      final start = i * 3;
-      final end = start + 3;
-      groups.add(strNumber.substring(start, end));
-    }
-
-    final List<int> intGroups = groups.map((g) => int.parse(g)).toList();
-    String result = '';
-
-    for (int i = 0; i < totalGroups; i++) {
-      int groupValue = intGroups[i];
-      if (groupValue > 0) {
-        int scaleIndex = totalGroups - 1 - i;
-        String partial = _convertLessThanOneThousand(groupValue);
-        String scaleName = _scaleNames[scaleIndex];
-        if (scaleName.isNotEmpty) {
-          partial = '$partial $scaleName ';
-        } else {
-          partial = '$partial ';
-        }
-        result += partial;
-      }
-    }
-
-    // Clean up spaces
-    result = result.replaceAll(RegExp('\\s+'), ' ').trim();
-    return result.isEmpty ? _zero : result;
-  }
-
-  /// Convert a decimal number string
-  static String convertDecimal(String numberStr) {
-    if (!RegExp(r'^-?\d+(\.\d+)?$').hasMatch(numberStr)) {
-      throw ArgumentError('Input is not a valid number');
-    }
-
-    bool isNegative = numberStr.startsWith('-');
-    if (isNegative) {
-      numberStr = numberStr.substring(1);
-    }
-
-    // Split into integer and decimal parts
-    List<String> parts = numberStr.split('.');
-    String integerPartStr = parts[0];
-    String decimalPartStr = parts.length > 1 ? parts[1] : '';
-
-    // Convert integer part
-    int integerPart = int.parse(integerPartStr);
-    String integerWords = _convertIntegerPart(integerPart);
-
-    // If no decimal part
-    if (decimalPartStr.isEmpty) {
-      return (isNegative ? 'minus ' : '') + integerWords;
-    }
-
-    // If there's a decimal part, read each digit
-    String decimalWords = 'point';
-    for (int i = 0; i < decimalPartStr.length; i++) {
-      int digit = int.parse(decimalPartStr[i]);
-      decimalWords += ' ${_numNames[digit]}';
-    }
-
-    String result = '$integerWords $decimalWords';
-    result = result.replaceAll(RegExp('\\s+'), ' ').trim();
-    if (isNegative) {
-      result = 'minus $result';
-    }
-    return result;
-  }
-
-  /// Public method to convert a number (int or double) to words.
+  /// Convert a number to English words
+  ///
+  /// This method is maintained for backward compatibility.
+  /// For new projects, use [NumberToWords.convert('en', number)] instead.
+  ///
+  /// Example:
+  /// ```dart
+  /// String result = NumberToWordsEnglish.convert(123);
+  /// // Returns: "one hundred twenty-three"
+  /// ```
+  ///
+  /// **Parameters:**
+  /// - [number] - The number to convert (supports both int and double)
+  ///
+  /// **Returns:**
+  /// - String representation of the number in English words
   static String convert(num number) {
-    bool isNegative = number < 0;
-    if (number is int) {
-      int absNumber = number.abs();
-      String words = _convertIntegerPart(absNumber);
-      return isNegative ? 'minus $words' : words;
-    } else {
-      // Convert double to string and then to words
-      return convertDecimal(number.toString());
-    }
+    return _english.convert(number);
+  }
+
+  /// Convert a decimal number string to English words
+  ///
+  /// This method is maintained for backward compatibility.
+  /// For new projects, use [NumberToWords.convertDecimal('en', numberStr)] instead.
+  ///
+  /// Example:
+  /// ```dart
+  /// String result = NumberToWordsEnglish.convertDecimal("123.45");
+  /// // Returns: "one hundred twenty-three point four five"
+  /// ```
+  ///
+  /// **Parameters:**
+  /// - [numberStr] - String representation of the number
+  ///
+  /// **Returns:**
+  /// - String representation of the number in English words
+  ///
+  /// **Throws:**
+  /// - [ArgumentError] if the input string is not a valid number
+  static String convertDecimal(String numberStr) {
+    return _english.convertDecimal(numberStr);
   }
 }
