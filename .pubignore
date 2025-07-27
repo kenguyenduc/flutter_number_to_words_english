@@ -1,0 +1,30 @@
+# IDE files  
+.idea/
+.idea/.gitignore
+.idea/libraries/Dart_SDK.xml
+.idea/libraries/Flutter_Plugins.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+*.iml
+number_to_words_english.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Development files
+coverage/
+build/
+.dart_tool/
+.fvm/
+
+# Git
+.git/
+
+# Temporary test files for development only
+verify_*.dart
+debug_*.dart
+
+# Example app (optional - uncomment if you don't want to include example)
+# example/ 

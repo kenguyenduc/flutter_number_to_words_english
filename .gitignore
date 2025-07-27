@@ -29,4 +29,5 @@
 build/
 
 # FVM Version Cache
-.fvm/
+.fvm/.idea/
+*.iml
