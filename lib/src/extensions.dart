@@ -185,7 +185,7 @@ extension NumberToWordsExtension on num {
   /// **Throws:**
   /// - [ArgumentError] if the number is not a positive integer
   String toOrdinal() {
-    if (this != this.toInt() || this <= 0) {
+    if (this != toInt() || this <= 0) {
       throw ArgumentError('Ordinal conversion requires positive integers');
     }
     return NumberToWords.convertOrdinal('en', toInt());
