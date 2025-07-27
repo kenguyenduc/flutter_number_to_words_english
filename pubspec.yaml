@@ -6,8 +6,8 @@ git: https://github.com/kenguyenduc/flutter_number_to_words_english
 issue_tracker: https://github.com/kenguyenduc/flutter_number_to_words_english/issues
 
 environment:
-  sdk: ">=2.12.0-0 <4.0.0"
-  flutter: ">=1.20.0"
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.24.0"
 
 dependencies:
   flutter:
@@ -16,7 +16,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
