@@ -168,4 +168,26 @@ class VietnameseNumberToWords extends NumberToWordsLanguage {
       return convertDecimal(number.toString());
     }
   }
+
+  @override
+  String convertOrdinal(int number) {
+    if (number <= 0) {
+      throw ArgumentError('Ordinal numbers must be positive integers');
+    }
+
+    // Special ordinal forms in Vietnamese
+    switch (number) {
+      case 1:
+        return 'thứ nhất';
+      case 2:
+        return 'thứ hai';
+      case 3:
+        return 'thứ ba';
+      case 4:
+        return 'thứ tư';
+      default:
+        // For other numbers, use "thứ" + cardinal number
+        return 'thứ ${convertIntegerPart(number)}';
+    }
+  }
 }

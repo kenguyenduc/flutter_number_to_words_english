@@ -184,4 +184,45 @@ class SpanishNumberToWords extends NumberToWordsLanguage {
       return convertDecimal(number.toString());
     }
   }
+
+  static const List<String> _ordinalNames = [
+    '',
+    'primero',
+    'segundo',
+    'tercero',
+    'cuarto',
+    'quinto',
+    'sexto',
+    'séptimo',
+    'octavo',
+    'noveno',
+    'décimo',
+    'undécimo',
+    'duodécimo',
+    'decimotercero',
+    'decimocuarto',
+    'decimoquinto',
+    'decimosexto',
+    'decimoséptimo',
+    'decimoctavo',
+    'decimonoveno',
+    'vigésimo'
+  ];
+
+  @override
+  String convertOrdinal(int number) {
+    if (number <= 0) {
+      throw ArgumentError('Ordinal numbers must be positive integers');
+    }
+
+    // Use predefined ordinals for 1-20
+    if (number <= 20) {
+      return _ordinalNames[number];
+    }
+
+    // For larger numbers, construct from base + ordinal endings
+    // This is a simplified version - Spanish ordinals can be complex
+    String baseWords = convertIntegerPart(number);
+    return '${baseWords}º'; // Using ordinal symbol for simplicity
+  }
 }

@@ -182,4 +182,15 @@ class ChineseNumberToWords extends NumberToWordsLanguage {
       return convertDecimal(number.toString());
     }
   }
+
+  @override
+  String convertOrdinal(int number) {
+    if (number <= 0) {
+      throw ArgumentError('Ordinal numbers must be positive integers');
+    }
+
+    // In Chinese, ordinals are formed by adding "第" before the cardinal number
+    String cardinalWords = convertIntegerPart(number);
+    return '第$cardinalWords';
+  }
 }

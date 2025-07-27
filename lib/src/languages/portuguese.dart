@@ -182,4 +182,38 @@ class PortugueseNumberToWords extends NumberToWordsLanguage {
       return convertDecimal(number.toString());
     }
   }
+
+  @override
+  String convertOrdinal(int number) {
+    if (number <= 0) {
+      throw ArgumentError('Ordinal numbers must be positive integers');
+    }
+
+    switch (number) {
+      case 1:
+        return 'primeiro';
+      case 2:
+        return 'segundo';
+      case 3:
+        return 'terceiro';
+      case 4:
+        return 'quarto';
+      case 5:
+        return 'quinto';
+      case 6:
+        return 'sexto';
+      case 7:
+        return 'sétimo';
+      case 8:
+        return 'oitavo';
+      case 9:
+        return 'nono';
+      case 10:
+        return 'décimo';
+      default:
+        // For larger numbers, use cardinal + º
+        String baseWords = convertIntegerPart(number);
+        return '${baseWords}º';
+    }
+  }
 }

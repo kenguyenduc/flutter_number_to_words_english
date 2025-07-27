@@ -178,4 +178,38 @@ class RussianNumberToWords extends NumberToWordsLanguage {
       return convertDecimal(number.toString());
     }
   }
+
+  @override
+  String convertOrdinal(int number) {
+    if (number <= 0) {
+      throw ArgumentError('Ordinal numbers must be positive integers');
+    }
+
+    switch (number) {
+      case 1:
+        return 'первый';
+      case 2:
+        return 'второй';
+      case 3:
+        return 'третий';
+      case 4:
+        return 'четвёртый';
+      case 5:
+        return 'пятый';
+      case 6:
+        return 'шестой';
+      case 7:
+        return 'седьмой';
+      case 8:
+        return 'восьмой';
+      case 9:
+        return 'девятый';
+      case 10:
+        return 'десятый';
+      default:
+        // For larger numbers, use simplified approach
+        String baseWords = convertIntegerPart(number);
+        return '$baseWords-й'; // Simplified ordinal marker
+    }
+  }
 }

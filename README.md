@@ -12,14 +12,15 @@ A Flutter/Dart package that converts numbers to their written words representati
 ## Features
 
 ✅ **Comprehensive multi-language support**: 12 languages worldwide  
-✅ **Extension methods**: Direct conversion with `.toWords()`, `.toFrench()`, etc.  
+✅ **🆕 Ordinal numbers**: 1st, 2nd, 3rd conversion in all languages  
+✅ **Extension methods**: Direct conversion with `.toWords()`, `.toOrdinal()`, etc.  
 ✅ **Global coverage**: Europe, Asia, Middle East, Latin America  
 ✅ Convert integers to written words in 12 languages  
 ✅ Supports numbers from 0 to trillion scale  
 ✅ Null safety support  
 ✅ Lightweight and fast  
 ✅ No external dependencies  
-✅ Well tested and documented  
+✅ Well tested and documented (103+ tests)  
 ✅ **Backward compatible** - existing code continues to work  
 ✅ **Modular architecture** - easy to extend with new languages
 
@@ -29,7 +30,7 @@ Add this package to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  number_to_words_english: ^3.1.0
+  number_to_words_english: ^3.0.0
 ```
 
 Then run:
@@ -73,6 +74,25 @@ print(123.toJapanese());
 
 print(123.toArabic());
 // Output: 'مائة ثلاثة وعشرون'
+
+// 🆕 Ordinal Numbers (1st, 2nd, 3rd, etc.)
+print(1.toOrdinal()); // English (default)
+// Output: 'first'
+
+print(21.toOrdinal());
+// Output: 'twenty-first'
+
+print(1.toOrdinalVietnamese());
+// Output: 'thứ nhất'
+
+print(1.toOrdinalFrench());
+// Output: 'premier'
+
+print(1.toOrdinalChinese());
+// Output: '第一'
+
+print(1.toOrdinalJapanese());
+// Output: '第いち番目'
 
 // Language-specific conversion
 print(123.toWordsInLanguage('vi'));
@@ -123,6 +143,38 @@ print(NumberToWords.convert('es', 123));
 | `ja`          | Japanese (日本語)       | ひゃくにじゅうさん       | East Asia      |
 | `nl`          | Dutch (Nederlands)      | honderddrieëntwintig     | Europe         |
 | `ar`          | Arabic (العربية)        | مائة ثلاثة وعشرون        | Middle East    |
+
+### 🥇 Ordinal Numbers (NEW!)
+
+Convert numbers to their ordinal form (1st, 2nd, 3rd, etc.) in multiple languages:
+
+```dart
+// Basic ordinal conversion
+print(NumberToWords.convertOrdinal('en', 1));  // "first"
+print(NumberToWords.convertOrdinal('en', 21)); // "twenty-first"
+print(NumberToWords.convertOrdinal('en', 101)); // "one hundred first"
+
+// Multi-language ordinals
+print(NumberToWords.convertOrdinal('vi', 1));  // "thứ nhất"
+print(NumberToWords.convertOrdinal('fr', 1));  // "premier"
+print(NumberToWords.convertOrdinal('de', 1));  // "erste"
+print(NumberToWords.convertOrdinal('zh', 1));  // "第一"
+print(NumberToWords.convertOrdinal('ja', 1));  // "第いち番目"
+print(NumberToWords.convertOrdinal('ar', 1));  // "الأول"
+
+// Using extension methods (recommended)
+print(1.toOrdinal());                    // "first"
+print(2.toOrdinalVietnamese());          // "thứ hai"
+print(3.toOrdinalFrench());              // "troisième"
+print(4.toOrdinalGerman());              // "vierte"
+print(5.toOrdinalChinese());             // "第五"
+
+// Additional integer methods
+print(1.toOrdinalWords());               // "first"
+print(1.toOrdinalWords('vi'));           // "thứ nhất"
+print(21.getOrdinalSuffix());            // "st" (English only)
+print(5.canConvertToOrdinal());          // true
+```
 
 ### Advanced Multi-Language Examples
 

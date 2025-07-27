@@ -168,6 +168,186 @@ extension NumberToWordsExtension on num {
   String toArabic() {
     return NumberToWords.convert('ar', this);
   }
+
+  /// Convert this number to ordinal words in the default language (English)
+  ///
+  /// Converts the number to its ordinal form (1st, 2nd, 3rd, etc.) in English.
+  /// Only works with positive integers.
+  ///
+  /// Example:
+  /// ```dart
+  /// print(1.toOrdinal()); // "first"
+  /// print(2.toOrdinal()); // "second"
+  /// print(21.toOrdinal()); // "twenty-first"
+  /// print(23.toOrdinal()); // "twenty-third"
+  /// ```
+  ///
+  /// **Throws:**
+  /// - [ArgumentError] if the number is not a positive integer
+  String toOrdinal() {
+    if (this != this.toInt() || this <= 0) {
+      throw ArgumentError('Ordinal conversion requires positive integers');
+    }
+    return NumberToWords.convertOrdinal('en', this.toInt());
+  }
+
+  /// Convert this number to ordinal words in a specific language
+  ///
+  /// Converts the number to its ordinal form in the specified language.
+  /// Only works with positive integers.
+  ///
+  /// Example:
+  /// ```dart
+  /// print(1.toOrdinalInLanguage('en')); // "first"
+  /// print(1.toOrdinalInLanguage('vi')); // "thứ nhất"
+  /// print(1.toOrdinalInLanguage('fr')); // "premier"
+  /// print(1.toOrdinalInLanguage('zh')); // "第一"
+  /// ```
+  ///
+  /// **Parameters:**
+  /// - [languageCode] - Language code for conversion
+  ///
+  /// **Throws:**
+  /// - [ArgumentError] if the language is not supported
+  /// - [ArgumentError] if the number is not a positive integer
+  String toOrdinalInLanguage(String languageCode) {
+    if (this != this.toInt() || this <= 0) {
+      throw ArgumentError('Ordinal conversion requires positive integers');
+    }
+    return NumberToWords.convertOrdinal(languageCode, this.toInt());
+  }
+
+  /// Convert this number to ordinal words in English (explicit)
+  ///
+  /// Example:
+  /// ```dart
+  /// print(1.toOrdinalEnglish()); // "first"
+  /// print(21.toOrdinalEnglish()); // "twenty-first"
+  /// ```
+  String toOrdinalEnglish() {
+    return toOrdinalInLanguage('en');
+  }
+
+  /// Convert this number to ordinal words in Vietnamese
+  ///
+  /// Example:
+  /// ```dart
+  /// print(1.toOrdinalVietnamese()); // "thứ nhất"
+  /// print(2.toOrdinalVietnamese()); // "thứ hai"
+  /// ```
+  String toOrdinalVietnamese() {
+    return toOrdinalInLanguage('vi');
+  }
+
+  /// Convert this number to ordinal words in Spanish
+  ///
+  /// Example:
+  /// ```dart
+  /// print(1.toOrdinalSpanish()); // "primero"
+  /// print(2.toOrdinalSpanish()); // "segundo"
+  /// ```
+  String toOrdinalSpanish() {
+    return toOrdinalInLanguage('es');
+  }
+
+  /// Convert this number to ordinal words in French
+  ///
+  /// Example:
+  /// ```dart
+  /// print(1.toOrdinalFrench()); // "premier"
+  /// print(2.toOrdinalFrench()); // "deuxième"
+  /// ```
+  String toOrdinalFrench() {
+    return toOrdinalInLanguage('fr');
+  }
+
+  /// Convert this number to ordinal words in German
+  ///
+  /// Example:
+  /// ```dart
+  /// print(1.toOrdinalGerman()); // "erste"
+  /// print(2.toOrdinalGerman()); // "zweite"
+  /// ```
+  String toOrdinalGerman() {
+    return toOrdinalInLanguage('de');
+  }
+
+  /// Convert this number to ordinal words in Italian
+  ///
+  /// Example:
+  /// ```dart
+  /// print(1.toOrdinalItalian()); // "primo"
+  /// print(2.toOrdinalItalian()); // "secondo"
+  /// ```
+  String toOrdinalItalian() {
+    return toOrdinalInLanguage('it');
+  }
+
+  /// Convert this number to ordinal words in Portuguese
+  ///
+  /// Example:
+  /// ```dart
+  /// print(1.toOrdinalPortuguese()); // "primeiro"
+  /// print(2.toOrdinalPortuguese()); // "segundo"
+  /// ```
+  String toOrdinalPortuguese() {
+    return toOrdinalInLanguage('pt');
+  }
+
+  /// Convert this number to ordinal words in Russian
+  ///
+  /// Example:
+  /// ```dart
+  /// print(1.toOrdinalRussian()); // "первый"
+  /// print(2.toOrdinalRussian()); // "второй"
+  /// ```
+  String toOrdinalRussian() {
+    return toOrdinalInLanguage('ru');
+  }
+
+  /// Convert this number to ordinal words in Chinese
+  ///
+  /// Example:
+  /// ```dart
+  /// print(1.toOrdinalChinese()); // "第一"
+  /// print(2.toOrdinalChinese()); // "第二"
+  /// ```
+  String toOrdinalChinese() {
+    return toOrdinalInLanguage('zh');
+  }
+
+  /// Convert this number to ordinal words in Japanese
+  ///
+  /// Example:
+  /// ```dart
+  /// print(1.toOrdinalJapanese()); // "第いち番目"
+  /// print(2.toOrdinalJapanese()); // "第に番目"
+  /// ```
+  String toOrdinalJapanese() {
+    return toOrdinalInLanguage('ja');
+  }
+
+  /// Convert this number to ordinal words in Dutch
+  ///
+  /// Example:
+  /// ```dart
+  /// print(1.toOrdinalDutch()); // "eerste"
+  /// print(2.toOrdinalDutch()); // "tweede"
+  /// ```
+  String toOrdinalDutch() {
+    return toOrdinalInLanguage('nl');
+  }
+
+  /// Convert this number to ordinal words in Arabic
+  ///
+  /// Example:
+  /// ```dart
+  /// print(1.toOrdinalArabic()); // "الأول"
+  /// print(2.toOrdinalArabic()); // "الثاني"
+  /// ```
+  String toOrdinalArabic() {
+    return toOrdinalInLanguage('ar');
+  }
 }
 
 /// Extension on [int] to provide integer-specific conversion methods
@@ -230,6 +410,78 @@ extension IntegerToWordsExtension on int {
   int wordCount([String languageCode = 'en']) {
     String words = NumberToWords.convert(languageCode, this);
     return words.split(RegExp(r'\s+')).length;
+  }
+
+  /// Convert this integer to ordinal words in the specified language
+  /// 
+  /// Specialized method for integers to convert to ordinal form.
+  /// 
+  /// Example:
+  /// ```dart
+  /// print(1.toOrdinalWords()); // "first"
+  /// print(21.toOrdinalWords()); // "twenty-first"
+  /// print(101.toOrdinalWords()); // "one hundred first"
+  /// print(1.toOrdinalWords('vi')); // "thứ nhất"
+  /// ```
+  /// 
+  /// **Throws:**
+  /// - [ArgumentError] if the number is not positive
+  String toOrdinalWords([String languageCode = 'en']) {
+    if (this <= 0) {
+      throw ArgumentError('Ordinal numbers must be positive integers');
+    }
+    return NumberToWords.convertOrdinal(languageCode, this);
+  }
+
+  /// Check if this integer can be converted to ordinal words
+  /// 
+  /// Returns true if the number is a positive integer.
+  /// 
+  /// Example:
+  /// ```dart
+  /// print(1.canConvertToOrdinal()); // true
+  /// print(0.canConvertToOrdinal()); // false
+  /// print((-1).canConvertToOrdinal()); // false
+  /// ```
+  bool canConvertToOrdinal() {
+    return this > 0;
+  }
+
+  /// Get ordinal suffix for this number (English only)
+  /// 
+  /// Returns just the ordinal suffix (st, nd, rd, th).
+  /// 
+  /// Example:
+  /// ```dart
+  /// print(1.getOrdinalSuffix()); // "st"
+  /// print(2.getOrdinalSuffix()); // "nd" 
+  /// print(3.getOrdinalSuffix()); // "rd"
+  /// print(11.getOrdinalSuffix()); // "th"
+  /// print(21.getOrdinalSuffix()); // "st"
+  /// ```
+  String getOrdinalSuffix() {
+    if (this <= 0) {
+      throw ArgumentError('Ordinal suffix requires positive integers');
+    }
+
+    // Special cases for the teens
+    int lastTwoDigits = this % 100;
+    if (lastTwoDigits >= 11 && lastTwoDigits <= 13) {
+      return 'th';
+    }
+
+    // Check last digit
+    int lastDigit = this % 10;
+    switch (lastDigit) {
+      case 1:
+        return 'st';
+      case 2:
+        return 'nd';
+      case 3:
+        return 'rd';
+      default:
+        return 'th';
+    }
   }
 }
 

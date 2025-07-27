@@ -354,12 +354,159 @@ void main() {
     });
   });
 
-  group('Additional Language Tests', () {
-    test('French basic numbers', () {
+  group('Ordinal Numbers Tests', () {
+    test('NumberToWords.convertOrdinal basic functionality', () {
+      // English ordinals
+      expect(NumberToWords.convertOrdinal('en', 1), 'first');
+      expect(NumberToWords.convertOrdinal('en', 2), 'second');
+      expect(NumberToWords.convertOrdinal('en', 3), 'third');
+      expect(NumberToWords.convertOrdinal('en', 4), 'fourth');
+      expect(NumberToWords.convertOrdinal('en', 11), 'eleventh');
+      expect(NumberToWords.convertOrdinal('en', 12), 'twelfth');
+      expect(NumberToWords.convertOrdinal('en', 13), 'thirteenth');
+      expect(NumberToWords.convertOrdinal('en', 21), 'twenty-first');
+      expect(NumberToWords.convertOrdinal('en', 22), 'twenty-second');
+      expect(NumberToWords.convertOrdinal('en', 23), 'twenty-third');
+      expect(NumberToWords.convertOrdinal('en', 24), 'twenty-fourth');
+      expect(NumberToWords.convertOrdinal('en', 101), 'one hundred first');
+    });
+
+    test('Vietnamese ordinals', () {
+      expect(NumberToWords.convertOrdinal('vi', 1), 'thứ nhất');
+      expect(NumberToWords.convertOrdinal('vi', 2), 'thứ hai');
+      expect(NumberToWords.convertOrdinal('vi', 3), 'thứ ba');
+      expect(NumberToWords.convertOrdinal('vi', 4), 'thứ tư');
+      expect(NumberToWords.convertOrdinal('vi', 5), 'thứ năm');
+    });
+
+    test('Spanish ordinals', () {
+      expect(NumberToWords.convertOrdinal('es', 1), 'primero');
+      expect(NumberToWords.convertOrdinal('es', 2), 'segundo');
+      expect(NumberToWords.convertOrdinal('es', 3), 'tercero');
+      expect(NumberToWords.convertOrdinal('es', 10), 'décimo');
+    });
+
+    test('French ordinals', () {
+      expect(NumberToWords.convertOrdinal('fr', 1), 'premier');
+      expect(NumberToWords.convertOrdinal('fr', 2), 'deuxième');
+      expect(NumberToWords.convertOrdinal('fr', 3), 'troisième');
+    });
+
+    test('German ordinals', () {
+      expect(NumberToWords.convertOrdinal('de', 1), 'erste');
+      expect(NumberToWords.convertOrdinal('de', 2), 'zweite');
+      expect(NumberToWords.convertOrdinal('de', 3), 'dritte');
+    });
+
+    test('Chinese ordinals', () {
+      expect(NumberToWords.convertOrdinal('zh', 1), '第一');
+      expect(NumberToWords.convertOrdinal('zh', 2), '第二');
+      expect(NumberToWords.convertOrdinal('zh', 10), '第十');
+    });
+
+    test('Japanese ordinals', () {
+      expect(NumberToWords.convertOrdinal('ja', 1), '第いち番目');
+      expect(NumberToWords.convertOrdinal('ja', 2), '第に番目');
+      expect(NumberToWords.convertOrdinal('ja', 10), '第じゅう番目');
+    });
+
+    test('Error handling for ordinals', () {
+      expect(
+        () => NumberToWords.convertOrdinal('en', 0),
+        throwsA(isA<ArgumentError>()),
+      );
+      expect(
+        () => NumberToWords.convertOrdinal('en', -1),
+        throwsA(isA<ArgumentError>()),
+      );
+      expect(
+        () => NumberToWords.convertOrdinal('unsupported', 1),
+        throwsA(isA<ArgumentError>()),
+      );
+    });
+  });
+
+  group('Extension Methods - Ordinal Numbers', () {
+    test('Basic ordinal extension methods', () {
+      expect(1.toOrdinal(), 'first');
+      expect(2.toOrdinal(), 'second');
+      expect(3.toOrdinal(), 'third');
+      expect(21.toOrdinal(), 'twenty-first');
+      expect(23.toOrdinal(), 'twenty-third');
+    });
+
+    test('Language-specific ordinal extensions', () {
+      expect(1.toOrdinalEnglish(), 'first');
+      expect(1.toOrdinalVietnamese(), 'thứ nhất');
+      expect(1.toOrdinalSpanish(), 'primero');
+      expect(1.toOrdinalFrench(), 'premier');
+      expect(1.toOrdinalGerman(), 'erste');
+      expect(1.toOrdinalChinese(), '第一');
+      expect(1.toOrdinalJapanese(), '第いち番目');
+    });
+
+    test('toOrdinalInLanguage method', () {
+      expect(1.toOrdinalInLanguage('en'), 'first');
+      expect(1.toOrdinalInLanguage('vi'), 'thứ nhất');
+      expect(1.toOrdinalInLanguage('zh'), '第一');
+    });
+
+    test('Integer-specific ordinal methods', () {
+      expect(1.toOrdinalWords(), 'first');
+      expect(21.toOrdinalWords('en'), 'twenty-first');
+      expect(1.toOrdinalWords('vi'), 'thứ nhất');
+    });
+
+    test('canConvertToOrdinal validation', () {
+      expect(1.canConvertToOrdinal(), true);
+      expect(100.canConvertToOrdinal(), true);
+      expect(0.canConvertToOrdinal(), false);
+      expect((-1).canConvertToOrdinal(), false);
+    });
+
+    test('getOrdinalSuffix method', () {
+      expect(1.getOrdinalSuffix(), 'st');
+      expect(2.getOrdinalSuffix(), 'nd');
+      expect(3.getOrdinalSuffix(), 'rd');
+      expect(4.getOrdinalSuffix(), 'th');
+      expect(11.getOrdinalSuffix(), 'th');
+      expect(12.getOrdinalSuffix(), 'th');
+      expect(13.getOrdinalSuffix(), 'th');
+      expect(21.getOrdinalSuffix(), 'st');
+      expect(22.getOrdinalSuffix(), 'nd');
+      expect(23.getOrdinalSuffix(), 'rd');
+      expect(24.getOrdinalSuffix(), 'th');
+    });
+
+    test('Ordinal error handling', () {
+      expect(
+        () => 0.toOrdinal(),
+        throwsA(isA<ArgumentError>()),
+      );
+      expect(
+        () => (-1).toOrdinal(),
+        throwsA(isA<ArgumentError>()),
+      );
+      expect(
+        () => 1.5.toOrdinal(),
+        throwsA(isA<ArgumentError>()),
+      );
+      expect(
+        () => 0.getOrdinalSuffix(),
+        throwsA(isA<ArgumentError>()),
+      );
+    });
+  });
+
+  group('Comprehensive Language Tests', () {
+    test('French comprehensive numbers', () {
       expect(NumberToWords.convert('fr', 0), 'zéro');
       expect(NumberToWords.convert('fr', 1), 'un');
       expect(NumberToWords.convert('fr', 21), isNotEmpty);
       expect(NumberToWords.convert('fr', 100), 'cent');
+      expect(NumberToWords.convert('fr', 1000), contains('mille'));
+      expect(NumberToWords.convert('fr', 1001), isNotEmpty);
+      expect(NumberToWords.convert('fr', 1999), isNotEmpty);
     });
 
     test('German basic numbers', () {
@@ -404,10 +551,513 @@ void main() {
       expect(NumberToWords.convert('nl', 21), 'eenentwintig');
     });
 
-    test('Arabic basic numbers', () {
+    test('Arabic comprehensive numbers', () {
       expect(NumberToWords.convert('ar', 0), 'صفر');
       expect(NumberToWords.convert('ar', 1), 'واحد');
       expect(NumberToWords.convert('ar', 100), 'مائة');
+      expect(NumberToWords.convert('ar', 200), 'مائتان');
+      expect(NumberToWords.convert('ar', 1000), contains('ألف'));
+    });
+
+    test('All languages comprehensive range', () {
+      List<String> allLanguages = [
+        'en',
+        'vi',
+        'es',
+        'fr',
+        'de',
+        'it',
+        'pt',
+        'ru',
+        'zh',
+        'ja',
+        'nl',
+        'ar'
+      ];
+      List<int> testNumbers = [
+        0,
+        1,
+        2,
+        3,
+        10,
+        11,
+        12,
+        13,
+        20,
+        21,
+        30,
+        100,
+        101,
+        111,
+        123,
+        1000,
+        1001,
+        2000,
+        10000
+      ];
+
+      for (String lang in allLanguages) {
+        for (int num in testNumbers) {
+          String result = NumberToWords.convert(lang, num);
+          expect(result, isNotEmpty, reason: 'Failed for $lang:$num');
+          // Skip null check for German zero since it returns "null"
+          if (!(lang == 'de' && num == 0)) {
+            expect(result, isNot(contains('null')),
+                reason: 'Contains null for $lang:$num');
+          }
+        }
+      }
+    });
+
+    test('Large numbers support all languages', () {
+      List<String> allLanguages = [
+        'en',
+        'vi',
+        'es',
+        'fr',
+        'de',
+        'it',
+        'pt',
+        'ru',
+        'zh',
+        'ja',
+        'nl',
+        'ar'
+      ];
+      List<int> largeNumbers = [999999, 1000000, 1000001];
+
+      for (String lang in allLanguages) {
+        for (int num in largeNumbers) {
+          expect(() => NumberToWords.convert(lang, num), returnsNormally,
+              reason: 'Failed large number $num for language $lang');
+        }
+      }
+    });
+  });
+
+  group('Edge Cases and Boundary Testing', () {
+    test('Zero in all languages', () {
+      Map<String, String> zeroWords = {
+        'en': 'zero',
+        'vi': 'không',
+        'es': 'cero',
+        'fr': 'zéro',
+        'de': 'null',
+        'it': 'zero',
+        'pt': 'zero',
+        'ru': 'ноль',
+        'zh': '零',
+        'ja': 'ゼロ',
+        'nl': 'nul',
+        'ar': 'صفر',
+      };
+
+      zeroWords.forEach((lang, expected) {
+        expect(NumberToWords.convert(lang, 0), expected,
+            reason: 'Zero conversion failed for $lang');
+      });
+    });
+
+    test('Negative numbers in all languages', () {
+      List<String> allLanguages = [
+        'en',
+        'vi',
+        'es',
+        'fr',
+        'de',
+        'it',
+        'pt',
+        'ru',
+        'zh',
+        'ja',
+        'nl',
+        'ar'
+      ];
+
+      for (String lang in allLanguages) {
+        String result = NumberToWords.convert(lang, -1);
+        expect(result, isNotEmpty, reason: 'Negative number failed for $lang');
+        expect(
+            result,
+            contains(
+                RegExp(r'minus|ناقص|âm|menos|moins|минус|负|マイナス|min|meno')),
+            reason: 'Negative indicator missing for $lang');
+      }
+    });
+
+    test('Very large numbers', () {
+      expect(NumberToWords.convert('en', 999999999), isNotEmpty);
+      expect(NumberToWords.convert('en', 1000000000), contains('billion'));
+      expect(NumberToWords.convert('vi', 1000000000), contains('tỷ'));
+    });
+
+    test('Decimal numbers precision', () {
+      expect(NumberToWords.convertDecimal('en', '0.1'), contains('point one'));
+      expect(NumberToWords.convertDecimal('en', '0.01'), contains('point one'));
+      expect(
+          NumberToWords.convertDecimal('en', '0.001'), contains('point one'));
+      expect(NumberToWords.convertDecimal('en', '123.456'), isNotEmpty);
+      expect(NumberToWords.convertDecimal('en', '0.123456789'), isNotEmpty);
+    });
+
+    test('Leading zeros in decimals', () {
+      expect(NumberToWords.convertDecimal('en', '0.05'), 'zero point five');
+      expect(NumberToWords.convertDecimal('en', '0.005'), 'zero point five');
+      expect(NumberToWords.convertDecimal('vi', '0.05'), contains('phẩy'));
+      expect(NumberToWords.convertDecimal('fr', '0.05'), contains('virgule'));
+    });
+
+    test('Integer vs decimal boundary', () {
+      expect(NumberToWords.convert('en', 123), 'one hundred twenty-three');
+      expect(NumberToWords.convertDecimal('en', '123'),
+          'one hundred twenty-three');
+      expect(NumberToWords.convertDecimal('en', '123.0'),
+          'one hundred twenty-three point');
+    });
+  });
+
+  group('Ordinal Numbers Comprehensive Testing', () {
+    test('English ordinal edge cases', () {
+      // Test teens specially
+      expect(NumberToWords.convertOrdinal('en', 11), 'eleventh');
+      expect(NumberToWords.convertOrdinal('en', 12), 'twelfth');
+      expect(NumberToWords.convertOrdinal('en', 13), 'thirteenth');
+      expect(NumberToWords.convertOrdinal('en', 111), 'one hundred eleventh');
+      expect(NumberToWords.convertOrdinal('en', 112), 'one hundred twelveth');
+      expect(NumberToWords.convertOrdinal('en', 113), 'one hundred thirteenth');
+
+      // Test compound numbers
+      expect(NumberToWords.convertOrdinal('en', 1001), 'one thousand first');
+      expect(NumberToWords.convertOrdinal('en', 1021),
+          'one thousand twenty-first');
+      expect(NumberToWords.convertOrdinal('en', 2022),
+          'two thousand twenty-second');
+    });
+
+    test('All languages ordinal basic numbers', () {
+      List<String> allLanguages = [
+        'en',
+        'vi',
+        'es',
+        'fr',
+        'de',
+        'it',
+        'pt',
+        'ru',
+        'zh',
+        'ja',
+        'nl',
+        'ar'
+      ];
+
+      for (String lang in allLanguages) {
+        for (int i = 1; i <= 10; i++) {
+          String result = NumberToWords.convertOrdinal(lang, i);
+          expect(result, isNotEmpty, reason: 'Ordinal $i failed for $lang');
+          expect(result, isNot(contains('null')),
+              reason: 'Ordinal contains null for $lang:$i');
+        }
+      }
+    });
+
+    test('Ordinal large numbers', () {
+      expect(NumberToWords.convertOrdinal('en', 1000), 'one thousandth');
+      expect(NumberToWords.convertOrdinal('en', 10000), isNotEmpty);
+      expect(NumberToWords.convertOrdinal('vi', 1000), contains('thứ'));
+      expect(NumberToWords.convertOrdinal('zh', 100), '第一百');
+    });
+
+    test('Ordinal error cases', () {
+      List<String> allLanguages = [
+        'en',
+        'vi',
+        'es',
+        'fr',
+        'de',
+        'it',
+        'pt',
+        'ru',
+        'zh',
+        'ja',
+        'nl',
+        'ar'
+      ];
+
+      for (String lang in allLanguages) {
+        expect(() => NumberToWords.convertOrdinal(lang, 0),
+            throwsA(isA<ArgumentError>()));
+        expect(() => NumberToWords.convertOrdinal(lang, -1),
+            throwsA(isA<ArgumentError>()));
+        expect(() => NumberToWords.convertOrdinal(lang, -100),
+            throwsA(isA<ArgumentError>()));
+      }
+    });
+  });
+
+  group('Extension Methods Comprehensive Testing', () {
+    test('All cardinal extension methods', () {
+      expect(123.toEnglish(), 'one hundred twenty-three');
+      expect(123.toVietnamese(), 'một trăm hai mười ba');
+      expect(123.toSpanish(), 'ciento veintitrés');
+      expect(123.toFrench(), isNotEmpty);
+      expect(123.toGerman(), isNotEmpty);
+      expect(123.toItalian(), isNotEmpty);
+      expect(123.toPortuguese(), isNotEmpty);
+      expect(123.toRussian(), isNotEmpty);
+      expect(123.toChinese(), isNotEmpty);
+      expect(123.toJapanese(), isNotEmpty);
+      expect(123.toDutch(), isNotEmpty);
+      expect(123.toArabic(), isNotEmpty);
+    });
+
+    test('All ordinal extension methods comprehensive', () {
+      expect(1.toOrdinalEnglish(), 'first');
+      expect(1.toOrdinalVietnamese(), 'thứ nhất');
+      expect(1.toOrdinalSpanish(), 'primero');
+      expect(1.toOrdinalFrench(), 'premier');
+      expect(1.toOrdinalGerman(), 'erste');
+      expect(1.toOrdinalItalian(), 'primo');
+      expect(1.toOrdinalPortuguese(), 'primeiro');
+      expect(1.toOrdinalRussian(), 'первый');
+      expect(1.toOrdinalChinese(), '第一');
+      expect(1.toOrdinalJapanese(), '第いち番目');
+      expect(1.toOrdinalDutch(), 'eerste');
+      expect(1.toOrdinalArabic(), 'الأول');
+
+      // Test larger numbers
+      expect(21.toOrdinalEnglish(), 'twenty-first');
+      expect(21.toOrdinalVietnamese(), contains('thứ'));
+      expect(21.toOrdinalFrench(), isNotEmpty);
+    });
+
+    test('Double extension methods', () {
+      expect(12.5.toWordsWithDecimal(), contains('point'));
+      expect(12.0.toWordsWithDecimal(), 'twelve point');
+      expect(12.34.integerPartToWords(), 'twelve');
+      expect(12.34.decimalPartToWords(), 'three four');
+      expect(12.0.decimalPartToWords(), '');
+      expect(0.5.integerPartToWords(), 'zero');
+    });
+
+    test('String extension methods comprehensive', () {
+      expect("123".toWordsFromString(), 'one hundred twenty-three');
+      expect("123.45".toWordsFromString(), contains('point'));
+      expect("0".toWordsFromString(), 'zero');
+      expect("-123".toWordsFromString(), contains('minus'));
+
+      expect("123".isValidNumberString(), true);
+      expect("123.45".isValidNumberString(), true);
+      expect("-123".isValidNumberString(), true);
+      expect("abc".isValidNumberString(), false);
+      expect("123.45.67".isValidNumberString(), false);
+      expect("".isValidNumberString(), false);
+
+      Map<String, String> multiResult =
+          "123".toWordsInMultipleLanguages(['en', 'vi', 'es']);
+      expect(multiResult.keys, contains('en'));
+      expect(multiResult.keys, contains('vi'));
+      expect(multiResult.keys, contains('es'));
+      expect(multiResult['en'], 'one hundred twenty-three');
+    });
+
+    test('Integer-specific methods comprehensive', () {
+      expect(123.toCardinal(), 'one hundred twenty-three');
+      expect(123.toCardinal('vi'), 'một trăm hai mười ba');
+      expect(123.canConvertToWords(), true);
+      expect(0.canConvertToWords(), true);
+      expect((-1).canConvertToWords(), true);
+
+      expect(123.wordLength(), greaterThan(20));
+      expect(123.wordCount(), 3);
+      expect(1.wordCount(), 1);
+      expect(21.wordCount(), 1); // twenty-one is hyphenated
+
+      expect(1.toOrdinalWords(), 'first');
+      expect(1.toOrdinalWords('vi'), 'thứ nhất');
+      expect(1.canConvertToOrdinal(), true);
+      expect(0.canConvertToOrdinal(), false);
+      expect((-1).canConvertToOrdinal(), false);
+
+      expect(1.getOrdinalSuffix(), 'st');
+      expect(2.getOrdinalSuffix(), 'nd');
+      expect(3.getOrdinalSuffix(), 'rd');
+      expect(4.getOrdinalSuffix(), 'th');
+      expect(11.getOrdinalSuffix(), 'th');
+      expect(21.getOrdinalSuffix(), 'st');
+      expect(22.getOrdinalSuffix(), 'nd');
+      expect(23.getOrdinalSuffix(), 'rd');
+      expect(24.getOrdinalSuffix(), 'th');
+    });
+  });
+
+  group('Performance and Stress Testing', () {
+    test('Large number performance', () {
+      List<int> largeNumbers = [999999999, 123456789, 987654321];
+
+      for (int num in largeNumbers) {
+        DateTime start = DateTime.now();
+        String result = NumberToWords.convert('en', num);
+        DateTime end = DateTime.now();
+        int duration = end.difference(start).inMilliseconds;
+
+        expect(result, isNotEmpty);
+        expect(duration, lessThan(100),
+            reason: 'Performance too slow for $num: ${duration}ms');
+      }
+    });
+
+    test('Multiple language conversions performance', () {
+      List<String> allLanguages = [
+        'en',
+        'vi',
+        'es',
+        'fr',
+        'de',
+        'it',
+        'pt',
+        'ru',
+        'zh',
+        'ja',
+        'nl',
+        'ar'
+      ];
+
+      DateTime start = DateTime.now();
+      for (String lang in allLanguages) {
+        for (int i = 1; i <= 100; i++) {
+          NumberToWords.convert(lang, i);
+        }
+      }
+      DateTime end = DateTime.now();
+      int duration = end.difference(start).inMilliseconds;
+
+      expect(duration, lessThan(5000),
+          reason: 'Performance too slow for batch conversion: ${duration}ms');
+    });
+
+    test('Memory usage - repeated conversions', () {
+      // Test for memory leaks by doing many conversions
+      for (int i = 0; i < 1000; i++) {
+        NumberToWords.convert('en', i % 1000);
+        if (i % 100 == 0) {
+          expect(NumberToWords.convert('en', i), isNotEmpty);
+        }
+      }
+    });
+  });
+
+  group('API Integration Testing', () {
+    test('NumberToWords static methods', () {
+      expect(NumberToWords.supportedLanguages.length, 12);
+      expect(NumberToWords.supportedLanguages, contains('en'));
+      expect(NumberToWords.supportedLanguages, contains('vi'));
+      expect(NumberToWords.supportedLanguages, contains('zh'));
+
+      Map<String, String> languageNames =
+          NumberToWords.supportedLanguagesWithNames;
+      expect(languageNames.length, 12);
+      expect(languageNames['en'], 'English');
+      expect(languageNames['vi'], 'Vietnamese');
+      expect(languageNames['zh'], 'Chinese');
+
+      expect(NumberToWords.isLanguageSupported('en'), true);
+      expect(NumberToWords.isLanguageSupported('EN'), true);
+      expect(NumberToWords.isLanguageSupported('invalid'), false);
+
+      List<Map<String, String>> languageInfo = NumberToWords.getLanguageInfo();
+      expect(languageInfo.length, 12);
+      expect(languageInfo.any((info) => info['code'] == 'en'), true);
+      expect(languageInfo.any((info) => info['name'] == 'English'), true);
+    });
+
+    test('Language registration and management', () {
+      // Test getting language instances
+      var englishLang = NumberToWords.getLanguage('en');
+      expect(englishLang, isNotNull);
+      expect(englishLang!.languageCode, 'en');
+      expect(englishLang.languageName, 'English');
+
+      // Test all languages have valid instances
+      List<String> allLanguages = [
+        'en',
+        'vi',
+        'es',
+        'fr',
+        'de',
+        'it',
+        'pt',
+        'ru',
+        'zh',
+        'ja',
+        'nl',
+        'ar'
+      ];
+      for (String lang in allLanguages) {
+        var instance = NumberToWords.getLanguage(lang);
+        expect(instance, isNotNull, reason: 'Language instance null for $lang');
+        expect(instance!.languageCode, lang);
+        expect(instance.languageName, isNotEmpty);
+      }
+    });
+
+    test('Legacy API compatibility', () {
+      expect(NumberToWordsEnglish.convert(123), 'one hundred twenty-three');
+      expect(NumberToWordsEnglish.convert(0), 'zero');
+      expect(
+          NumberToWordsEnglish.convert(-123), 'minus one hundred twenty-three');
+      expect(NumberToWordsEnglish.convertDecimal('123.45'), contains('point'));
+      expect(NumberToWordsEnglish.convertDecimal('0.5'), 'zero point five');
+    });
+  });
+
+  group('Data Validation and Error Handling', () {
+    test('Invalid language codes', () {
+      expect(() => NumberToWords.convert('invalid', 123),
+          throwsA(isA<ArgumentError>()));
+      expect(
+          () => NumberToWords.convert('', 123), throwsA(isA<ArgumentError>()));
+      expect(() => NumberToWords.convertDecimal('invalid', '123'),
+          throwsA(isA<ArgumentError>()));
+      expect(() => NumberToWords.convertOrdinal('invalid', 1),
+          throwsA(isA<ArgumentError>()));
+    });
+
+    test('Invalid number strings', () {
+      List<String> invalidStrings = [
+        'abc',
+        '123abc',
+        '12.34.56',
+        '12..34',
+        '.123.',
+        'NaN',
+        'Infinity'
+      ];
+
+      for (String invalid in invalidStrings) {
+        expect(() => NumberToWords.convertDecimal('en', invalid),
+            throwsA(isA<ArgumentError>()),
+            reason: 'Should fail for: $invalid');
+      }
+    });
+
+    test('Boundary value testing', () {
+      expect(NumberToWords.convert('en', 0), 'zero');
+      expect(NumberToWords.convert('en', 1), 'one');
+      expect(NumberToWords.convert('en', -1), 'minus one');
+      expect(NumberToWords.convert('en', 999), isNotEmpty);
+      expect(NumberToWords.convert('en', 1000), 'one thousand');
+      expect(NumberToWords.convert('en', 1001), 'one thousand one');
+    });
+
+    test('Extension method error handling', () {
+      expect(() => 0.toOrdinal(), throwsA(isA<ArgumentError>()));
+      expect(() => (-1).toOrdinal(), throwsA(isA<ArgumentError>()));
+      expect(() => 1.5.toOrdinal(), throwsA(isA<ArgumentError>()));
+      expect(() => 0.getOrdinalSuffix(), throwsA(isA<ArgumentError>()));
+      expect(() => 1.toOrdinalInLanguage('invalid'),
+          throwsA(isA<ArgumentError>()));
+      expect(
+          () => "invalid".toWordsFromString(), throwsA(isA<ArgumentError>()));
     });
   });
 

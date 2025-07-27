@@ -28,4 +28,14 @@ abstract class NumberToWordsLanguage {
 
   /// Get the word for "point" (decimal separator) in this language
   String get pointWord;
+
+  /// Convert a number to ordinal words (1st, 2nd, 3rd, etc.)
+  ///
+  /// Example:
+  /// ```dart
+  /// convertOrdinal(1); // "first" (English), "thứ nhất" (Vietnamese)
+  /// convertOrdinal(2); // "second" (English), "thứ hai" (Vietnamese)
+  /// convertOrdinal(21); // "twenty-first" (English), "thứ hai mười một" (Vietnamese)
+  /// ```
+  String convertOrdinal(int number);
 }

@@ -188,4 +188,116 @@ class EnglishNumberToWords extends NumberToWordsLanguage {
       return convertDecimal(number.toString());
     }
   }
+
+  @override
+  String convertOrdinal(int number) {
+    if (number <= 0) {
+      throw ArgumentError('Ordinal numbers must be positive integers');
+    }
+
+    // Special individual cases
+    switch (number) {
+      case 1:
+        return 'first';
+      case 2:
+        return 'second';
+      case 3:
+        return 'third';
+      case 4:
+        return 'fourth';
+      case 5:
+        return 'fifth';
+      case 6:
+        return 'sixth';
+      case 7:
+        return 'seventh';
+      case 8:
+        return 'eighth';
+      case 9:
+        return 'ninth';
+      case 10:
+        return 'tenth';
+      case 11:
+        return 'eleventh';
+      case 12:
+        return 'twelfth';
+      case 13:
+        return 'thirteenth';
+      case 14:
+        return 'fourteenth';
+      case 15:
+        return 'fifteenth';
+      case 16:
+        return 'sixteenth';
+      case 17:
+        return 'seventeenth';
+      case 18:
+        return 'eighteenth';
+      case 19:
+        return 'nineteenth';
+      case 20:
+        return 'twentieth';
+      case 30:
+        return 'thirtieth';
+      case 40:
+        return 'fortieth';
+      case 50:
+        return 'fiftieth';
+      case 60:
+        return 'sixtieth';
+      case 70:
+        return 'seventieth';
+      case 80:
+        return 'eightieth';
+      case 90:
+        return 'ninetieth';
+    }
+
+    // For larger numbers, handle compound ordinals
+    int lastTwoDigits = number % 100;
+    if (lastTwoDigits >= 11 && lastTwoDigits <= 13) {
+      return '${convertIntegerPart(number)}th';
+    }
+
+    // Check last digit for specific ordinal endings
+    int lastDigit = number % 10;
+    String baseWords = convertIntegerPart(number);
+
+    switch (lastDigit) {
+      case 1:
+        if (baseWords.endsWith(' one')) {
+          return baseWords.substring(0, baseWords.length - 4) + ' first';
+        } else if (baseWords.endsWith('-one')) {
+          return baseWords.substring(0, baseWords.length - 4) + '-first';
+        } else {
+          return '${baseWords}st';
+        }
+      case 2:
+        if (baseWords.endsWith(' two')) {
+          return baseWords.substring(0, baseWords.length - 4) + ' second';
+        } else if (baseWords.endsWith('-two')) {
+          return baseWords.substring(0, baseWords.length - 4) + '-second';
+        } else {
+          return '${baseWords}nd';
+        }
+      case 3:
+        if (baseWords.endsWith(' three')) {
+          return baseWords.substring(0, baseWords.length - 6) + ' third';
+        } else if (baseWords.endsWith('-three')) {
+          return baseWords.substring(0, baseWords.length - 6) + '-third';
+        } else {
+          return '${baseWords}rd';
+        }
+      case 5:
+        if (baseWords.endsWith(' five')) {
+          return baseWords.substring(0, baseWords.length - 5) + ' fifth';
+        } else if (baseWords.endsWith('-five')) {
+          return baseWords.substring(0, baseWords.length - 5) + '-fifth';
+        } else {
+          return '${baseWords}th';
+        }
+      default:
+        return '${baseWords}th';
+    }
+  }
 }

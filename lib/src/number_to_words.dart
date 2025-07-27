@@ -109,11 +109,42 @@ class NumberToWords {
   /// Example:
   /// ```dart
   /// bool isSupported = NumberToWords.isLanguageSupported('en'); // true
-  /// bool isSupported = NumberToWords.isLanguageSupported('fr'); // false
+  /// bool isSupported = NumberToWords.isLanguageSupported('fr'); // true
   /// bool isSupported = NumberToWords.isLanguageSupported('EN'); // true (case-insensitive)
   /// ```
   static bool isLanguageSupported(String languageCode) {
     return _languages.containsKey(languageCode.toLowerCase());
+  }
+
+  /// Convert an integer to ordinal words in specified language
+  /// 
+  /// Converts numbers to their ordinal form (1st, 2nd, 3rd, etc.) in words.
+  /// 
+  /// **Parameters:**
+  /// - [languageCode] - Language code ('en', 'vi', 'es', 'fr', 'de', 'it', 'pt', 'ru', 'zh', 'ja', 'nl', 'ar')
+  /// - [number] - Positive integer to convert to ordinal
+  /// 
+  /// **Examples:**
+  /// ```dart
+  /// NumberToWords.convertOrdinal('en', 1);   // "first"
+  /// NumberToWords.convertOrdinal('en', 2);   // "second"
+  /// NumberToWords.convertOrdinal('en', 21);  // "twenty-first"
+  /// NumberToWords.convertOrdinal('vi', 1);   // "thứ nhất"
+  /// NumberToWords.convertOrdinal('fr', 1);   // "premier"
+  /// NumberToWords.convertOrdinal('zh', 1);   // "第一"
+  /// NumberToWords.convertOrdinal('ja', 1);   // "第いち番目"
+  /// ```
+  /// 
+  /// **Throws:**
+  /// - [ArgumentError] if the language is not supported
+  /// - [ArgumentError] if the number is not a positive integer
+  static String convertOrdinal(String languageCode, int number) {
+    final language = _languages[languageCode.toLowerCase()];
+    if (language == null) {
+      throw ArgumentError('Language "$languageCode" is not supported. '
+          'Supported languages: ${_languages.keys.join(', ')}');
+    }
+    return language.convertOrdinal(number);
   }
 
   /// Get the language implementation for a given language code

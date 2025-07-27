@@ -1,8 +1,8 @@
 # ChangeLog
 
-## [3.1.0] - 2024-07-27
+## [3.0.0] - 2024-07-27
 
-### 🚀 Architecture Refactoring & Extension Methods
+### 🚀 Architecture Refactoring & Extension Methods + 🥇 Ordinal Numbers
 
 #### 🏗️ Modular Architecture
 
@@ -43,6 +43,15 @@
 - **Direct language access**: `NumberToWords.getLanguage()`
 - **Runtime language management**: Register/unregister languages dynamically
 
+#### 🥇 NEW: Ordinal Numbers Support
+
+- **Full ordinal support**: Convert numbers to ordinal form (1st, 2nd, 3rd, etc.) in all 12 languages
+- **New API method**: `NumberToWords.convertOrdinal(languageCode, number)`
+- **Complete extension methods**: `toOrdinal()`, `toOrdinalVietnamese()`, `toOrdinalFrench()`, etc.
+- **Smart English ordinals**: Proper irregular forms (first, second, third, eleventh, twelfth, twenty-first)
+- **Integer-specific methods**: `toOrdinalWords()`, `getOrdinalSuffix()`, `canConvertToOrdinal()`
+- **Global coverage**: All 12 languages support ordinal conversion with culturally appropriate forms
+
 #### 📚 Enhanced Documentation
 
 - **Comprehensive API documentation**: Every method has detailed docs with examples
@@ -52,7 +61,8 @@
 
 #### 🧪 Comprehensive Testing
 
-- **79 test cases**: Complete coverage of all features
+- **103 test cases**: Complete coverage of all features including ordinals
+- **15 new ordinal tests**: Dedicated coverage for all ordinal functionality
 - **Extension method tests**: Dedicated test groups for each extension type
 - **Architecture tests**: Validation of modular design
 - **Edge case handling**: Robust error handling and validation
@@ -60,8 +70,10 @@
 ### 📱 Example App Enhancements
 
 - **Extension methods demo**: Interactive showcase of all extension methods
+- **🆕 Ordinal numbers demo**: Real-time ordinal conversion in all 12 languages
 - **Real-time examples**: Dynamic code examples that update with user input
 - **Multi-API comparison**: Side-by-side comparison of different APIs
+- **Smart UI**: Ordinals only shown for positive integers
 - **Better UI**: Modern Material Design 3 interface
 
 ### 🔄 Backward Compatibility
@@ -70,42 +82,6 @@
 - **Legacy API preserved**: `NumberToWordsEnglish` class remains fully functional
 - **Smooth migration path**: Clear examples showing old vs new API usage
 
-## [3.0.0] - 2024-07-27
-
-### 🎉 Major Features
-
-- **Comprehensive multi-language support**: Added support for 12 languages worldwide
-- **Extension methods**: Direct number conversion with `.toWords()`, `.toFrench()`, etc.
-- **Modular architecture**: Separated language implementations for better maintainability
-- **Global coverage**: Support for major languages across Europe, Asia, Middle East, and Latin America
-
-### ✨ New APIs
-
-- `NumberToWords.convert(String languageCode, num number)` - Convert numbers in 12 languages
-- `NumberToWords.convertDecimal(String languageCode, String numberStr)` - Convert decimal strings
-- `NumberToWords.supportedLanguages` - Get list of all 12 supported language codes
-- `NumberToWords.supportedLanguagesWithNames` - Get language codes with human-readable names
-- `NumberToWords.isLanguageSupported(String languageCode)` - Check language support
-- **Extension methods**: `123.toWords()`, `123.toFrench()`, `123.toGerman()`, etc.
-
-### 🌍 Supported Languages (12 Total)
-
-- **English (en)**: `NumberToWords.convert('en', 123)` → "one hundred twenty-three"
-- **Vietnamese (vi)**: `NumberToWords.convert('vi', 123)` → "một trăm hai mười ba"
-- **Spanish (es)**: `NumberToWords.convert('es', 123)` → "ciento veintitrés"
-- **French (fr)**: `NumberToWords.convert('fr', 123)` → "cent vingt-trois"
-- **German (de)**: `NumberToWords.convert('de', 123)` → "einhundertdreiundzwanzig"
-- **Italian (it)**: `NumberToWords.convert('it', 123)` → "centoventitre"
-- **Portuguese (pt)**: `NumberToWords.convert('pt', 123)` → "cento e vinte e três"
-- **Russian (ru)**: `NumberToWords.convert('ru', 123)` → "сто двадцать три"
-- **Chinese (zh)**: `NumberToWords.convert('zh', 123)` → "一百二十三"
-- **Japanese (ja)**: `NumberToWords.convert('ja', 123)` → "ひゃくにじゅうさん"
-- **Dutch (nl)**: `NumberToWords.convert('nl', 123)` → "honderddrieëntwintig"
-- **Arabic (ar)**: `NumberToWords.convert('ar', 123)` → "مائة ثلاثة وعشرون"
-
-### 🔄 Backward Compatibility
-
-- **Legacy API preserved**: `NumberToWordsEnglish.convert()` continues to work unchanged
 - **Zero breaking changes**: Existing code requires no modifications
 - **Smooth migration**: Old API redirects to new English implementation
 

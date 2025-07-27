@@ -206,4 +206,38 @@ class ItalianNumberToWords extends NumberToWordsLanguage {
       return convertDecimal(number.toString());
     }
   }
+
+  @override
+  String convertOrdinal(int number) {
+    if (number <= 0) {
+      throw ArgumentError('Ordinal numbers must be positive integers');
+    }
+
+    switch (number) {
+      case 1:
+        return 'primo';
+      case 2:
+        return 'secondo';
+      case 3:
+        return 'terzo';
+      case 4:
+        return 'quarto';
+      case 5:
+        return 'quinto';
+      case 6:
+        return 'sesto';
+      case 7:
+        return 'settimo';
+      case 8:
+        return 'ottavo';
+      case 9:
+        return 'nono';
+      case 10:
+        return 'decimo';
+      default:
+        // For larger numbers, use cardinal + º
+        String baseWords = convertIntegerPart(number);
+        return '${baseWords}º';
+    }
+  }
 }

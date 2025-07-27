@@ -188,4 +188,38 @@ class DutchNumberToWords extends NumberToWordsLanguage {
       return convertDecimal(number.toString());
     }
   }
+
+  @override
+  String convertOrdinal(int number) {
+    if (number <= 0) {
+      throw ArgumentError('Ordinal numbers must be positive integers');
+    }
+
+    switch (number) {
+      case 1:
+        return 'eerste';
+      case 2:
+        return 'tweede';
+      case 3:
+        return 'derde';
+      case 4:
+        return 'vierde';
+      case 5:
+        return 'vijfde';
+      case 6:
+        return 'zesde';
+      case 7:
+        return 'zevende';
+      case 8:
+        return 'achtste';
+      default:
+        // For larger numbers, use cardinal + de/ste
+        String baseWords = convertIntegerPart(number);
+        if (number <= 19) {
+          return '${baseWords}de';
+        } else {
+          return '${baseWords}ste';
+        }
+    }
+  }
 }

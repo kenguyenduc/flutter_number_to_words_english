@@ -190,4 +190,15 @@ class JapaneseNumberToWords extends NumberToWordsLanguage {
       return convertDecimal(number.toString());
     }
   }
+
+  @override
+  String convertOrdinal(int number) {
+    if (number <= 0) {
+      throw ArgumentError('Ordinal numbers must be positive integers');
+    }
+
+    // In Japanese, ordinals are formed by adding "第" before and "番目" or just "番" after
+    String cardinalWords = convertIntegerPart(number);
+    return '第${cardinalWords}番目';
+  }
 }

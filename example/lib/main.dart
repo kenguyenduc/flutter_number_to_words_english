@@ -304,6 +304,8 @@ class _MyAppState extends State<MyApp> {
                       ),
                       const SizedBox(height: 12),
                       _buildExtensionDemo(),
+                      const SizedBox(height: 16),
+                      _buildOrdinalDemo(),
                     ],
                   ),
                 ),
@@ -412,6 +414,123 @@ class _MyAppState extends State<MyApp> {
           const SizedBox(height: 4),
           _buildExtensionExample(
               '"$_number".toWordsFromString()', "$_number".toWordsFromString()),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildOrdinalDemo() {
+    // Only show ordinals for positive integers
+    if (_number != _number.toInt() || _number <= 0) {
+      return Container();
+    }
+
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.green[50],
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.green[200]!),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.format_list_numbered,
+                  color: Colors.green[700], size: 16),
+              const SizedBox(width: 4),
+              Text(
+                'Ordinal Numbers (${_number.toInt()}):',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green[700],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+
+          // Basic ordinal methods
+          _buildOrdinalExample(
+              '${_number.toInt()}.toOrdinal()', _number.toInt().toOrdinal()),
+          _buildOrdinalExample('${_number.toInt()}.toOrdinalWords()',
+              _number.toInt().toOrdinalWords()),
+
+          const SizedBox(height: 8),
+          Text(
+            'Multi-language ordinals:',
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              color: Colors.green[600],
+              fontSize: 12,
+            ),
+          ),
+          const SizedBox(height: 4),
+
+          // Multi-language ordinals
+          _buildOrdinalExample('${_number.toInt()}.toOrdinalEnglish()',
+              _number.toInt().toOrdinalEnglish()),
+          _buildOrdinalExample('${_number.toInt()}.toOrdinalVietnamese()',
+              _number.toInt().toOrdinalVietnamese()),
+          _buildOrdinalExample('${_number.toInt()}.toOrdinalFrench()',
+              _number.toInt().toOrdinalFrench()),
+          _buildOrdinalExample('${_number.toInt()}.toOrdinalGerman()',
+              _number.toInt().toOrdinalGerman()),
+          _buildOrdinalExample('${_number.toInt()}.toOrdinalChinese()',
+              _number.toInt().toOrdinalChinese()),
+          _buildOrdinalExample('${_number.toInt()}.toOrdinalJapanese()',
+              _number.toInt().toOrdinalJapanese()),
+
+          if (_number.toInt() <= 10) ...[
+            const SizedBox(height: 8),
+            Text(
+              'Additional methods:',
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                color: Colors.green[600],
+                fontSize: 12,
+              ),
+            ),
+            const SizedBox(height: 4),
+            _buildOrdinalExample('${_number.toInt()}.getOrdinalSuffix()',
+                _number.toInt().getOrdinalSuffix()),
+            _buildOrdinalExample('${_number.toInt()}.canConvertToOrdinal()',
+                '${_number.toInt().canConvertToOrdinal()}'),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildOrdinalExample(String code, String result) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 1),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 3,
+            child: Text(
+              code,
+              style: const TextStyle(
+                fontFamily: 'monospace',
+                fontSize: 11,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          const Text(' → ', style: TextStyle(color: Colors.grey, fontSize: 12)),
+          Expanded(
+            flex: 4,
+            child: Text(
+              result,
+              style: const TextStyle(
+                fontSize: 11,
+                fontStyle: FontStyle.italic,
+                color: Colors.green,
+              ),
+            ),
+          ),
         ],
       ),
     );

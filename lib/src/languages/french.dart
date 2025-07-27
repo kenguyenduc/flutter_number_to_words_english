@@ -236,4 +236,38 @@ class FrenchNumberToWords extends NumberToWordsLanguage {
       return convertDecimal(number.toString());
     }
   }
+
+  @override
+  String convertOrdinal(int number) {
+    if (number <= 0) {
+      throw ArgumentError('Ordinal numbers must be positive integers');
+    }
+
+    switch (number) {
+      case 1:
+        return 'premier';
+      case 2:
+        return 'deuxième';
+      case 3:
+        return 'troisième';
+      case 4:
+        return 'quatrième';
+      case 5:
+        return 'cinquième';
+      case 6:
+        return 'sixième';
+      case 7:
+        return 'septième';
+      case 8:
+        return 'huitième';
+      case 9:
+        return 'neuvième';
+      case 10:
+        return 'dixième';
+      default:
+        // For larger numbers, use cardinal + ième
+        String baseWords = convertIntegerPart(number);
+        return '${baseWords}ième';
+    }
+  }
 }

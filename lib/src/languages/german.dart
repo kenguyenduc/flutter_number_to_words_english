@@ -198,4 +198,38 @@ class GermanNumberToWords extends NumberToWordsLanguage {
       return convertDecimal(number.toString());
     }
   }
+
+  @override
+  String convertOrdinal(int number) {
+    if (number <= 0) {
+      throw ArgumentError('Ordinal numbers must be positive integers');
+    }
+
+    switch (number) {
+      case 1:
+        return 'erste';
+      case 2:
+        return 'zweite';
+      case 3:
+        return 'dritte';
+      case 4:
+        return 'vierte';
+      case 5:
+        return 'fünfte';
+      case 6:
+        return 'sechste';
+      case 7:
+        return 'siebte';
+      case 8:
+        return 'achte';
+      default:
+        // For larger numbers, use cardinal + te/ste
+        String baseWords = convertIntegerPart(number);
+        if (number <= 19) {
+          return '${baseWords}te';
+        } else {
+          return '${baseWords}ste';
+        }
+    }
+  }
 }

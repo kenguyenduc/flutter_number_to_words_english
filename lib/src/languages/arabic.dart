@@ -171,4 +171,38 @@ class ArabicNumberToWords extends NumberToWordsLanguage {
       return convertDecimal(number.toString());
     }
   }
+
+  @override
+  String convertOrdinal(int number) {
+    if (number <= 0) {
+      throw ArgumentError('Ordinal numbers must be positive integers');
+    }
+
+    switch (number) {
+      case 1:
+        return 'الأول';
+      case 2:
+        return 'الثاني';
+      case 3:
+        return 'الثالث';
+      case 4:
+        return 'الرابع';
+      case 5:
+        return 'الخامس';
+      case 6:
+        return 'السادس';
+      case 7:
+        return 'السابع';
+      case 8:
+        return 'الثامن';
+      case 9:
+        return 'التاسع';
+      case 10:
+        return 'العاشر';
+      default:
+        // For larger numbers, use simplified approach
+        String baseWords = convertIntegerPart(number);
+        return 'ال$baseWords'; // Adding definite article "al"
+    }
+  }
 }
