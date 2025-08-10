@@ -1,11 +1,31 @@
 # ChangeLog
 
+## [3.0.2] - 2025-08-10
+
+### 🔧 Code Quality & Formatting
+
+#### 📝 Dart Formatting Fixes
+
+- **Fixed code formatting**: Resolved Dart format issues in 2 files
+  - `lib/src/languages/russian.dart` - Gender agreement implementation formatting
+  - `test/number_to_words_vietnamese_additional_test.dart` - Test case formatting
+- **Improved pub.dev score**: Better compliance with Dart style guidelines
+- **CI/CD compatibility**: All `dart format --set-exit-if-changed .` checks now pass
+- **Zero functional changes**: No breaking changes, all 147 tests continue to pass
+
+#### 📊 Code Standards
+
+- **Consistent formatting**: All files follow official Dart style guide
+- **Better readability**: Improved code structure and indentation
+- **Maintenance ready**: Easier for contributors to follow coding standards
+
 ## [3.0.1] - 2025-08-10
 
 ### 🐛 Bug Fixes & Quality Improvements
 
 #### 🇻🇳 Vietnamese Language Corrections
-- **Fixed number reading rules**: 
+
+- **Fixed number reading rules**:
   - 10 → "Mười" (capital M, proper pronunciation)
   - 15 → "mười lăm" (use "lăm" instead of "năm" after tens)
   - 20, 30, 40... → "hai mươi", "ba mươi", "bốn mươi" (use "mươi" for tens ≥ 20)
@@ -16,6 +36,7 @@
 - **Decimal reading**: Use base digit names (123.45 → "... phẩy bốn năm")
 
 #### 🌍 International Language Fixes
+
 - **🇷🇺 Russian**: Fixed gender agreement for thousands
   - 1000 → "одна тысяча" (feminine form, was "один тысяча")
   - Proper gender forms for 1-2 with feminine nouns
@@ -25,16 +46,19 @@
   - Fixed word order according to Arabic grammar rules
 
 #### 📦 Pub.dev Score Improvements
+
 - **Optimized package description**: Reduced from 201 to 127 characters (within 60-180 range)
 - **Fixed issue tracker URL**: Verified GitHub issues URL accessibility
 - **Enhanced package metadata**: Better compliance with Dart package conventions
 
 #### 🧪 Testing Enhancements
+
 - **Added Vietnamese-specific tests**: Comprehensive coverage for new pronunciation rules
 - **Updated all Vietnamese test expectations**: Aligned with corrected grammar
 - **Cross-language validation**: Verified all 12 languages maintain accuracy
 
 ### 📊 Code Quality
+
 - **Zero breaking changes**: All existing APIs remain fully compatible
 - **147 test cases pass**: Complete validation across all languages
 - **Improved documentation**: Updated examples with correct Vietnamese forms

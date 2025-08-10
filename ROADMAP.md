@@ -1,6 +1,6 @@
 # 🗺️ Development Roadmap - number_to_words_english
 
-## 📈 Current Status: v3.0.1
+## 📈 Current Status: v3.0.2
 
 - ✅ **12 languages worldwide** (English, Vietnamese, Spanish, French, German, Italian, Portuguese, Russian, Chinese, Japanese, Dutch, Arabic)
 - ✅ **Currency conversion** (12 major currencies: USD, EUR, GBP, JPY, VND, CNY, KRW, THB, SGD, AUD, CAD, CHF)
