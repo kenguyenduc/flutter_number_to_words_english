@@ -25,6 +25,14 @@ class RussianNumberToWords extends NumberToWordsLanguage {
     'триллион',
   ];
 
+  static const Map<int, String> _thousandsPlural = {
+    1: 'тысяча', // a thousand
+    2: 'тысячи', // two thousand
+    3: 'тысячи',
+    4: 'тысячи',
+    5: 'тысяч', // five thousand
+  };
+
   static const List<String> _numNames = [
     '',
     'один',
@@ -149,9 +157,18 @@ class RussianNumberToWords extends NumberToWordsLanguage {
       if (remainder > 0) {
         String part;
         if (scaleIndex == 1) {
-          // For thousands, use feminine form
+          // For thousands, use feminine form and handle pluralization
           part = _convertLessThanOneThousandInternal(remainder, feminine: true);
-          part += ' ${_scaleNames[scaleIndex]}';
+          int lastDigit = remainder % 10;
+          int lastTwoDigits = remainder % 100;
+
+          if (lastTwoDigits >= 11 && lastTwoDigits <= 19) {
+            part += ' ${_thousandsPlural[5]}';
+          } else if (_thousandsPlural.containsKey(lastDigit)) {
+            part += ' ${_thousandsPlural[lastDigit]}';
+          } else {
+            part += ' ${_thousandsPlural[5]}';
+          }
         } else {
           part = _convertLessThanOneThousandInternal(remainder);
           if (scaleIndex > 0) {

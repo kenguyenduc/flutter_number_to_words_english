@@ -112,10 +112,25 @@ class ArabicNumberToWords extends NumberToWordsLanguage {
     while (number > 0 && scaleIndex < _scaleNames.length) {
       int remainder = number % 1000;
       if (remainder > 0) {
-        String part = convertLessThanOneThousand(remainder);
+        String part;
         if (scaleIndex > 0) {
-          // Simplified Arabic - not handling complex grammar
-          part += ' ${_scaleNames[scaleIndex]}';
+          // Handle pluralization for thousands, millions, etc.
+          String scaleName;
+          if (remainder == 1) {
+            scaleName = _scaleNames[scaleIndex];
+            part = scaleName; // e.g., "ألف", "مليون"
+          } else if (remainder == 2) {
+            scaleName = _scaleNames[scaleIndex];
+            part = '${scaleName}ان'; // e.g., "ألفان"
+          } else if (remainder >= 3 && remainder <= 10) {
+            scaleName = _scaleNames[scaleIndex];
+            part = '${convertLessThanOneThousand(remainder)} ${scaleName}'; // e.g., "ثلاثة آلاف"
+          } else {
+            scaleName = _scaleNames[scaleIndex];
+            part = '${convertLessThanOneThousand(remainder)} ${scaleName}';
+          }
+        } else {
+          part = convertLessThanOneThousand(remainder);
         }
         parts.insert(0, part);
       }
@@ -123,7 +138,7 @@ class ArabicNumberToWords extends NumberToWordsLanguage {
       scaleIndex++;
     }
 
-    return parts.join(' ');
+    return parts.join(' و');
   }
 
   @override

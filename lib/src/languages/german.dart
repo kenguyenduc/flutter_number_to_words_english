@@ -71,51 +71,45 @@ class GermanNumberToWords extends NumberToWordsLanguage {
     // Handle hundreds
     if (number >= 100) {
       int hundreds = number ~/ 100;
-      if (hundreds == 1) {
-        result = 'ein$_hundred';
-      } else {
-        result = '${_numNames[hundreds]}$_hundred';
-      }
+      result = (hundreds == 1) ? 'ein' : _numNames[hundreds];
+      result += _hundred;
       number %= 100;
     }
 
-    // Handle tens and ones (German specific: ones before tens)
-    if (number >= 20) {
-      int tens = number ~/ 10;
-      int ones = number % 10;
-
-      String tensResult = _tensNames[tens];
-      if (ones > 0) {
-        String onesWord = ones == 1 ? 'ein' : _numNames[ones];
-        tensResult = '${onesWord}und$tensResult';
-      }
-
-      if (result.isNotEmpty) {
-        result += tensResult;
-      } else {
-        result = tensResult;
-      }
-    } else if (number > 0) {
-      String onesWord = '';
-      if (number == 1) {
-        onesWord = result.isEmpty ? 'eins' : 'ein';
-      } else {
-        onesWord = _numNames[number];
-      }
-
-      if (result.isNotEmpty) {
+    // Handle tens and ones
+    if (number > 0) {
+      if (number < 20) {
+        String onesWord =
+            (number == 1 && result.isNotEmpty) ? 'eins' : _numNames[number];
         result += onesWord;
       } else {
-        result = onesWord;
+        int tens = number ~/ 10;
+        int ones = number % 10;
+        String tensStr = _tensNames[tens];
+        if (ones > 0) {
+          String onesStr = (ones == 1) ? 'ein' : _numNames[ones];
+          result += '${onesStr}und$tensStr';
+        } else {
+          result += tensStr;
+        }
       }
     }
 
     return result;
   }
 
+  // Helper to determine if a number is part of a larger structure
+  // This is a simplified check. A more robust solution might need more context.
+  bool numberIsPartOfLargerNumber(int number) {
+    // This is a placeholder. In a real scenario, you might pass a context flag.
+    // For now, assume it's part of a larger number if it's being processed here.
+    return true;
+  }
+
   @override
   String convertIntegerPart(int number) {
     if (number == 0) return _zero;
+    if (number == 1) return 'eins';
 
     if (number < 1000) {
       return convertLessThanOneThousand(number);
@@ -127,19 +121,23 @@ class GermanNumberToWords extends NumberToWordsLanguage {
     while (number > 0 && scaleIndex < _scaleNames.length) {
       int remainder = number % 1000;
       if (remainder > 0) {
-        String part = convertLessThanOneThousand(remainder);
+        String part;
+        if (scaleIndex == 1 && remainder == 1) {
+          part = 'ein'; // eintausend
+        } else {
+          part = convertLessThanOneThousand(remainder);
+        }
+
         if (scaleIndex > 0) {
-          // Special handling for German
-          if (scaleIndex == 1) {
-            // For thousands, just add "tausend"
-            part += _scaleNames[scaleIndex];
-          } else {
-            // For millions, billions, etc.
+          String scaleName = _scaleNames[scaleIndex];
+          if (scaleIndex >= 2) {
             if (remainder == 1) {
-              part = 'eine ${_scaleNames[scaleIndex]}';
+              part = 'eine $scaleName';
             } else {
-              part += ' ${_scaleNames[scaleIndex]}en';
+              part += ' ${scaleName}en';
             }
+          } else {
+            part += scaleName;
           }
         }
         parts.insert(0, part);
@@ -148,7 +146,7 @@ class GermanNumberToWords extends NumberToWordsLanguage {
       scaleIndex++;
     }
 
-    return parts.join('');
+    return parts.join(' ');
   }
 
   @override

@@ -59,7 +59,7 @@ print(123.toWords()); // English (default)
 // Output: 'one hundred twenty-three'
 
 print(123.toVietnamese());
-// Output: 'một trăm hai mười ba'
+// Output: 'một trăm hai mươi ba'
 
 print(123.toSpanish());
 // Output: 'ciento veintitrés'
@@ -109,7 +109,7 @@ print(123.toJPY());
 // Output: 'one hundred twenty-three yen'
 
 print(123.45.toVND());
-// Output: 'một trăm hai mười ba đồng bốn mười năm xu'
+// Output: 'một trăm hai mươi ba đồng và bốn mươi lăm xu'
 
 print(123.45.toCNY());
 // Output: '一百二十三人民币四十五角'
@@ -126,7 +126,7 @@ print(123.45.toCurrencyInLanguage('es', 'USD'));
 
 // Language-specific conversion
 print(123.toWordsInLanguage('vi'));
-// Output: 'một trăm hai mười ba'
+// Output: 'một trăm hai mươi ba'
 
 // Integer-specific methods
 print(123.toCardinal()); // Cardinal numbers
@@ -151,7 +151,7 @@ print(NumberToWords.convert('en', 123));
 // Output: 'one hundred twenty-three'
 
 print(NumberToWords.convert('vi', 123));
-// Output: 'một trăm hai mười ba'
+// Output: 'một trăm hai mươi ba'
 
 print(NumberToWords.convert('es', 123));
 // Output: 'ciento veintitrés'
@@ -162,7 +162,7 @@ print(NumberToWords.convert('es', 123));
 | Language Code | Language                | Example (123)            | Region         |
 | ------------- | ----------------------- | ------------------------ | -------------- |
 | `en`          | English                 | one hundred twenty-three | Global         |
-| `vi`          | Vietnamese (Tiếng Việt) | một trăm hai mười ba     | Southeast Asia |
+| `vi`          | Vietnamese (Tiếng Việt) | một trăm hai mươi ba     | Southeast Asia |
 | `es`          | Spanish (Español)       | ciento veintitrés        | Latin America  |
 | `fr`          | French (Français)       | cent vingt-trois         | Europe         |
 | `de`          | German (Deutsch)        | einhundertdreiundzwanzig | Europe         |
@@ -222,7 +222,7 @@ print(NumberToWords.convertCurrency('en', 123.45, 'USD'));  // English
 // "one hundred twenty-three dollars and forty-five cents"
 
 print(NumberToWords.convertCurrency('vi', 123.45, 'VND'));  // Vietnamese
-// "một trăm hai mười ba đồng bốn mười năm xu"
+// "một trăm hai mươi ba đồng và bốn mươi lăm xu"
 
 print(NumberToWords.convertCurrency('fr', 123.45, 'EUR'));  // French
 // "cent vingt-trois euros et quarante-cinq centimes"
@@ -256,12 +256,20 @@ print(NumberToWords.convert('vi', 1000000));
 print(NumberToWords.convert('es', 1000000));
 // Output: 'uno millón'
 
+// Grammar improvements - Russian gender agreement for thousands
+print(NumberToWords.convert('ru', 1000));
+// Output: 'одна тысяча' (feminine form)
+
+// Grammar improvements - Arabic proper word order
+print(NumberToWords.convert('ar', 21));
+// Output: 'واحد وعشرون' (ones before tens)
+
 // Negative numbers
 print(NumberToWords.convert('en', -123));
 // Output: 'minus one hundred twenty-three'
 
 print(NumberToWords.convert('vi', -123));
-// Output: 'âm một trăm hai mười ba'
+// Output: 'âm một trăm hai mươi ba'
 
 print(NumberToWords.convert('es', -123));
 // Output: 'menos ciento veintitrés'
@@ -354,7 +362,7 @@ Converts a number to its word representation in the specified language.
 
 ```dart
 String result = NumberToWords.convert('vi', 123);
-// Returns: "một trăm hai mười ba"
+// Returns: "một trăm hai mươi ba"
 ```
 
 ##### `static String convertDecimal(String languageCode, String numberStr)`
