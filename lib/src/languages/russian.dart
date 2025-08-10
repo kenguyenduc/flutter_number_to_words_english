@@ -51,8 +51,8 @@ class RussianNumberToWords extends NumberToWordsLanguage {
   // For thousands - feminine form
   static const List<String> _numNamesFeminine = [
     '',
-    'одна',  // feminine form of "один" for thousands
-    'две',   // feminine form of "два" for thousands
+    'одна', // feminine form of "один" for thousands
+    'две', // feminine form of "два" for thousands
     'три',
     'четыре',
     'пять',
@@ -98,7 +98,8 @@ class RussianNumberToWords extends NumberToWordsLanguage {
     'девятьсот'
   ];
 
-  String _convertLessThanOneThousandInternal(int number, {bool feminine = false}) {
+  String _convertLessThanOneThousandInternal(int number,
+      {bool feminine = false}) {
     if (number == 0) return '';
 
     String result = '';
