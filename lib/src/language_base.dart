@@ -48,7 +48,7 @@ abstract class NumberToWordsLanguage {
   /// ```dart
   /// convertCurrency(123.45, 'USD'); // "one hundred twenty-three dollars and forty-five cents" (English)
   /// convertCurrency(123.45, 'EUR'); // "one hundred twenty-three euros and forty-five cents" (English)
-  /// convertCurrency(123.45, 'VND'); // "một trăm hai mười ba đồng bốn mười lăm xu" (Vietnamese)
+  /// convertCurrency(123.45, 'VND'); // "một trăm hai mươi ba đồng và bốn mươi lăm xu" (Vietnamese)
   /// convertCurrency(123, 'JPY'); // "one hundred twenty-three yen" (English) - no subunits
   /// ```
   ///

@@ -156,13 +156,13 @@ void main() {
 
     test('toWordsInLanguage() extension', () {
       expect(123.toWordsInLanguage('en'), 'one hundred twenty-three');
-      expect(123.toWordsInLanguage('vi'), 'một trăm hai mười ba');
+      expect(123.toWordsInLanguage('vi'), 'một trăm hai mươi ba');
       expect(123.toWordsInLanguage('es'), 'ciento veintitrés');
     });
 
     test('Language-specific extension methods', () {
       expect(123.toEnglish(), 'one hundred twenty-three');
-      expect(123.toVietnamese(), 'một trăm hai mười ba');
+      expect(123.toVietnamese(), 'một trăm hai mươi ba');
       expect(123.toSpanish(), 'ciento veintitrés');
       expect(123.toFrench(), isNotEmpty);
       expect(123.toGerman(), isNotEmpty);
@@ -180,7 +180,7 @@ void main() {
     test('toCardinal() extension', () {
       expect(1.toCardinal(), 'one');
       expect(21.toCardinal(), 'twenty-one');
-      expect(123.toCardinal('vi'), 'một trăm hai mười ba');
+      expect(123.toCardinal('vi'), 'một trăm hai mươi ba');
     });
 
     test('canConvertToWords() extension', () {
@@ -238,7 +238,7 @@ void main() {
     test('toWordsInMultipleLanguages() extension', () {
       final results = "123".toWordsInMultipleLanguages(['en', 'vi', 'es']);
       expect(results['en'], 'one hundred twenty-three');
-      expect(results['vi'], 'một trăm hai mười ba');
+      expect(results['vi'], 'một trăm hai mươi ba');
       expect(results['es'], 'ciento veintitrés');
 
       // Test with invalid language
@@ -275,11 +275,11 @@ void main() {
       expect(NumberToWords.convert('vi', 0), 'không');
       expect(NumberToWords.convert('vi', 1), 'một');
       expect(NumberToWords.convert('vi', 5), 'năm');
-      expect(NumberToWords.convert('vi', 10), 'mười');
-      expect(NumberToWords.convert('vi', 15), 'mười năm');
-      expect(NumberToWords.convert('vi', 21), 'hai mười một');
+      expect(NumberToWords.convert('vi', 10), 'Mười');
+      expect(NumberToWords.convert('vi', 15), 'mười lăm');
+      expect(NumberToWords.convert('vi', 21), 'hai mươi mốt');
       expect(NumberToWords.convert('vi', 100), 'một trăm');
-      expect(NumberToWords.convert('vi', 123), 'một trăm hai mười ba');
+      expect(NumberToWords.convert('vi', 123), 'một trăm hai mươi ba');
       expect(NumberToWords.convert('vi', 1000), 'một nghìn');
     });
 
@@ -290,12 +290,12 @@ void main() {
 
     test('Negative numbers', () {
       expect(NumberToWords.convert('vi', -5), 'âm năm');
-      expect(NumberToWords.convert('vi', -123), 'âm một trăm hai mười ba');
+      expect(NumberToWords.convert('vi', -123), 'âm một trăm hai mươi ba');
     });
 
     test('Decimal numbers', () {
-      expect(NumberToWords.convert('vi', 12.34), 'mười hai phẩy ba tư');
-      expect(NumberToWords.convert('vi', -12.34), 'âm mười hai phẩy ba tư');
+      expect(NumberToWords.convert('vi', 12.34), 'mười hai phẩy ba bốn');
+      expect(NumberToWords.convert('vi', -12.34), 'âm mười hai phẩy ba bốn');
     });
   });
 
@@ -334,9 +334,9 @@ void main() {
 
     test('Vietnamese decimal strings', () {
       expect(NumberToWords.convertDecimal('vi', '123.45'),
-          'một trăm hai mười ba phẩy tư năm');
+          'một trăm hai mươi ba phẩy bốn năm');
       expect(NumberToWords.convertDecimal('vi', '-123.45'),
-          'âm một trăm hai mười ba phẩy tư năm');
+          'âm một trăm hai mươi ba phẩy bốn năm');
     });
 
     test('Spanish decimal strings', () {
@@ -797,7 +797,7 @@ void main() {
   group('Extension Methods Comprehensive Testing', () {
     test('All cardinal extension methods', () {
       expect(123.toEnglish(), 'one hundred twenty-three');
-      expect(123.toVietnamese(), 'một trăm hai mười ba');
+      expect(123.toVietnamese(), 'một trăm hai mươi ba');
       expect(123.toSpanish(), 'ciento veintitrés');
       expect(123.toFrench(), isNotEmpty);
       expect(123.toGerman(), isNotEmpty);
@@ -862,7 +862,7 @@ void main() {
 
     test('Integer-specific methods comprehensive', () {
       expect(123.toCardinal(), 'one hundred twenty-three');
-      expect(123.toCardinal('vi'), 'một trăm hai mười ba');
+      expect(123.toCardinal('vi'), 'một trăm hai mươi ba');
       expect(123.canConvertToWords(), true);
       expect(0.canConvertToWords(), true);
       expect((-1).canConvertToWords(), true);
@@ -1273,7 +1273,7 @@ void main() {
   group('Case Insensitivity', () {
     test('Language codes are case insensitive', () {
       expect(NumberToWords.convert('EN', 123), 'one hundred twenty-three');
-      expect(NumberToWords.convert('Vi', 123), 'một trăm hai mười ba');
+      expect(NumberToWords.convert('Vi', 123), 'một trăm hai mươi ba');
       expect(NumberToWords.convert('ES', 123), 'ciento veintitrés');
     });
   });

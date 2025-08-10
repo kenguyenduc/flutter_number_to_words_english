@@ -78,16 +78,18 @@ class ArabicNumberToWords extends NumberToWordsLanguage {
         result = '${_numNames[hundreds]} $_hundred';
       }
       number %= 100;
-      if (number > 0) result += ' ';
+      if (number > 0) result += ' و';
     }
 
     // Handle tens and ones
     if (number >= 20) {
       int tens = number ~/ 10;
-      result += _tensNames[tens];
-      number %= 10;
-      if (number > 0) {
-        result += ' ${_numNames[number]}';
+      int ones = number % 10;
+      if (ones > 0) {
+        // In Arabic, ones come before tens: "واحد وعشرون" (one and twenty)
+        result += '${_numNames[ones]} و${_tensNames[tens]}';
+      } else {
+        result += _tensNames[tens];
       }
     } else if (number > 0) {
       result += _numNames[number];

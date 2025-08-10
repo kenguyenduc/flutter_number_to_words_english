@@ -29,7 +29,7 @@ extension NumberToWordsExtension on num {
   /// Example:
   /// ```dart
   /// print(123.toWords('en')); // "one hundred twenty-three"
-  /// print(123.toWords('vi')); // "một trăm hai mười ba"
+  /// print(123.toWords('vi')); // "một trăm hai mươi ba"
   /// print(123.toWords('es')); // "ciento veintitrés"
   /// ```
   ///
@@ -45,7 +45,7 @@ extension NumberToWordsExtension on num {
   ///
   /// Example:
   /// ```dart
-  /// print(123.toVietnamese()); // "một trăm hai mười ba"
+  /// print(123.toVietnamese()); // "một trăm hai mươi ba"
   /// print((-45).toVietnamese()); // "âm bốn mười năm"
   /// ```
   String toVietnamese() {
@@ -377,7 +377,7 @@ extension NumberToWordsExtension on num {
   ///
   /// Example:
   /// ```dart
-  /// print(123.45.toCurrencyInLanguage('vi', 'VND')); // "một trăm hai mười ba đồng bốn mười lăm xu"
+  /// print(123.45.toCurrencyInLanguage('vi', 'VND')); // "một trăm hai mươi ba đồng và bốn mươi lăm xu"
   /// print(123.45.toCurrencyInLanguage('fr', 'EUR')); // "cent vingt-trois euros et quarante-cinq centimes"
   /// print(123.45.toCurrencyInLanguage('zh', 'CNY')); // "一百二十三人民币四十五角"
   /// ```
@@ -442,7 +442,7 @@ extension NumberToWordsExtension on num {
   ///
   /// Example:
   /// ```dart
-  /// print(123.45.toVND()); // "một trăm hai mười ba đồng bốn mười lăm xu"
+  /// print(123.45.toVND()); // "một trăm hai mươi ba đồng và bốn mươi lăm xu"
   /// print(1000.toVND());   // "một nghìn đồng"
   /// ```
   String toVND() {
@@ -706,7 +706,7 @@ extension StringNumberToWordsExtension on String {
   /// Map<String, String> results = "123".toWordsInMultipleLanguages(['en', 'vi', 'es']);
   /// // {
   /// //   'en': 'one hundred twenty-three',
-  /// //   'vi': 'một trăm hai mười ba',
+  /// //   'vi': 'một trăm hai mươi ba',
   /// //   'es': 'ciento veintitrés'
   /// // }
   /// ```

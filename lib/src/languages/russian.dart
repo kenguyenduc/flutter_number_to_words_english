@@ -48,6 +48,30 @@ class RussianNumberToWords extends NumberToWordsLanguage {
     'девятнадцать'
   ];
 
+  // For thousands - feminine form
+  static const List<String> _numNamesFeminine = [
+    '',
+    'одна',  // feminine form of "один" for thousands
+    'две',   // feminine form of "два" for thousands
+    'три',
+    'четыре',
+    'пять',
+    'шесть',
+    'семь',
+    'восемь',
+    'девять',
+    'десять',
+    'одиннадцать',
+    'двенадцать',
+    'тринадцать',
+    'четырнадцать',
+    'пятнадцать',
+    'шестнадцать',
+    'семнадцать',
+    'восемнадцать',
+    'девятнадцать'
+  ];
+
   static const List<String> _tensNames = [
     '',
     'десять',
@@ -74,11 +98,11 @@ class RussianNumberToWords extends NumberToWordsLanguage {
     'девятьсот'
   ];
 
-  @override
-  String convertLessThanOneThousand(int number) {
+  String _convertLessThanOneThousandInternal(int number, {bool feminine = false}) {
     if (number == 0) return '';
 
     String result = '';
+    final numNames = feminine ? _numNamesFeminine : _numNames;
 
     // Handle hundreds
     if (number >= 100) {
@@ -94,13 +118,18 @@ class RussianNumberToWords extends NumberToWordsLanguage {
       result += _tensNames[tens];
       number %= 10;
       if (number > 0) {
-        result += ' ${_numNames[number]}';
+        result += ' ${numNames[number]}';
       }
     } else if (number > 0) {
-      result += _numNames[number];
+      result += numNames[number];
     }
 
     return result;
+  }
+
+  @override
+  String convertLessThanOneThousand(int number) {
+    return _convertLessThanOneThousandInternal(number, feminine: false);
   }
 
   @override
@@ -108,7 +137,7 @@ class RussianNumberToWords extends NumberToWordsLanguage {
     if (number == 0) return _zero;
 
     if (number < 1000) {
-      return convertLessThanOneThousand(number);
+      return _convertLessThanOneThousandInternal(number);
     }
 
     List<String> parts = [];
@@ -117,10 +146,16 @@ class RussianNumberToWords extends NumberToWordsLanguage {
     while (number > 0 && scaleIndex < _scaleNames.length) {
       int remainder = number % 1000;
       if (remainder > 0) {
-        String part = convertLessThanOneThousand(remainder);
-        if (scaleIndex > 0) {
-          // Simplified version - not handling complex Russian grammar
+        String part;
+        if (scaleIndex == 1) {
+          // For thousands, use feminine form
+          part = _convertLessThanOneThousandInternal(remainder, feminine: true);
           part += ' ${_scaleNames[scaleIndex]}';
+        } else {
+          part = _convertLessThanOneThousandInternal(remainder);
+          if (scaleIndex > 0) {
+            part += ' ${_scaleNames[scaleIndex]}';
+          }
         }
         parts.insert(0, part);
       }

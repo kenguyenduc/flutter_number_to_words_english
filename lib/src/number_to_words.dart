@@ -45,7 +45,7 @@ class NumberToWords {
   /// Example:
   /// ```dart
   /// NumberToWords.convert('en', 123); // "one hundred twenty-three"
-  /// NumberToWords.convert('vi', 123); // "một trăm hai mười ba"
+  /// NumberToWords.convert('vi', 123); // "một trăm hai mươi ba"
   /// NumberToWords.convert('es', 123); // "ciento veintitrés"
   /// ```
   ///

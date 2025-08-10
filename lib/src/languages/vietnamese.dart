@@ -29,69 +29,83 @@ class VietnameseNumberToWords extends NumberToWordsLanguage {
     _trillion,
   ];
 
-  static const List<String> _numNames = [
-    '',
+  // Base digit names 0-9 (context-free)
+  static const List<String> _digitNames = [
+    'không',
     'một',
     'hai',
     'ba',
-    'tư',
+    'bốn',
     'năm',
     'sáu',
     'bảy',
     'tám',
     'chín',
-    'mười',
-    'mười một',
-    'mười hai',
-    'mười ba',
-    'mười tư',
-    'mười năm',
-    'mười sáu',
-    'mười bảy',
-    'mười tám',
-    'mười chín'
   ];
 
-  static const List<String> _tensNames = [
-    '',
-    'mười',
-    'hai mười',
-    'ba mười',
-    'bốn mười',
-    'năm mười',
-    'sáu mười',
-    'bảy mười',
-    'tám mười',
-    'chín mười'
-  ];
+  // Helper to get ones name depending on tens context
+  String _onesNameForTens(int ones, int tens) {
+    if (ones == 0) return '';
+    if (tens >= 2) {
+      if (ones == 1) return 'mốt';
+      if (ones == 4) return 'tư';
+      if (ones == 5) return 'lăm';
+    }
+    return _digitNames[ones];
+  }
 
   @override
   String convertLessThanOneThousand(int number) {
     if (number == 0) return '';
 
+    int original = number;
     String result = '';
 
-    // Handle hundreds
+    // Hundreds
     if (number >= 100) {
       int hundreds = number ~/ 100;
-      result += '${_numNames[hundreds]} $_hundred';
+      result += '${_digitNames[hundreds]} $_hundred';
       number %= 100;
       if (number > 0) result += ' ';
     }
 
-    // Handle tens and ones
+    // Tens and ones
     if (number >= 20) {
       int tens = number ~/ 10;
-      result += _tensNames[tens];
-      number %= 10;
-      if (number > 0) {
-        result += ' ${_numNames[number]}';
+      int ones = number % 10;
+      result += '${_digitNames[tens]} mươi';
+      if (ones > 0) {
+        result += ' ${_onesNameForTens(ones, tens)}';
+      }
+    } else if (number >= 10) {
+      int ones = number - 10;
+      result += 'mười';
+      if (ones > 0) {
+        String onesName;
+        if (ones == 5) {
+          onesName = 'lăm';
+        } else if (ones == 4) {
+          onesName = 'bốn';
+        } else {
+          onesName = _digitNames[ones];
+        }
+        result += ' ' + onesName;
       }
     } else if (number > 0) {
-      result += _numNames[number];
+      // If there was a hundreds part and tens is 0 but ones > 0, use "lẻ"
+      if (original >= 100) {
+        result += 'lẻ ' + _digitNames[number];
+      } else {
+        result += _digitNames[number];
+      }
     }
 
-    return result;
+    // Capitalize "mười" when the whole number is exactly 10
+    if (original == 10 && result.trim() == 'mười') {
+      return 'Mười';
+    }
+
+    return result.trim();
   }
 
   @override
@@ -146,7 +160,7 @@ class VietnameseNumberToWords extends NumberToWordsLanguage {
     String decimalWords = pointWord;
     for (int i = 0; i < decimalPartStr.length; i++) {
       int digit = int.parse(decimalPartStr[i]);
-      decimalWords += ' ${_numNames[digit]}';
+      decimalWords += ' ${_digitNames[digit]}';
     }
 
     String result = '$integerWords $decimalWords';
@@ -287,7 +301,7 @@ class VietnameseNumberToWords extends NumberToWordsLanguage {
     if (decimals > 0 && minorAmount > 0) {
       String minorWords = convertIntegerPart(minorAmount);
       String minorUnit = currency['minor']!;
-      result += ' $minorWords $minorUnit';
+      result += ' và $minorWords $minorUnit';
     }
 
     return result;

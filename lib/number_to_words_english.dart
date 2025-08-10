@@ -43,12 +43,12 @@ import 'src/languages/english.dart';
 ///
 /// // Using the new multi-language API
 /// print(NumberToWords.convert('en', 123)); // "one hundred twenty-three"
-/// print(NumberToWords.convert('vi', 123)); // "một trăm hai mười ba"
+/// print(NumberToWords.convert('vi', 123)); // "một trăm hai mươi ba"
 /// print(NumberToWords.convert('es', 123)); // "ciento veintitrés"
 ///
 /// // Using extension methods
 /// print(123.toWords()); // "one hundred twenty-three"
-/// print(123.toVietnamese()); // "một trăm hai mười ba"
+/// print(123.toVietnamese()); // "một trăm hai mươi ba"
 /// print(123.toSpanish()); // "ciento veintitrés"
 /// print(123.toFrench()); // "cent vingt-trois"
 /// print(123.toGerman()); // "einhundertdreiundzwanzig"
@@ -65,7 +65,7 @@ import 'src/languages/english.dart';
 /// | Code | Language | Example (123) | Region |
 /// |------|----------|---------------|--------|
 /// | `en` | English | one hundred twenty-three | Global |
-/// | `vi` | Vietnamese | một trăm hai mười ba | Southeast Asia |
+/// | `vi` | Vietnamese | một trăm hai mươi ba | Southeast Asia |
 /// | `es` | Spanish | ciento veintitrés | Latin America |
 /// | `fr` | French | cent vingt-trois | Europe |
 /// | `de` | German | einhundertdreiundzwanzig | Europe |
