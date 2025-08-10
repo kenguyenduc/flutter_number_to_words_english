@@ -34,7 +34,7 @@ Add this package to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  number_to_words_english: ^3.0.3
+  number_to_words_english: ^3.0.4
 ```
 
 Then run:
