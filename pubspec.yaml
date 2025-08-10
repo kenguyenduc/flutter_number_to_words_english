@@ -1,13 +1,13 @@
 name: number_to_words_english
 description: Convert numbers to words in 12 languages with currency & ordinal support. Easy-to-use extension methods for Flutter/Dart apps.
-version: 3.0.2
+version: 3.0.3
 homepage: https://github.com/kenguyenduc/flutter_number_to_words_english
 git: https://github.com/kenguyenduc/flutter_number_to_words_english
 issue_tracker: https://github.com/kenguyenduc/flutter_number_to_words_english/issues
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
-  flutter: ">=3.24.0"
+  sdk: ">=2.12.0 <4.0.0"
+  flutter: ">=2.5.0"
 
 dependencies:
   flutter:

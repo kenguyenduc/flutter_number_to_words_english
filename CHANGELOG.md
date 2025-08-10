@@ -1,5 +1,30 @@
 # ChangeLog
 
+## [3.0.3] - 2025-08-10
+
+### 📚 Documentation Updates & Compatibility Improvements
+
+#### 📝 README Synchronization
+- **Updated dependency version**: Changed installation guide from `^3.0.0` to `^3.0.3`
+- **Accurate test count**: Updated from "145+ tests" to precise "147 tests"
+- **Added recent improvements**: Highlighted Vietnamese, Russian, Arabic grammar fixes
+- **Added code quality notes**: Mentioned Dart formatting compliance improvements
+- **Version consistency**: All documentation now matches actual package version
+
+#### 📱 Broader Flutter Support
+- **Relaxed SDK constraints**: Dart `>=2.12.0 <4.0.0` (was `>=3.0.0 <4.0.0`)
+- **Relaxed Flutter constraints**: Flutter `>=2.5.0` (was `>=3.24.0`)
+- **Backward compatibility**: Now supports older Flutter projects and legacy codebases
+- **Wider adoption**: Compatible with Flutter 2.5+ to latest versions
+- **Enterprise friendly**: Works with conservative enterprise Flutter versions
+
+#### 🎯 User Experience
+- **Clear installation instructions**: Users get the correct version for dependencies
+- **Up-to-date feature list**: Recent language accuracy improvements documented
+- **Better onboarding**: New users see current capabilities and improvements
+- **Legacy project support**: Existing projects can now use the package without upgrading
+- **Team flexibility**: Different team members can use different Flutter versions
+
 ## [3.0.2] - 2025-08-10
 
 ### 🔧 Code Quality & Formatting

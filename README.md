@@ -21,9 +21,12 @@ A Flutter/Dart package that converts numbers to their written words representati
 ✅ Null safety support  
 ✅ Lightweight and fast  
 ✅ No external dependencies  
-✅ Well tested and documented (145+ tests)  
+✅ Well tested and documented (147+ tests)
 ✅ **Backward compatible** - existing code continues to work  
-✅ **Modular architecture** - easy to extend with new languages
+✅ **Modular architecture** - easy to extend with new languages  
+✅ **🆕 Language accuracy improvements** - Vietnamese, Russian, Arabic grammar fixes  
+✅ **🆕 Code quality optimized** - Dart formatting compliance for better pub.dev scores  
+✅ **🆕 Broader compatibility** - Supports Flutter 2.5+ and Dart 2.12+ for legacy projects
 
 ## Getting started
 
@@ -31,7 +34,7 @@ Add this package to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  number_to_words_english: ^3.0.0
+  number_to_words_english: ^3.0.3
 ```
 
 Then run:
