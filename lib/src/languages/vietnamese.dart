@@ -89,12 +89,12 @@ class VietnameseNumberToWords extends NumberToWordsLanguage {
         } else {
           onesName = _digitNames[ones];
         }
-        result += ' ' + onesName;
+        result += ' $onesName';
       }
     } else if (number > 0) {
       // If there was a hundreds part and tens is 0 but ones > 0, use "lẻ"
       if (original >= 100) {
-        result += 'lẻ ' + _digitNames[number];
+        result += 'lẻ ${_digitNames[number]}';
       } else {
         result += _digitNames[number];
       }
