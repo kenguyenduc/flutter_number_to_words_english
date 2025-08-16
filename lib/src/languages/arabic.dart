@@ -124,7 +124,8 @@ class ArabicNumberToWords extends NumberToWordsLanguage {
             part = '${scaleName}ان'; // e.g., "ألفان"
           } else if (remainder >= 3 && remainder <= 10) {
             scaleName = _scaleNames[scaleIndex];
-            part = '${convertLessThanOneThousand(remainder)} ${scaleName}'; // e.g., "ثلاثة آلاف"
+            part =
+                '${convertLessThanOneThousand(remainder)} ${scaleName}'; // e.g., "ثلاثة آلاف"
           } else {
             scaleName = _scaleNames[scaleIndex];
             part = '${convertLessThanOneThousand(remainder)} ${scaleName}';
