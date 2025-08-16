@@ -8,9 +8,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: subosito/flutter-action@v1
-      - uses: bluefireteam/flutter-gh-pages@v7
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
-          workingDir: example
-          baseHref: /flutter_number_to_words_english/
+          flutter-version: '3.32.8'
+          channel: 'stable'
+          
+      - name: Enable web platform
+        run: flutter config --enable-web
+        
+      - name: Get dependencies
+        run: flutter pub get
+        working-directory: example
+        
+      - name: Build web app
+        run: flutter build web --release --base-href /flutter_number_to_words_english/
+        working-directory: example
+        
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: example/build/web
