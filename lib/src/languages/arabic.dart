@@ -121,14 +121,14 @@ class ArabicNumberToWords extends NumberToWordsLanguage {
             part = scaleName; // e.g., "ألف", "مليون"
           } else if (remainder == 2) {
             scaleName = _scaleNames[scaleIndex];
-            part = '${scaleName}ان'; // e.g., "ألفان"
+            part = '$scaleNameان'; // e.g., "ألفان"
           } else if (remainder >= 3 && remainder <= 10) {
             scaleName = _scaleNames[scaleIndex];
             part =
-                '${convertLessThanOneThousand(remainder)} ${scaleName}'; // e.g., "ثلاثة آلاف"
+                '${convertLessThanOneThousand(remainder)} $scaleName'; // e.g., "ثلاثة آلاف"
           } else {
             scaleName = _scaleNames[scaleIndex];
-            part = '${convertLessThanOneThousand(remainder)} ${scaleName}';
+            part = '${convertLessThanOneThousand(remainder)} $scaleName';
           }
         } else {
           part = convertLessThanOneThousand(remainder);
