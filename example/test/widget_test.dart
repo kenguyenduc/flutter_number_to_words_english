@@ -33,7 +33,7 @@ void main() {
 
     // Find and tap the language dropdown
     expect(find.text('Select Language'), findsOneWidget);
-    
+
     // Should have English selected by default
     expect(find.text('EN - English'), findsOneWidget);
   });

@@ -51,11 +51,11 @@ class NumberConverterHome extends StatefulWidget {
 class _NumberConverterHomeState extends State<NumberConverterHome>
     with TickerProviderStateMixin {
   late TabController _tabController;
-  final TextEditingController _numberController = 
+  final TextEditingController _numberController =
       TextEditingController(text: '123');
-  final TextEditingController _currencyController = 
+  final TextEditingController _currencyController =
       TextEditingController(text: '123.45');
-  final TextEditingController _ordinalController = 
+  final TextEditingController _ordinalController =
       TextEditingController(text: '21');
 
   String _selectedLanguage = 'en';
@@ -210,8 +210,8 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
           children: [
             Row(
               children: [
-                Icon(Icons.language, 
-                     color: Theme.of(context).colorScheme.primary),
+                Icon(Icons.language,
+                    color: Theme.of(context).colorScheme.primary),
                 const SizedBox(width: 8),
                 Text(
                   'Select Language',
@@ -256,8 +256,8 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
           children: [
             Row(
               children: [
-                Icon(Icons.numbers, 
-                     color: Theme.of(context).colorScheme.primary),
+                Icon(Icons.numbers,
+                    color: Theme.of(context).colorScheme.primary),
                 const SizedBox(width: 8),
                 Text(
                   'Enter Number',
@@ -310,12 +310,13 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
             Row(
               children: [
                 Icon(Icons.record_voice_over,
-                     color: Theme.of(context).colorScheme.onSecondaryContainer),
+                    color: Theme.of(context).colorScheme.onSecondaryContainer),
                 const SizedBox(width: 8),
                 Text(
                   'Result in ${NumberToWords.supportedLanguagesWithNames[_selectedLanguage]}',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.onSecondaryContainer,
+                        color:
+                            Theme.of(context).colorScheme.onSecondaryContainer,
                         fontWeight: FontWeight.bold,
                       ),
                 ),
@@ -357,7 +358,8 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
                 Text(
                   'Number: $_currentNumber',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Theme.of(context).colorScheme.onSecondaryContainer,
+                        color:
+                            Theme.of(context).colorScheme.onSecondaryContainer,
                       ),
                 ),
               ],
@@ -369,8 +371,20 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
   }
 
   Widget _buildQuickNumberButtons() {
-    final examples = [0, 1, 7, 21, 100, 123, 1000, 1234, 10000, 100000, 1000000];
-    
+    final examples = [
+      0,
+      1,
+      7,
+      21,
+      100,
+      123,
+      1000,
+      1234,
+      10000,
+      100000,
+      1000000
+    ];
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -380,7 +394,7 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
             Row(
               children: [
                 Icon(Icons.touch_app,
-                     color: Theme.of(context).colorScheme.primary),
+                    color: Theme.of(context).colorScheme.primary),
                 const SizedBox(width: 8),
                 Text(
                   'Quick Examples',
@@ -394,15 +408,17 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
             Wrap(
               spacing: 8.0,
               runSpacing: 8.0,
-              children: examples.map((value) => FilledButton.tonal(
-                    onPressed: () {
-                      setState(() {
-                        _currentNumber = value;
-                        _numberController.text = value.toString();
-                      });
-                    },
-                    child: Text(value.toString()),
-                  )).toList(),
+              children: examples
+                  .map((value) => FilledButton.tonal(
+                        onPressed: () {
+                          setState(() {
+                            _currentNumber = value;
+                            _numberController.text = value.toString();
+                          });
+                        },
+                        child: Text(value.toString()),
+                      ))
+                  .toList(),
             ),
           ],
         ),
@@ -420,7 +436,7 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
             Row(
               children: [
                 Icon(Icons.extension,
-                     color: Theme.of(context).colorScheme.primary),
+                    color: Theme.of(context).colorScheme.primary),
                 const SizedBox(width: 8),
                 Text(
                   'Extension Methods Demo',
@@ -441,19 +457,14 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildExtensionExample(
-                      '$_currentNumber.toWords()', 
-                      _currentNumber.toWords()),
-                  _buildExtensionExample(
-                      '$_currentNumber.toVietnamese()', 
+                      '$_currentNumber.toWords()', _currentNumber.toWords()),
+                  _buildExtensionExample('$_currentNumber.toVietnamese()',
                       _currentNumber.toVietnamese()),
-                  _buildExtensionExample(
-                      '$_currentNumber.toSpanish()', 
+                  _buildExtensionExample('$_currentNumber.toSpanish()',
                       _currentNumber.toSpanish()),
                   _buildExtensionExample(
-                      '$_currentNumber.toFrench()', 
-                      _currentNumber.toFrench()),
-                  _buildExtensionExample(
-                      '$_currentNumber.toChinese()', 
+                      '$_currentNumber.toFrench()', _currentNumber.toFrench()),
+                  _buildExtensionExample('$_currentNumber.toChinese()',
                       _currentNumber.toChinese()),
                   if (_currentNumber is int && _currentNumber > 0) ...[
                     const Divider(),
@@ -466,10 +477,10 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
                     ),
                     const SizedBox(height: 4),
                     _buildExtensionExample(
-                        '${_currentNumber.toInt()}.toCardinal()', 
+                        '${_currentNumber.toInt()}.toCardinal()',
                         _currentNumber.toInt().toCardinal()),
                     _buildExtensionExample(
-                        '${_currentNumber.toInt()}.canConvertToWords()', 
+                        '${_currentNumber.toInt()}.canConvertToWords()',
                         '${_currentNumber.toInt().canConvertToWords()}'),
                   ],
                 ],
@@ -506,7 +517,7 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
             Row(
               children: [
                 Icon(Icons.monetization_on,
-                     color: Theme.of(context).colorScheme.primary),
+                    color: Theme.of(context).colorScheme.primary),
                 const SizedBox(width: 8),
                 Text(
                   'Select Currency',
@@ -528,8 +539,7 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
                   _selectedCurrency = newValue!;
                 });
               },
-              items: currencies.entries
-                  .map<DropdownMenuItem<String>>((entry) {
+              items: currencies.entries.map<DropdownMenuItem<String>>((entry) {
                 return DropdownMenuItem<String>(
                   value: entry.key,
                   child: Text('${entry.key} - ${entry.value}'),
@@ -552,7 +562,7 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
             Row(
               children: [
                 Icon(Icons.attach_money,
-                     color: Theme.of(context).colorScheme.primary),
+                    color: Theme.of(context).colorScheme.primary),
                 const SizedBox(width: 8),
                 Text(
                   'Enter Amount',
@@ -565,7 +575,8 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
             const SizedBox(height: 12),
             TextFormField(
               controller: _currencyController,
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: 'Enter amount (e.g., 123.45)',
@@ -602,12 +613,13 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
             Row(
               children: [
                 Icon(Icons.paid,
-                     color: Theme.of(context).colorScheme.onTertiaryContainer),
+                    color: Theme.of(context).colorScheme.onTertiaryContainer),
                 const SizedBox(width: 8),
                 Text(
                   'Currency Result',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.onTertiaryContainer,
+                        color:
+                            Theme.of(context).colorScheme.onTertiaryContainer,
                         fontWeight: FontWeight.bold,
                       ),
                 ),
@@ -640,7 +652,7 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
 
   Widget _buildCurrencyExamples() {
     final examples = [1.0, 12.34, 100.0, 1000.50, 1234.56];
-    
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -649,8 +661,7 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
           children: [
             Row(
               children: [
-                Icon(Icons.quiz,
-                     color: Theme.of(context).colorScheme.primary),
+                Icon(Icons.quiz, color: Theme.of(context).colorScheme.primary),
                 const SizedBox(width: 8),
                 Text(
                   'Currency Examples',
@@ -664,15 +675,17 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
             Wrap(
               spacing: 8.0,
               runSpacing: 8.0,
-              children: examples.map((value) => FilledButton.tonal(
-                    onPressed: () {
-                      setState(() {
-                        _currentCurrencyAmount = value;
-                        _currencyController.text = value.toString();
-                      });
-                    },
-                    child: Text(value.toString()),
-                  )).toList(),
+              children: examples
+                  .map((value) => FilledButton.tonal(
+                        onPressed: () {
+                          setState(() {
+                            _currentCurrencyAmount = value;
+                            _currencyController.text = value.toString();
+                          });
+                        },
+                        child: Text(value.toString()),
+                      ))
+                  .toList(),
             ),
           ],
         ),
@@ -690,7 +703,7 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
             Row(
               children: [
                 Icon(Icons.language,
-                     color: Theme.of(context).colorScheme.primary),
+                    color: Theme.of(context).colorScheme.primary),
                 const SizedBox(width: 8),
                 Text(
                   'Multi-Language Currency Demo',
@@ -711,16 +724,16 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildExtensionExample(
-                      '${_currentCurrencyAmount.toStringAsFixed(2)}.toUSD()', 
+                      '${_currentCurrencyAmount.toStringAsFixed(2)}.toUSD()',
                       _currentCurrencyAmount.toUSD()),
                   _buildExtensionExample(
-                      '${_currentCurrencyAmount.toStringAsFixed(2)}.toEUR()', 
+                      '${_currentCurrencyAmount.toStringAsFixed(2)}.toEUR()',
                       _currentCurrencyAmount.toEUR()),
                   _buildExtensionExample(
-                      '${_currentCurrencyAmount.toStringAsFixed(2)}.toVND()', 
+                      '${_currentCurrencyAmount.toStringAsFixed(2)}.toVND()',
                       _currentCurrencyAmount.toVND()),
                   _buildExtensionExample(
-                      '${_currentCurrencyAmount.toStringAsFixed(2)}.toCNY()', 
+                      '${_currentCurrencyAmount.toStringAsFixed(2)}.toCNY()',
                       _currentCurrencyAmount.toCNY()),
                 ],
               ),
@@ -741,7 +754,7 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
             Row(
               children: [
                 Icon(Icons.format_list_numbered,
-                     color: Theme.of(context).colorScheme.primary),
+                    color: Theme.of(context).colorScheme.primary),
                 const SizedBox(width: 8),
                 Text(
                   'Enter Number for Ordinal',
@@ -778,7 +791,8 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
       if (_currentOrdinalNumber <= 0) {
         result = 'Please enter a positive integer';
       } else {
-        result = NumberToWords.convertOrdinal(_selectedLanguage, _currentOrdinalNumber);
+        result = NumberToWords.convertOrdinal(
+            _selectedLanguage, _currentOrdinalNumber);
       }
     } catch (e) {
       result = 'Error: ${e.toString()}';
@@ -794,7 +808,7 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
             Row(
               children: [
                 Icon(Icons.emoji_events,
-                     color: Theme.of(context).colorScheme.onPrimaryContainer),
+                    color: Theme.of(context).colorScheme.onPrimaryContainer),
                 const SizedBox(width: 8),
                 Text(
                   'Ordinal Result',
@@ -832,7 +846,7 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
 
   Widget _buildOrdinalExamples() {
     final examples = [1, 2, 3, 11, 21, 22, 101, 1001];
-    
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -841,8 +855,7 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
           children: [
             Row(
               children: [
-                Icon(Icons.list,
-                     color: Theme.of(context).colorScheme.primary),
+                Icon(Icons.list, color: Theme.of(context).colorScheme.primary),
                 const SizedBox(width: 8),
                 Text(
                   'Ordinal Examples',
@@ -856,15 +869,17 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
             Wrap(
               spacing: 8.0,
               runSpacing: 8.0,
-              children: examples.map((value) => FilledButton.tonal(
-                    onPressed: () {
-                      setState(() {
-                        _currentOrdinalNumber = value;
-                        _ordinalController.text = value.toString();
-                      });
-                    },
-                    child: Text(value.toString()),
-                  )).toList(),
+              children: examples
+                  .map((value) => FilledButton.tonal(
+                        onPressed: () {
+                          setState(() {
+                            _currentOrdinalNumber = value;
+                            _ordinalController.text = value.toString();
+                          });
+                        },
+                        child: Text(value.toString()),
+                      ))
+                  .toList(),
             ),
           ],
         ),
@@ -886,7 +901,7 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
             Row(
               children: [
                 Icon(Icons.language,
-                     color: Theme.of(context).colorScheme.primary),
+                    color: Theme.of(context).colorScheme.primary),
                 const SizedBox(width: 8),
                 Text(
                   'Multi-Language Ordinals',
@@ -906,20 +921,19 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildExtensionExample(
-                      '$_currentOrdinalNumber.toOrdinal()', 
+                  _buildExtensionExample('$_currentOrdinalNumber.toOrdinal()',
                       _currentOrdinalNumber.toOrdinal()),
                   _buildExtensionExample(
-                      '$_currentOrdinalNumber.toOrdinalVietnamese()', 
+                      '$_currentOrdinalNumber.toOrdinalVietnamese()',
                       _currentOrdinalNumber.toOrdinalVietnamese()),
                   _buildExtensionExample(
-                      '$_currentOrdinalNumber.toOrdinalFrench()', 
+                      '$_currentOrdinalNumber.toOrdinalFrench()',
                       _currentOrdinalNumber.toOrdinalFrench()),
                   _buildExtensionExample(
-                      '$_currentOrdinalNumber.toOrdinalGerman()', 
+                      '$_currentOrdinalNumber.toOrdinalGerman()',
                       _currentOrdinalNumber.toOrdinalGerman()),
                   _buildExtensionExample(
-                      '$_currentOrdinalNumber.toOrdinalChinese()', 
+                      '$_currentOrdinalNumber.toOrdinalChinese()',
                       _currentOrdinalNumber.toOrdinalChinese()),
                 ],
               ),
@@ -940,7 +954,7 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
             Row(
               children: [
                 Icon(Icons.public,
-                     color: Theme.of(context).colorScheme.primary),
+                    color: Theme.of(context).colorScheme.primary),
                 const SizedBox(width: 8),
                 Text(
                   'Supported Languages (${NumberToWords.supportedLanguages.length})',
@@ -954,28 +968,30 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
             Wrap(
               spacing: 8.0,
               runSpacing: 8.0,
-              children: NumberToWords.supportedLanguagesWithNames.entries.map(
-                (entry) => Chip(
-                  avatar: CircleAvatar(
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    child: Text(
-                      entry.key.toUpperCase(),
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onPrimary,
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
+              children: NumberToWords.supportedLanguagesWithNames.entries
+                  .map(
+                    (entry) => Chip(
+                      avatar: CircleAvatar(
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        child: Text(
+                          entry.key.toUpperCase(),
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onPrimary,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
+                      label: Text(entry.value),
+                      onDeleted: () {
+                        setState(() {
+                          _selectedLanguage = entry.key;
+                        });
+                      },
+                      deleteIcon: const Icon(Icons.arrow_forward),
                     ),
-                  ),
-                  label: Text(entry.value),
-                  onDeleted: () {
-                    setState(() {
-                      _selectedLanguage = entry.key;
-                    });
-                  },
-                  deleteIcon: const Icon(Icons.arrow_forward),
-                ),
-              ).toList(),
+                  )
+                  .toList(),
             ),
           ],
         ),
@@ -992,8 +1008,7 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
           children: [
             Row(
               children: [
-                Icon(Icons.code,
-                     color: Theme.of(context).colorScheme.primary),
+                Icon(Icons.code, color: Theme.of(context).colorScheme.primary),
                 const SizedBox(width: 8),
                 Text(
                   'API Usage Examples',
@@ -1085,7 +1100,7 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
             Row(
               children: [
                 Icon(Icons.extension,
-                     color: Theme.of(context).colorScheme.primary),
+                    color: Theme.of(context).colorScheme.primary),
                 const SizedBox(width: 8),
                 Text(
                   'Extension Methods Reference',
@@ -1128,8 +1143,7 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
           children: [
             Row(
               children: [
-                Icon(Icons.info,
-                     color: Theme.of(context).colorScheme.primary),
+                Icon(Icons.info, color: Theme.of(context).colorScheme.primary),
                 const SizedBox(width: 8),
                 Text(
                   'Library Information',
@@ -1143,7 +1157,8 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
             ListTile(
               leading: const Icon(Icons.language),
               title: const Text('Languages Supported'),
-              subtitle: Text('${NumberToWords.supportedLanguages.length} languages'),
+              subtitle:
+                  Text('${NumberToWords.supportedLanguages.length} languages'),
               dense: true,
             ),
             ListTile(
