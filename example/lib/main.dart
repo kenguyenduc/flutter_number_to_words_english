@@ -222,24 +222,28 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
               ],
             ),
             const SizedBox(height: 12),
-            DropdownButtonFormField<String>(
-              value: _selectedLanguage,
+            InputDecorator(
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 prefixIcon: Icon(Icons.translate),
               ),
-              onChanged: (String? newValue) {
-                setState(() {
-                  _selectedLanguage = newValue!;
-                });
-              },
-              items: NumberToWords.supportedLanguagesWithNames.entries
-                  .map<DropdownMenuItem<String>>((entry) {
-                return DropdownMenuItem<String>(
-                  value: entry.key,
-                  child: Text('${entry.key.toUpperCase()} - ${entry.value}'),
-                );
-              }).toList(),
+              child: DropdownButton<String>(
+                value: _selectedLanguage,
+                isExpanded: true,
+                underline: const SizedBox(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _selectedLanguage = newValue!;
+                  });
+                },
+                items: NumberToWords.supportedLanguagesWithNames.entries
+                    .map<DropdownMenuItem<String>>((entry) {
+                  return DropdownMenuItem<String>(
+                    value: entry.key,
+                    child: Text('${entry.key.toUpperCase()} - ${entry.value}'),
+                  );
+                }).toList(),
+              ),
             ),
           ],
         ),
@@ -528,23 +532,28 @@ class _NumberConverterHomeState extends State<NumberConverterHome>
               ],
             ),
             const SizedBox(height: 12),
-            DropdownButtonFormField<String>(
-              value: _selectedCurrency,
+            InputDecorator(
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 prefixIcon: Icon(Icons.currency_exchange),
               ),
-              onChanged: (String? newValue) {
-                setState(() {
-                  _selectedCurrency = newValue!;
-                });
-              },
-              items: currencies.entries.map<DropdownMenuItem<String>>((entry) {
-                return DropdownMenuItem<String>(
-                  value: entry.key,
-                  child: Text('${entry.key} - ${entry.value}'),
-                );
-              }).toList(),
+              child: DropdownButton<String>(
+                value: _selectedCurrency,
+                isExpanded: true,
+                underline: const SizedBox(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _selectedCurrency = newValue!;
+                  });
+                },
+                items:
+                    currencies.entries.map<DropdownMenuItem<String>>((entry) {
+                  return DropdownMenuItem<String>(
+                    value: entry.key,
+                    child: Text('${entry.key} - ${entry.value}'),
+                  );
+                }).toList(),
+              ),
             ),
           ],
         ),
